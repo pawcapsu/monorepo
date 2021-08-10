@@ -1,100 +1,77 @@
-<!-- Channel logotype -->
-<div class="w-full pt-4 pb-2 px-4 relative flex flex-col">
-  <!-- Title -->
-  <div>
-    <h1 class="text-xl text-white font-bold">Клуб Гарри Поттера</h1>
+<!-- Writings -->
+<section id="writings" class="bg-gray-800 overflow-hidden overflow-y-auto w-full h-screen flex justify-center items-center px-8">
+  <!-- Texts -->
+  <div class="w-1/2 px-3">
+    <h1 class="text-5xl text-gray-100 font-bold">Огромное количество рассказов</h1>
+    <p class="mt-2 text-xl text-gray-100 opacity-75">Наша платформа собирает рассказы с все известных русскоязычных сайтов, так что вы всегда сможете хоть что-то найти!</p>
 
-    <div class="cursor-pointer flex items-center mt-0.5">
-      <Icon name="external-link" attrs={{ class: "w-4 h-4 text-white mr-1.5" }} />
-      <p class="text-sm text-white opacity-60">"Гарри Поттер"</p>
-    </div>
-  </div>
-</div>
+    <!-- Buttons -->
+    <div class="w-2/3 mt-6">
+      <div class="flex justify-center items-center w-full relative">
+        <!-- Start -->
+        <button class="flex w-1/2 items-center justify-center py-2 rounded-md bg-indigo-400">
+          <p class="text-sm text-white font-medium">Начать исследовать</p>
+        </button>
 
-<!-- Actions -->
-<div class="mb-2 px-4">
-  <!--  -->
-  <div class="my-4 flex items-center">
-    <!-- Icon -->
-    <Icon name="search" attrs={{ class: "w-4 h-4 text-white", "stroke-width": "3" }} />
-
-    <!-- Text -->
-    <p class="ml-2 text-white font-medium">Поиск</p>
-  </div>
-
-  <div class="my-4 flex items-center">
-    <!-- Icon -->
-    <Icon name="book" attrs={{ class: "w-4 h-4 text-white", "stroke-width": "3" }} />
-
-    <!-- Text -->
-    <p class="ml-2 text-white font-medium">К рассказу</p>
-  </div>
-</div>
-
-<!-- Divider -->
-<div class="px-4 w-full relative">
-  <div style="height: 3px;" class="w-full bg-gray-500 opacity-20 rounded-full"></div>
-</div>
-
-<!-- Channel list -->
-<div class="mt-2 px-2 flex-grow">
-
-  <!-- Ordinary channel #1 -->
-  <div class="my-2 w-full flex items-center relative rounded-xl py-2 px-2 bg-gray-500 bg-opacity-30">
-    <!-- Icon + text -->
-    <div class="flex items-center w-2/3">
-      <!-- Icon -->
-      <img class="w-5 h-5 mr-1.5" src="./icons/victory-hand.png" alt="">
-
-      <!-- Text -->
-      <p class="text-md text-white font-medium">Главный</p>
-    </div>
-
-    <!-- Messages -->
-    <div class="w-1/3 items-center flex justify-end">
-      <div class="w-6 h-6 bg-gray-800 rounded-full flex items-center justify-center">
-        <p class="text-sm text-white font-medium">1</p>
+        <!-- More -->
+        <button class="cursor-not-allowed opacity-60 ml-4 w-1/2 flex items-center justify-center py-2 rounded-md bg-indigo-400">
+          <p class="text-sm text-white font-medium">Узнать больше</p>
+        </button>
       </div>
-    </div>
-  </div>
-
-  <!-- Ordinary channel #2 -->
-  <div class="my-2 w-full flex items-center relative rounded-xl py-2 px-2">
-    <!-- Icon + text -->
-    <div class="flex items-center w-2/3">
-      <!-- Icon -->
-      <img class="w-5 h-5 mr-1.5" src="./icons/hot-beverage.png" alt="">
 
       <!-- Text -->
-      <p class="text-md text-white font-medium">Чаепитие</p>
+      <p class="mt-1 text-xs text-gray-100 opacity-60">Продолжая, вы соглашаетесь с Правилами пользования</p>
     </div>
   </div>
 
-  <!-- Group
-  <div class="mb-2 mt-4">
-    #Group title
-    <div class="w-full flex items-center text-white opacity-50">
-      #Icon
-      <Icon name="chevron-down" attrs={{ class: "w-4 h-4 mr-1.5", "stroke-width": "3" }} />
+  <!-- Content -->
+  <div class="w-1/2 h-full relative px-3">
+    <div style="z-index: 2;" class="absolute inset-0 w-full h-full"></div>
+    <div style="overflow: hidden; z-index: 1; width: 125%; right: 5vw;" id="content-container" class="transform -skew-y-12 rotate-12 flex flex-wrap absolute inset-0 h-full rounded-md bg-dark">
+      { #each testData as entry }
+        <div class="w-1/2 p-2 relative">
+          <div style="z-index: 2;" class="w-full h-full rounded-xl bg-gray-900 p-4">
+            <!-- Title -->
+            <div class="mb-2">
+              <div class="flex items-center mt-0.5 opacity-70 text-white">
+                <Icon name="link-2" attrs={{ class: "w-4 h-4" }} />
+                
+                <p class="ml-1.5 text-xs">Гарри Поттер</p>
+              </div>
 
-      #Text
-      <p class="text-sm">Категория</p>
-    </div>
+              <h1 class="text-3xl text-white font-medium">Невероятно крутой рассказ который прям вау...</h1>
+            
+              <!-- Tags -->
+              <div class="w-full flex flex-wrap mt-2">
+                <div class="m-0.5 px-2 py-1 rounded-full bg-pink-500 flex items-center justify-center">
+                  <!-- Icon -->
+                  <p class="text-white font-medium text-sm">⚣</p>
+                
+                  <p class="ml-1 text-xs text-white font-medium">Гей</p>
+                </div>
 
-    #Group channels
-    <div class="mt-1.5">
-      <div class="my-2 w-full flex items-center relative rounded-xl py-2 px-2">
-        #Icon + text
-        <div class="flex items-center w-2/3">
-          #Icon
-          <img class="w-5 h-5 mr-1.5" src="./icons/eggplant.png" alt="">
+                <div class="m-0.5 px-2 py-1 rounded-full bg-purple-600 flex items-center justify-center">
+                  <p class="text-xs text-white font-medium">Драма</p>
+                </div>
 
-          #Text
-          <p class="text-md text-white font-medium">Запрещённое</p>
+                <div class="m-0.5 px-2 py-1 rounded-full bg-gray-500 flex items-center justify-center">
+                  <p class="text-xs text-white font-medium">До 5000 слов</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="text-sm text-white opacity-70">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores ipsam aliquam, atque eos hic autem tempore. Iusto ipsa sint laboriosam inventore dolor, illo ex cum vitae tenetur sed impedit ut modi veniam ducimus numquam vel dolores delectus aperiam cumque adipisci, nam placeat voluptatum sequi! Ex ipsam minus illo rem fugit.  
+            </div>
+          </div>
         </div>
-      </div>
+      { /each }  
     </div>
+  </div>
+</section>
 
-  </div> -->
+<!-- Groups -->
+<section id="groups" class="bg-gray-800 w-full h-screen flex justify-center items-center">
 
-</div>
+</section>
