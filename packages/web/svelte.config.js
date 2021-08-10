@@ -23,6 +23,7 @@ const config = {
 			resolve: {
 				alias: {
 					$stores: resolve('./src/stores'),
+					$shared: resolve('../shared/src'),
 				},
 			},
 		},

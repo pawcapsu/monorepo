@@ -2,7 +2,8 @@
   // Importing modules
   import { onMount } from "svelte";
   import { UserStore } from '$stores/user';
-  
+  import { test } from '$shared/test';
+
 	// Importing components
   import Icon from '../components/Icon.svelte';
 
