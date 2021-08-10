@@ -1,25 +1,13 @@
 <script>
   // Importing modules
   import { onMount } from "svelte";
-	import * as axios from "axios";
-
+  import { UserStore } from '$stores/user';
+  
 	// Importing components
   import Icon from '../components/Icon.svelte';
 
 	// Test Data
 	let testData = [1,2,3,4,5,6,7,8,9];
-
-	// Populating our test data
-	onMount(() => {
-    let scroll = 0;
-    let element = document.getElementById("content-container");
-
-    setInterval(() => {
-      element.scroll(0, scroll);
-      scroll += 0.15;
-
-    }, 5);
-	});
 </script>
 
 <!-- Header -->
@@ -44,7 +32,9 @@
 
     <!-- Buttons -->
     <div class="w-full flex items-center justify-center relative">
-      <button class="w-1/2 mr-4 bg-indigo-500 rounded-md py-2 flex items-center justify-center">
+      <button on:click={() => {
+        window.location.href = "https://auth.odzi.dog/callback/" + encodeURIComponent("https://pawcapsu.ml/api/login");
+      }} class="w-1/2 mr-4 bg-indigo-500 rounded-md py-2 flex items-center justify-center">
         <p class="text-white">Авторизоваться</p>
 
         <Icon name="user" attrs={{ class: "w-4 h-4 text-white ml-2" }} />
