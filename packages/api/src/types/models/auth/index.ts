@@ -1,1 +1,0 @@
-export * from './AuthCode.model';
