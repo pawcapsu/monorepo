@@ -9,7 +9,8 @@ import * as ModuleList from '../startup/imports';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot('mongodb+srv://dog:5jmVn7kiMuvnN355@cluster0.8nu2l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'),
+    // kxz2zyGxIO28JaCR
+    MongooseModule.forRoot('mongodb+srv://paws:kxz2zyGxIO28JaCR@cluster0.03jyp.mongodb.net/production?retryWrites=true&w=majority'),
 
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',

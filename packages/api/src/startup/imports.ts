@@ -1,1 +1,1 @@
-export * from 'src/modules/user/module';
+export * from 'src/modules/profiles/module';
