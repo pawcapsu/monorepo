@@ -2,11 +2,28 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
-  id: Int!
+type Book {
+  _id: String!
+  creator: Profile!
+  description: String!
+  title: String!
+}
+
+type Profile {
+  _id: String!
   email: String!
+  username: String
+  books: [Book!]!
 }
 
 type Query {
-  user(id: Int!): User!
+  profile(uid: String!): Profile!
+  book(
+    """Book _id"""
+    bookId: String!
+  ): Book!
+}
+
+type Mutation {
+  createBook(description: String!, title: String!, uid: String!): Book!
 }

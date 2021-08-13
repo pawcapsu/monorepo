@@ -1,20 +1,30 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { IProfile } from '../../../../../shared/src/index';
+import { IProfile } from '@pawcapsu/shared/src';
+import * as mongoose from 'mongoose';
+
+import { Book } from '../content';
 
 export type ProfileDocument = Profile & Document;
 
 @Schema()
 @ObjectType()
 export class Profile implements IProfile {
-  @Prop({ unique: true })
-  @Field({ nullable: false })
-  uid: string;
+  @Field(type => String, { nullable: false })
+  _id: mongoose.Schema.Types.ObjectId;
 
   @Prop({ unique: true })
   @Field({ nullable: false })
+  email: string;
+
+  @Prop()
+  @Field({ nullable: true })
   username: string;
+
+  @Prop()
+  @Field(type => [Book])
+  books: [Book];
 }
 
 export const ProfileSchema = SchemaFactory.createForClass(Profile);

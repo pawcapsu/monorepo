@@ -1,5 +1,5 @@
 {
-  "name": "pawcapsu-api",
+  "name": "@pawcapsu/api",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -28,6 +28,7 @@
     "@nestjs/mongoose": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.0.9",
+    "@pawcapsu/shared": "^1.0.0",
     "@sendgrid/mail": "^7.4.5",
     "@types/nodemailer": "^6.4.4",
     "apollo-server-express": "^2.25.2",
