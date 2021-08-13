@@ -9,14 +9,14 @@ import * as ModuleList from '../startup/imports';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    // kxz2zyGxIO28JaCR
     MongooseModule.forRoot('mongodb+srv://paws:kxz2zyGxIO28JaCR@cluster0.03jyp.mongodb.net/production?retryWrites=true&w=majority'),
 
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
+      context: ({ req }) => ({ req }),
     }),
-
-    ...Object.values(ModuleList)
+    
+    ...Object.values(ModuleList),
   ],
 })
 export class AppModule {}

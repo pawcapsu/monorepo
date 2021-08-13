@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../modules/main.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'; 
+import * as session from 'express-session';
 import * as fs from 'fs';
 
 export default async function(): Promise<void> {
@@ -15,6 +16,14 @@ export default async function(): Promise<void> {
   const app = await NestFactory.create(AppModule, {
     httpsOptions: process.env.MODE === 'PRODUCTION' ? httpsOptions : null,
   });
+
+  app.use(
+    session({
+      secret: 'my-secret',
+      resave: false,
+      saveUninitialized: false,
+    }),
+  );
   
   const config = new DocumentBuilder()
     .setTitle('pawcapsu')

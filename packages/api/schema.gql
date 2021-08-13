@@ -17,6 +17,7 @@ type Profile {
 }
 
 type Query {
+  me: Profile!
   profile(uid: String!): Profile!
   book(
     """Book _id"""
@@ -25,5 +26,5 @@ type Query {
 }
 
 type Mutation {
-  createBook(description: String!, title: String!, uid: String!): Book!
+  login(uid: String!): Profile!
 }

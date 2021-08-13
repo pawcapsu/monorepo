@@ -1,7 +1,9 @@
-import { Resolver, Query, Args, Mutation, ResolveField, Parent } from "@nestjs/graphql";
+import { Resolver, Query, Args, Mutation, ResolveField, Parent, Context } from '@nestjs/graphql';
 import { ProfilesService } from 'src/modules/profiles/services';
-import { BooksService } from "src/modules/books/services";
+import { BooksService } from 'src/modules/books/services';
 import { Profile, Book } from 'src/types/models';
+import { UseGuards } from '@nestjs/common';
+import { GqlAuthGuard, IRequest } from 'src/auth/guards';
 
 @Resolver(of => Profile)
 export class ProfilesResolver{
@@ -23,6 +25,25 @@ export class ProfilesResolver{
   // ) {
   //   return this.booksService.testAddBook(uid, title, description);
   // };
+
+  @Mutation(returns => Profile)
+  async login(
+    @Args('uid') uid: string,
+    @Context('req') req: IRequest,
+  ) {
+    const profile = await this.service.findProfile(uid);
+
+    if (profile != undefined) {
+      req.session.uid = profile._id;
+      return profile;
+    };
+  };
+
+  @UseGuards(GqlAuthGuard)
+  @Query(returns => Profile)
+  async me(@Context('user') user: Profile) {
+    return user;
+  };
 
   @Query(returns => Profile)
   async profile(@Args('uid', { type: () => String }) uid: string) {

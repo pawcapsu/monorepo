@@ -11,16 +11,20 @@ export class ProfilesService {
     @InjectModel('profile') private profileModel: Model<ProfileDocument>,
   ) {}
 
-  // 
   // findProfile
   async findProfile(id?: string | mongoose.Schema.Types.ObjectId): Promise<Profile | undefined> {
     const _id = typeof id === "string" ? mongoose.Types.ObjectId(id) : id;
     return await this.profileModel.findOne({ _id: id  });
   };
 
-  // testAddProfile
-  async testAddProfile(uid: string): Promise<Profile> {
-    const profile = new this.profileModel(<IProfile>{ uid, email: 'soglacen@gmail.com', username: 'juiipup' });
+  // findProfileByEmail
+  async findProfildByEmail(email: string) {
+    return await this.profileModel.findOne({ email });
+  };
+
+  // createProfile
+  async createProfile(options: { email: string, username?: string }) {
+    const profile = new this.profileModel(<IProfile>{ email: options.email, username: options.username });
     return await profile.save();
   };
 };
