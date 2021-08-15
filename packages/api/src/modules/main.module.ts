@@ -15,7 +15,7 @@ import * as ModuleList from '../startup/imports';
       autoSchemaFile: 'schema.gql',
       context: ({ req }) => ({ req }),
       cors: {
-        origin: 'https://www.pawcapsu.ml',
+        origin: process.env.MODE === 'PRODUCTION' ? 'https://www.pawcapsu.ml' : 'http://localhost:3000',
         credentials: true,
       },
     }),

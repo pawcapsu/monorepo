@@ -3,7 +3,7 @@ import { ProfilesService } from 'src/modules/profiles/services';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProfileSchema } from 'src/types/models';
 
-import * as controllers from 'src/modules/auth/controllers';
+import * as resolvers from 'src/modules/auth/resolvers';
 import * as services from 'src/modules/auth/services';
 
 @Module({
@@ -13,7 +13,6 @@ import * as services from 'src/modules/auth/services';
       schema: ProfileSchema 
     }
   ])],
-  controllers: [...Object.values(controllers)],
-  providers: [...Object.values(services), ProfilesService],
+  providers: [...Object.values(resolvers), ...Object.values(services), ProfilesService],
 })
 export class AuthModule {}

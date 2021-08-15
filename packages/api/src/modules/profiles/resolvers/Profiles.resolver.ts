@@ -12,33 +12,6 @@ export class ProfilesResolver{
     private booksService: BooksService,
   ) {}
 
-  // @Mutation(returns => Profile)
-  // async createProfile(@Args('uid', { type: () => String }) uid: string): Promise<Profile> {
-  //   return this.service.testAddProfile(uid);
-  // };
-
-  // @Mutation(returns => Book)
-  // async createBook(
-  //   @Args('uid') uid: string,
-  //   @Args('title') title: string,
-  //   @Args('description') description: string,
-  // ) {
-  //   return this.booksService.testAddBook(uid, title, description);
-  // };
-
-  @Mutation(returns => Profile)
-  async login(
-    @Args('uid') uid: string,
-    @Context('req') req: IRequest,
-  ) {
-    const profile = await this.service.findProfile(uid);
-
-    if (profile != undefined) {
-      req.session.uid = profile._id;
-      return profile;
-    };
-  };
-
   @UseGuards(GqlAuthGuard)
   @Query(returns => Profile)
   async me(@Context('user') user: Profile) {

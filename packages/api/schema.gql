@@ -26,5 +26,5 @@ type Query {
 }
 
 type Mutation {
-  login(uid: String!): Profile!
+  login(token: String!): Profile!
 }
