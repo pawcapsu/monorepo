@@ -10,7 +10,7 @@
       logotype: "https://res.cloudinary.com/lococovu-cdn/image/upload/v1614110162/logotypes/pawcapsu-black-small.svg"
     };
 
-    goto(`https://auth.odzi.dog/callback/${encodeURIComponent(Config.get('MODE') === 'PRODUCTION' ? 'pawcapsu.ml/login' : 'localhost:3000/login')}?design=${encodeURIComponent(JSON.stringify(json))}`);
+    goto(`https://auth.odzi.dog/callback/${encodeURIComponent(Config.get('MODE') === 'DEVELOPMENT' ? 'localhost:3000/login' : 'pawcapsu.ml/login')}?design=${encodeURIComponent(JSON.stringify(json))}`);
   });
 </script>
 
