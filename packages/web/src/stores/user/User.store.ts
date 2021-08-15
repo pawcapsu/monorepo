@@ -1,17 +1,16 @@
 // Importin stores
 import { writable } from "svelte/store";
-import { page } from "$app/stores";
-import { goto } from "$app/navigation";
+import { client } from '$services/graphql';
+import { gql } from '@apollo/client/core/core.cjs.js';
+import type { IProfile } from '$shared/interfaces';
+import type { ReadableQuery } from "svelte-apollo-client";
 
 export interface Store {
   // User information
-  user?: {
-
-  },
+  user?: IProfile,
 
   // Token information
   token?: {
-
   },
 
   // Notifications
@@ -19,20 +18,48 @@ export interface Store {
 
   // Sessions
   sessions?: [],
+
+  // Is Store loaded?
+  loaded: boolean,
 };
 
 const store = () => {
   const { subscribe, update } = writable(<Store>{});
 
   return {
-    subscribe,
+    subscribe,    
+  
+    authMe() {
+      const { subscribe } = client.query(gql`
+        query me {
+          me {
+            _id
+            email
+            username
+          }
+        }
+      `);
 
-    // loginUser
-    loginUser: () => {
-      page.subscribe((obj) => {
-        goto(`https://auth.odzi.dog/callback/${encodeURIComponent("pawcapsu.ml/api/session")}`);
+      subscribe((obj: any) => {
+        if (!obj.loading) {
+          // User is authorized
+          if (obj.data?.me != null) {
+            update((store: Store) => {
+              store.user = <IProfile>obj?.data?.me;
+              store.loaded = true;
+
+              return store;
+            });
+          } else {
+            update((store: Store) => {
+              store.loaded = true;
+
+              return store;
+            });
+          };
+        };
       });
-    },
+    }
   };
 };
 

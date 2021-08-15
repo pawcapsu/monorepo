@@ -26,6 +26,7 @@
 			"$lib/*": ["src/lib/*"],
 			"$stores/*": ["src/stores/*"],
 			"$services/*": ["src/services/*"],
+			"$config/*": ["src/config/*"],
 			"$shared/*": ["../shared/src/*"],
 		}
 	},

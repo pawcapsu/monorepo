@@ -1,20 +1,16 @@
 <script>
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
+  
+  import { UserService } from '$services/user';
   import { goto } from '$app/navigation';
-
-  import axios from 'axios';
 
   onMount(() => {
     const token = $page.query.get('token');
-    $page.query.set('token', '');
-    
-    axios.get(`http://localhost:3001/login/${token}`)
-    .then(res => res.data)
-    .then((data) => {
-      if (data._id != null) {
-        goto('/');
-      };
+
+    UserService.loginUser(token)
+    .then(() => {
+      goto('/');
     });
   });
 </script>

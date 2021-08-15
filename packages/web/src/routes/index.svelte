@@ -1,11 +1,10 @@
 <script>
   // Importing modules
-  import { onMount } from "svelte";
   import { UserStore } from '$stores/user';
-  import { test } from '$shared/test';
 
 	// Importing components
   import Icon from '../components/Icon.svelte';
+  import { goto } from "$app/navigation";
 
 	// Test Data
 	let testData = [1,2,3,4,5,6,7,8,9];
@@ -33,13 +32,21 @@
 
     <!-- Buttons -->
     <div class="w-full flex items-center justify-center relative">
-      <button on:click={() => {
-        window.location.href = "https://auth.odzi.dog/callback/" + encodeURIComponent("https://pawcapsu.ml/api/login");
-      }} class="w-1/2 mr-4 bg-indigo-500 rounded-md py-2 flex items-center justify-center">
-        <p class="text-white">Авторизоваться</p>
+      { #if $UserStore.user }
+        <button on:click={() => {
+          goto('/app');
+        }} class="w-1/2 mr-4 bg-indigo-500 rounded-md py-2 flex items-center justify-center">
+          <p class="text-white">Перейти к приложению</p>
+        </button>
+      { :else }
+        <button on:click={() => {
+          goto('/login/link');
+        }} class="w-1/2 mr-4 bg-indigo-500 rounded-md py-2 flex items-center justify-center">
+          <p class="text-white">Авторизоваться</p>
 
-        <Icon name="user" attrs={{ class: "w-4 h-4 text-white ml-2" }} />
-      </button>
+          <Icon name="user" attrs={{ class: "w-4 h-4 text-white ml-2" }} />
+        </button>
+      { /if }
 
       <button class="w-1/2 bg-gray-800 rounded-md py-2 flex items-center justify-center">
         <p class="text-white">Хз что</p>
