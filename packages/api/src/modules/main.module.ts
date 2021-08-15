@@ -15,9 +15,9 @@ import * as ModuleList from '../startup/imports';
       autoSchemaFile: 'schema.gql',
       context: ({ req }) => ({ req }),
       cors: {
-        origin: true,
+        origin: 'https://www.pawcapsu.ml',
         credentials: true,
-      }
+      },
     }),
     
     ...Object.values(ModuleList),

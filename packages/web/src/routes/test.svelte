@@ -1,8 +1,7 @@
 <script>
-  import { client } from '../services/graphql';
-  import { gql } from '@apollo/client';
-
   import { onMount } from 'svelte';
+  import { gql } from '@apollo/client/core/core.cjs.js';
+  import { client } from '../services/graphql';
 
   let me;
 
@@ -17,7 +16,7 @@
             username
           }
         }
-      `);
+     `);
 
     console.log("LOGIN:");
     console.log(login);
@@ -34,6 +33,6 @@
 
     me.subscribe((obj) => {
       console.log(obj);
-    });
+    })
   });
 </script>

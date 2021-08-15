@@ -33,5 +33,5 @@ export default async function(): Promise<void> {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('documentation', app, document);
 
-  await app.listen(3001);
+  await app.listen(3000);
 };
