@@ -3,7 +3,7 @@ import development from './environments/development.json';
 export class ConfigClass {
   private config: object;
   
-  constructor(file) {
+  constructor(file?) {
     this.config = file;
   };
 
@@ -14,4 +14,4 @@ export class ConfigClass {
 };
 
 // Exporting Config instance
-export const Config = new ConfigClass(development);
+export const Config = new ConfigClass();
