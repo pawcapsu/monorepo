@@ -1,6 +1,6 @@
 <script>
   import { client } from '../services/graphql';
-  import { gql } from '@apollo/client/core';
+  import { gql } from '@apollo/client';
 
   import { onMount } from 'svelte';
 
