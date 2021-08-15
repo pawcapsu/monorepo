@@ -4,7 +4,7 @@ export class ConfigClass {
   private config: object;
   
   constructor(file?) {
-    this.config = file;
+    this.config = file || {};
   };
 
   // get
@@ -14,4 +14,4 @@ export class ConfigClass {
 };
 
 // Exporting Config instance
-export const Config = new ConfigClass();
+export const Config = new ConfigClass(development);
