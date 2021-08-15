@@ -25,6 +25,7 @@
 		"paths": {
 			"$lib/*": ["src/lib/*"],
 			"$stores/*": ["src/stores/*"],
+			"$services/*": ["src/services/*"],
 			"$shared/*": ["../shared/src/*"],
 		}
 	},
