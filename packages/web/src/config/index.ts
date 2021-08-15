@@ -1,4 +1,5 @@
 import development from './environments/development.json';
+import production from './environments/production.json';
 
 export class ConfigClass {
   private config: object;
@@ -14,4 +15,4 @@ export class ConfigClass {
 };
 
 // Exporting Config instance
-export const Config = new ConfigClass(development);
+export const Config = new ConfigClass(production);
