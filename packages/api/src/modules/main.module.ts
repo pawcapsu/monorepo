@@ -14,6 +14,11 @@ import * as ModuleList from '../startup/imports';
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
       context: ({ req }) => ({ req }),
+      
+      cors: {
+        credentials: true,
+        origin: true,
+      },
     }),
     
     ...Object.values(ModuleList),
