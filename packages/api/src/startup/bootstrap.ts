@@ -34,7 +34,6 @@ export default async function(): Promise<void> {
   SwaggerModule.setup('documentation', app, document);
 
   app.enableCors({
-    origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
