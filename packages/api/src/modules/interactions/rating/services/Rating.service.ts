@@ -53,12 +53,20 @@ export class RatingService {
   
     // return BookRating
     if (type === UserRatingType.BOOK) {
-      return this.extractBookRating(rating);
+      return this._extractBookRating(rating);
     };
   };
 
   // fetchRating[s]
-  async fetchRatings(id: string | mongoose.Schema.Types.ObjectId, type: UserRatingType): Promise<BookRating[] | undefined>  {
+  async fetchRatings(
+    id: string | mongoose.Schema.Types.ObjectId, 
+    type: UserRatingType,
+    
+    options?: {
+      limit?: number,
+      direction?: UserRatingDirection,
+    },
+  ): Promise<BookRating[] | undefined>  {
     const _id = typeof id === "string" ? (<unknown>mongoose.Types.ObjectId(id)) as mongoose.Schema.Types.ObjectId : id;
     const bookRatings = await this.userRatingModel.find({ entity: _id, type }).exec();
   
@@ -66,15 +74,32 @@ export class RatingService {
     if (type === UserRatingType.BOOK) {
       const ratings: BookRating[] = [];
       bookRatings.forEach((rating) => {
-        ratings.push(this.extractBookRating(rating));
+        ratings.push(this._extractBookRating(rating));
       });
       
-      return ratings;
+      return this._applyOptions(ratings, options);
     };
   }
 
+  private _applyOptions(ratings: BookRating[], options?: { limit?: number, direction?: UserRatingDirection }) {
+    let filteredRatings: BookRating[] = ratings;
+    
+    // options: direction
+    // LIKE, DISLIKE
+    if (options?.direction) {
+      filteredRatings = filteredRatings.filter((x) => x.direction == options.direction);
+    };
+
+    // options: limit
+    if (options?.limit) {
+      filteredRatings = filteredRatings.slice(0, options.limit);
+    };
+
+    return filteredRatings;
+  };
+
   // private extractBookRating
-  private extractBookRating(rating: UserRating): BookRating {
+  private _extractBookRating(rating: UserRating): BookRating {
     return <BookRating>{
       _id: rating._id,
       user: rating.user,

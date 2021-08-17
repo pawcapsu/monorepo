@@ -1,5 +1,5 @@
 import { Resolver, Args, Query, ResolveField, Parent } from "@nestjs/graphql";
-import { Book, BookRating, Profile, UserRatingType } from 'src/types/models';
+import { Book, BookRating, Profile, UserRatingDirection, UserRatingType } from 'src/types/models';
 import { BooksService } from 'src/modules/books/services';
 import { ProfilesService } from 'src/modules/profiles/services';
 import { RatingService } from "src/modules/interactions/rating/services";
@@ -39,7 +39,12 @@ export class BooksResolver {
 
   // resolve ratings
   @ResolveField('ratings', returns => [BookRating])
-  async resolveBookRatings(@Parent() book: Book) {
-    return this.ratingService.fetchRatings(book._id, UserRatingType.BOOK);
+  async resolveBookRatings(
+    @Parent() book: Book,
+
+    @Args('limit', { nullable: true, description: 'Number of ratings we need to get' }) limit?: number,
+    @Args('direction', { nullable: true, description: 'Is it a Like or a Dislike?' }) direction?: UserRatingDirection,
+  ) {
+    return this.ratingService.fetchRatings(book._id, UserRatingType.BOOK, { limit, direction });
   };
 }

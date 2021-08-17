@@ -22,7 +22,13 @@ type Book {
   description: String!
   likes: Float!
   dislikes: Float!
-  ratings: [BookRating!]!
+  ratings(
+    """Is it a Like or a Dislike?"""
+    direction: String
+
+    """Number of ratings we need to get"""
+    limit: Float
+  ): [BookRating!]!
 }
 
 type Profile {
