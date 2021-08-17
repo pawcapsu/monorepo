@@ -12,5 +12,8 @@
   "devDependencies": {
     "tslint": "^5.20.1",
     "typescript": "^3.9.10"
+  },
+  "dependencies": {
+    "mongoose": "^5.13.7"
   }
 }
