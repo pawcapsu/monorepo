@@ -26,6 +26,7 @@ export class BooksService {
 
   // fetchProfileBooks
   async fetchProfileBooks(id: mongoose.Schema.Types.ObjectId): Promise<Book[] | undefined> {
-    return await this.bookModel.find({ creator: id }).exec();
+    const books = await this.bookModel.find({ creator: id }).exec();
+    return books;
   };
 };

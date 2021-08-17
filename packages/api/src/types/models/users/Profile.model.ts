@@ -31,6 +31,9 @@ export class Profile implements IProfile {
   @Prop()
   @Field(type => [Book])
   books: [Book];
+
+  // interactions: UserInteractions;
+  // ratings: [ProfileRating]
 }
 
 export const ProfileSchema = SchemaFactory.createForClass(Profile);

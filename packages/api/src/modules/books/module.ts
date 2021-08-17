@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { BookSchema, ProfileSchema } from 'src/types/models';
+import { BookSchema, ProfileSchema, UserRatingSchema } from 'src/types/models';
 
 import { ProfilesService } from 'src/modules/profiles/services';
+import { RatingService } from 'src/modules/interactions/rating/services';
 
 import * as resolvers from './resolvers';
 import * as services from './services';
@@ -16,8 +17,13 @@ import * as services from './services';
     {
       name: 'profile',
       schema: ProfileSchema,
-    }])],
-  providers: [...Object.values(resolvers), ...Object.values(services), ProfilesService],
+    },
+    {
+      name: 'userRating',
+      schema: UserRatingSchema,
+    },
+  ])],
+  providers: [...Object.values(resolvers), ...Object.values(services), ProfilesService, RatingService],
   exports: [...Object.values(services)],
 })
 export class BooksModule {};

@@ -23,8 +23,9 @@ export class ProfilesResolver{
     return this.service.findProfile(uid);
   };
 
-  @ResolveField('books', returns => Book)
+  @ResolveField('books', returns => [Book])
   async books(@Parent() profile: Profile) {
+    console.log(profile);
     return this.booksService.fetchProfileBooks(profile._id);
   };
 }
