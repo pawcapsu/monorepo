@@ -1,7 +1,7 @@
 import { registerEnumType } from "@nestjs/graphql";
-import { UserRatingDirection } from "@pawcapsu/shared/src";
+import { EUserRatingDirection } from "@app/shared";
 
-export const UserRatingDirectionEnum = registerEnumType(UserRatingDirection, {
-  name: 'UserRatingDirection',
+registerEnumType(EUserRatingDirection, {
+  name: 'EUserRatingDirection',
   description: 'Is it an Like or an Dislike?'
 });

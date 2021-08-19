@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from '@nestjs/mongoose';
 import { Book, BookDocument } from 'src/types/models';
 import { Model } from 'mongoose';
+import { ObjectId } from 'src/types';
 import * as mongoose from 'mongoose';
 
 @Injectable()
@@ -25,7 +26,7 @@ export class BooksService {
   };
 
   // fetchProfileBooks
-  async fetchProfileBooks(id: mongoose.Schema.Types.ObjectId): Promise<Book[] | undefined> {
+  async fetchProfileBooks(id: ObjectId): Promise<Book[] | undefined> {
     const books = await this.bookModel.find({ creator: id }).exec();
     return books;
   };

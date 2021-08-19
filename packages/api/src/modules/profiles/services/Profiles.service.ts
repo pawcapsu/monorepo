@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Profile, ProfileDocument } from '../../../types/models';
-import { IProfile } from '@pawcapsu/shared/src';
+import { Profile, ProfileDocument } from 'src/types/models';
+import { IProfile } from '@app/shared';
+import { ObjectId } from 'src/types';
 import * as mongoose from 'mongoose';
 
 @Injectable()
@@ -12,7 +13,7 @@ export class ProfilesService {
   ) {}
 
   // findProfile
-  async findProfile(id?: string | mongoose.Schema.Types.ObjectId): Promise<Profile | undefined> {
+  async findProfile(id?: ObjectId): Promise<Profile | undefined> {
     const _id = typeof id === "string" ? mongoose.Types.ObjectId(id) : id;
     return await this.profileModel.findOne({ _id: id  });
   };

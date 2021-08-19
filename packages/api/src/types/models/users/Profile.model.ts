@@ -1,8 +1,8 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { IProfile } from '@pawcapsu/shared/src';
-import * as mongoose from 'mongoose';
+import { IProfile } from '@app/shared';
+import { ObjectId } from 'src/types';
 
 import { Book } from '../content';
 
@@ -18,7 +18,7 @@ export class Token {
 @ObjectType()
 export class Profile implements IProfile {
   @Field(type => String, { nullable: false })
-  _id: mongoose.Schema.Types.ObjectId;
+  _id: ObjectId;
 
   @Prop({ unique: true })
   @Field({ nullable: false })

@@ -1,11 +1,11 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { IBook } from '@pawcapsu/shared/src';
-import * as mongoose from 'mongoose';
+import { IBook } from '@app/shared';
+
+import { ObjectId } from 'src/types';
 
 import { Profile } from '../users';
-import { RelationalProp } from '@pawcapsu/shared/src';
 import { BookRating } from '../interactions';
 
 export type BookDocument = Book & Document;
@@ -14,11 +14,11 @@ export type BookDocument = Book & Document;
 @ObjectType()
 export class Book implements IBook {
   @Field(type => String)
-  _id: mongoose.Schema.Types.ObjectId;
+  _id: ObjectId;
 
   @Prop({ unique: false, type: String })
   @Field(type => Profile)
-  creator: mongoose.Schema.Types.ObjectId;
+  creator: ObjectId;
 
   // General information
   @Prop()

@@ -1,6 +1,6 @@
 import { Resolver, Query, ResolveField, Mutation, Parent, Args } from '@nestjs/graphql';
-import { BookRating, Profile, Book, UserRatingType } from 'src/types/models';
-
+import { BookRating, Profile, Book } from 'src/types/models';
+import { EUserRatingType } from '@app/shared';
 import { ProfilesService } from 'src/modules/profiles/services';
 import { RatingService } from 'src/modules/interactions/rating/services';
 import { BooksService } from 'src/modules/books/services';
@@ -25,7 +25,7 @@ export class BookRatingResolver {
   async getBookRating(
     @Args('ratingId', { description: 'UserRating _id property' }) ratingId: string,
   ) {
-    return await this.ratingService.fetchRating(ratingId, UserRatingType.BOOK);
+    return await this.ratingService.fetchRating(ratingId, EUserRatingType.BOOK);
   };
 
   // getBookRating[s]
@@ -33,7 +33,7 @@ export class BookRatingResolver {
   async getBookRatings(
     @Args('bookId', { description: 'Book _id property' }) bookId: string
   ) {
-    return await this.ratingService.fetchRatings(bookId, UserRatingType.BOOK);
+    return await this.ratingService.fetchRatings(bookId, EUserRatingType.BOOK);
   };
 
   // resolveUserField

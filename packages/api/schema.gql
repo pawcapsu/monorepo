@@ -6,8 +6,14 @@ type BookRating {
   _id: String!
   user: Profile!
   book: Book!
-  direction: String!
+  direction: EUserRatingDirection!
   posted: DateTime
+}
+
+"""Is it an Like or an Dislike?"""
+enum EUserRatingDirection {
+  LIKE
+  DISLIKE
 }
 
 """
@@ -24,7 +30,7 @@ type Book {
   dislikes: Float!
   ratings(
     """Is it a Like or a Dislike?"""
-    direction: String
+    direction: EUserRatingDirection
 
     """Number of ratings we need to get"""
     limit: Float

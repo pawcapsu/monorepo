@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 
 // Importing modules
 import * as ModuleList from '../startup/imports';
+import 'src/types/enums';
 
 @Module({
   imports: [

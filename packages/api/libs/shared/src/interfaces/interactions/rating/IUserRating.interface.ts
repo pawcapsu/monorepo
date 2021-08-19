@@ -1,15 +1,15 @@
 import { 
-  UserRatingType,
-  UserRatingEntity,
-  UserRatingDirection,
+  EUserRatingType,
+  TUserRatingEntity,
+  EUserRatingDirection,
 } from "../../../enums";
 import { RelationalProp } from "../../../enums";
 import { IProfile } from '../../../';
 
 export interface IUserRating {
-  type?: UserRatingType,
+  type?: EUserRatingType,
   user: RelationalProp<IProfile>,
-  entity: RelationalProp<UserRatingEntity>
-  direction?: UserRatingDirection,
+  entity: RelationalProp<TUserRatingEntity>,
+  direction?: EUserRatingDirection,
   posted?: Date,
 };

@@ -27,7 +27,12 @@
 			"$stores/*": ["src/stores/*"],
 			"$services/*": ["src/services/*"],
 			"$config/*": ["src/config/*"],
-			"$shared/*": ["../shared/src/*"],
+			"@app/shared": [
+        "../api/libs/shared/src"
+      ],
+      "@app/shared/*": [
+        "../api/libs/shared/src/*"
+      ]
 		}
 	},
 	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]

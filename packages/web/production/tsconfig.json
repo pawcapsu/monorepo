@@ -25,9 +25,15 @@
 		"paths": {
 			"$lib/*": ["src/lib/*"],
 			"$stores/*": ["src/stores/*"],
-			"$shared/*": ["production/shared/*"],
 			"$config/*": ["src/config/*"],
 			"$services/*": ["src/services/*"],
+			"$shared/*": ["production/shared/*"],
+			"@app/shared": [
+        "production/shared/src"
+      ],
+      "@app/shared/*": [
+        "production/shared/src/*"
+      ]
 		}
 	},
 	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]

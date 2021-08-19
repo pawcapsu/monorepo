@@ -1,4 +1,4 @@
-export enum UserRatingDirection {
+export enum EUserRatingDirection {
   LIKE = 'LIKE',
   DISLIKE = 'DISLIKE',
 };

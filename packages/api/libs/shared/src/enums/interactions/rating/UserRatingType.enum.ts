@@ -1,4 +1,4 @@
-export enum UserRatingType {
+export enum EUserRatingType {
   PROFILE = 'PROFILE',
   BOOK = 'BOOK',
 };

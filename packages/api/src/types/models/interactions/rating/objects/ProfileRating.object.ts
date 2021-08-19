@@ -1,8 +1,8 @@
 import { ObjectType, Field } from "@nestjs/graphql";
 import { Profile } from 'src/types/models';
 
-import { UserRatingDirection } from "@pawcapsu/shared/src";
-import { RelationalProp } from "@pawcapsu/shared/src";
+// import { UserRatingDirection } from "@app/shared";
+import { RelationalProp } from "@app/shared";
 
 @ObjectType()
 export class ProfileRating {

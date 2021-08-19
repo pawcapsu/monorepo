@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Book, BookRating, UserRating, UserRatingDocument, UserRatingType, UserRatingDirection } from 'src/types/models';
-import { IUserRating } from '@pawcapsu/shared/src';
+import { Book, BookRating, UserRating, UserRatingDocument } from 'src/types/models';
+import { EUserRatingType, EUserRatingDirection } from '@app/shared';
+import { IUserRating } from '@app/shared';
+import { ObjectId } from 'src/types';
 import * as mongoose from 'mongoose';
 
 @Injectable()
@@ -16,62 +18,62 @@ export class RatingService {
     const userRating = new this.userRatingModel({
       user: mongoose.Types.ObjectId('61163d119b31edce0323541d'),
       entity: mongoose.Types.ObjectId('6116466d451854e3f37913e9'),
-      direction: UserRatingDirection.DISLIKE,
-      type: UserRatingType.BOOK,
+      direction: EUserRatingDirection.DISLIKE,
+      type: EUserRatingType.BOOK,
     });
     return await userRating.save();
   };
 
   // fetchLikes
-  async fetchLikes(id: string | mongoose.Schema.Types.ObjectId, type: UserRatingType): Promise<Number> {
+  async fetchLikes(id: ObjectId, type: EUserRatingType): Promise<Number> {
     const ratings = await this.fetchRatings(id, type);
     let likes: number = 0;
 
     ratings.forEach((rating) => {
-      if (rating.direction === UserRatingDirection.LIKE) likes++;
+      if (rating.direction === EUserRatingDirection.LIKE) likes++;
     });
 
     return likes;
   };
 
   // fetchDislikes
-  async fetchDislikes(id: string | mongoose.Schema.Types.ObjectId, type: UserRatingType): Promise<Number> {
+  async fetchDislikes(id: ObjectId, type: EUserRatingType): Promise<Number> {
     const ratings = await this.fetchRatings(id, type);
     let dislikes: number = 0;
 
     ratings.forEach((rating) => {
-      if (rating.direction === UserRatingDirection.DISLIKE) dislikes++;
+      if (rating.direction === EUserRatingDirection.DISLIKE) dislikes++;
     });
 
     return dislikes;
   };
 
   // fetchRating
-  async fetchRating(id: string | mongoose.Schema.Types.ObjectId, type: UserRatingType): Promise<BookRating | undefined> {
+  async fetchRating(id: ObjectId, type: EUserRatingType): Promise<BookRating | undefined> {
     const _id = typeof id === "string" ? mongoose.Types.ObjectId(id) : id;
     const rating = await this.userRatingModel.findOne({ _id: _id, type }).exec();
   
     // return BookRating
-    if (type === UserRatingType.BOOK) {
+    if (type === EUserRatingType.BOOK) {
       return this._extractBookRating(rating);
     };
   };
 
   // fetchRating[s]
   async fetchRatings(
-    id: string | mongoose.Schema.Types.ObjectId, 
-    type: UserRatingType,
+    id: ObjectId, 
+    type: EUserRatingType,
     
     options?: {
       limit?: number,
-      direction?: UserRatingDirection,
+      direction?: EUserRatingDirection,
     },
   ): Promise<BookRating[] | undefined>  {
-    const _id = typeof id === "string" ? (<unknown>mongoose.Types.ObjectId(id)) as mongoose.Schema.Types.ObjectId : id;
+    const _id = typeof id === "string" ? mongoose.Types.ObjectId(id) : id;
     const bookRatings = await this.userRatingModel.find({ entity: _id, type }).exec();
   
     // return BookRating
-    if (type === UserRatingType.BOOK) {
+    if (type === EUserRatingType.BOOK) {
       const ratings: BookRating[] = [];
       bookRatings.forEach((rating) => {
         ratings.push(this._extractBookRating(rating));
@@ -81,7 +83,7 @@ export class RatingService {
     };
   }
 
-  private _applyOptions(ratings: BookRating[], options?: { limit?: number, direction?: UserRatingDirection }) {
+  private _applyOptions(ratings: BookRating[], options?: { limit?: number, direction?: EUserRatingDirection }) {
     let filteredRatings: BookRating[] = ratings;
     
     // options: direction

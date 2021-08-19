@@ -1,5 +1,6 @@
 import { Resolver, Args, Query, ResolveField, Parent } from "@nestjs/graphql";
-import { Book, BookRating, Profile, UserRatingDirection, UserRatingType } from 'src/types/models';
+import { Book, BookRating, Profile } from 'src/types/models';
+import { EUserRatingType, EUserRatingDirection } from "@app/shared";
 import { BooksService } from 'src/modules/books/services';
 import { ProfilesService } from 'src/modules/profiles/services';
 import { RatingService } from "src/modules/interactions/rating/services";
@@ -28,13 +29,13 @@ export class BooksResolver {
   // resolve likes
   @ResolveField('likes', returns => Number)
   async resolveBookLikes(@Parent() book: Book) {
-    return this.ratingService.fetchLikes(book._id, UserRatingType.BOOK);
+    return this.ratingService.fetchLikes(book._id, EUserRatingType.BOOK);
   };
 
   // resolve dislikes
   @ResolveField('dislikes', returns => Number)
   async resolveBookDislikes(@Parent() book: Book) {
-    return this.ratingService.fetchDislikes(book._id, UserRatingType.BOOK);
+    return this.ratingService.fetchDislikes(book._id, EUserRatingType.BOOK);
   };
 
   // resolve ratings
@@ -43,8 +44,8 @@ export class BooksResolver {
     @Parent() book: Book,
 
     @Args('limit', { nullable: true, description: 'Number of ratings we need to get' }) limit?: number,
-    @Args('direction', { nullable: true, description: 'Is it a Like or a Dislike?' }) direction?: UserRatingDirection,
+    @Args('direction', { nullable: true, description: 'Is it a Like or a Dislike?', type: () => EUserRatingDirection }) direction?: EUserRatingDirection,
   ) {
-    return this.ratingService.fetchRatings(book._id, UserRatingType.BOOK, { limit, direction });
+    return this.ratingService.fetchRatings(book._id, EUserRatingType.BOOK, { limit, direction });
   };
 }
