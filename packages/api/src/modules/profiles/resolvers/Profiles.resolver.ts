@@ -25,7 +25,6 @@ export class ProfilesResolver{
 
   @ResolveField('books', returns => [Book])
   async books(@Parent() profile: Profile) {
-    console.log(profile);
     return this.booksService.fetchProfileBooks(profile._id);
   };
 }

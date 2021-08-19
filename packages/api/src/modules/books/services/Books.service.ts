@@ -27,7 +27,6 @@ export class BooksService {
 
   // fetchProfileBooks
   async fetchProfileBooks(id: ObjectId): Promise<Book[] | undefined> {
-    const books = await this.bookModel.find({ creator: id }).exec();
-    return books;
+    return await this.bookModel.find({ creator: id }).exec();
   };
 };

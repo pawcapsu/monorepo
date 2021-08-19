@@ -2,6 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { IBook } from '@app/shared';
+import * as mongoose from 'mongoose';
 
 import { ObjectId } from 'src/types';
 
@@ -16,7 +17,7 @@ export class Book implements IBook {
   @Field(type => String)
   _id: ObjectId;
 
-  @Prop({ unique: false, type: String })
+  @Prop({ unique: false, type: mongoose.Schema.Types.ObjectId })
   @Field(type => Profile)
   creator: ObjectId;
 
