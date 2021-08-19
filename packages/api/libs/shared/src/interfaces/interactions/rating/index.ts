@@ -1,2 +1,2 @@
 export * from './IUserRating.interface';
-export * from './IBookRating.interface';
+export * from './Book';

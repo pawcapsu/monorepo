@@ -1,3 +1,6 @@
+import { IBookRating } from "../../interactions";
+import { IBookChapter } from "./Chapter";
+
 export interface IBook {
   // General information
   title: string;
@@ -8,7 +11,8 @@ export interface IBook {
   // Rating information
   likes: number,
   dislikes: number,
-  ratings: Array<any>;
+  ratings: Array<IBookRating | any>;
 
   // Chapters information
+  chapters: Array<IBookChapter | any>;
 };

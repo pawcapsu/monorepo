@@ -21,6 +21,13 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type BookChapter {
+  _id: String!
+  title: String!
+  description: String!
+  content: UniversalText!
+}
+
 type Book {
   _id: String!
   creator: Profile!
@@ -35,6 +42,26 @@ type Book {
     """Number of ratings we need to get"""
     limit: Float
   ): [BookRating!]!
+  chapters(
+    """Number of chapters we need to get"""
+    limit: Float
+  ): [BookChapter!]!
+}
+
+type TextNode {
+  type: ENodeType!
+  content: String!
+}
+
+"""Type of node of UniversalText object (TEXT, PICTURE, etc..)"""
+enum ENodeType {
+  TEXT
+  PICTURE
+}
+
+type UniversalText {
+  version: Float!
+  nodes: [TextNode!]!
 }
 
 type Profile {
@@ -54,6 +81,8 @@ type Query {
     """Book _id"""
     bookId: String!
   ): Book!
+  getChapter: BookChapter!
+  getText: UniversalText!
   getBookRating(
     """UserRating _id property"""
     ratingId: String!

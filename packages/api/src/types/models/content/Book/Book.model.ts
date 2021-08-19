@@ -6,8 +6,9 @@ import * as mongoose from 'mongoose';
 
 import { ObjectId } from 'src/types';
 
-import { Profile } from '../users';
-import { BookRating } from '../interactions';
+import { Profile } from '../../users';
+import { BookRating } from '../../interactions';
+import { BookChapter } from './Chapter.model';
 
 export type BookDocument = Book & Document;
 
@@ -40,6 +41,10 @@ export class Book implements IBook {
   @Prop()
   @Field(returns => [BookRating])
   ratings: BookRating[];
+
+  @Prop()
+  @Field(returns => [BookChapter])
+  chapters: [BookChapter];
 }
 
 export const BookSchema = SchemaFactory.createForClass(Book);

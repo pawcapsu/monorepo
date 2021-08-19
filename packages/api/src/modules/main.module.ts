@@ -2,10 +2,12 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { ModelsImports } from 'src/startup/models';
 
 // Importing modules
 import * as ModuleList from '../startup/imports';
 import 'src/types/enums';
+import 'src/types/unions';
 
 @Module({
   imports: [

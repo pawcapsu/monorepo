@@ -1,7 +1,7 @@
 import { Resolver, Args, Query, ResolveField, Parent } from "@nestjs/graphql";
-import { Book, BookRating, Profile } from 'src/types/models';
+import { Book, BookChapter, BookRating, Profile } from 'src/types/models';
 import { EUserRatingType, EUserRatingDirection } from "@app/shared";
-import { BooksService } from 'src/modules/books/services';
+import { BooksService, ChaptersService } from 'src/modules/books/services';
 import { ProfilesService } from 'src/modules/profiles/services';
 import { RatingService } from "src/modules/interactions/rating/services";
 
@@ -11,6 +11,7 @@ export class BooksResolver {
     private readonly service: BooksService,
     private readonly profilesService: ProfilesService,
     private readonly ratingService: RatingService,
+    private readonly chaptersService: ChaptersService,
   ) {}
 
   @Query(returns => Book)
@@ -47,5 +48,15 @@ export class BooksResolver {
     @Args('direction', { nullable: true, description: 'Is it a Like or a Dislike?', type: () => EUserRatingDirection }) direction?: EUserRatingDirection,
   ) {
     return this.ratingService.fetchRatings(book._id, EUserRatingType.BOOK, { limit, direction });
+  };
+
+  // resolve chapters
+  @ResolveField('chapters', returns => [BookChapter])
+  async resolveBookChapters(
+    @Parent() book: Book,
+
+    @Args('limit', { nullable: true, description: 'Number of chapters we need to get' }) limit: number
+  ) {
+    return await this.chaptersService.fetchBookChapters(book._id, { limit });
   };
 }
