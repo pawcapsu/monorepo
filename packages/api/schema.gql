@@ -41,7 +41,10 @@ type Profile {
   _id: String!
   email: String!
   username: String
-  books: [Book!]!
+  books(
+    """Number of books we need to get"""
+    limit: Float
+  ): [Book!]!
 }
 
 type Query {

@@ -1,4 +1,4 @@
-import { Resolver, Query, Args, Mutation, ResolveField, Parent, Context } from '@nestjs/graphql';
+import { Resolver, Query, Args, ResolveField, Parent, Context } from '@nestjs/graphql';
 import { ProfilesService } from 'src/modules/profiles/services';
 import { BooksService } from 'src/modules/books/services';
 import { Profile, Book } from 'src/types/models';
@@ -24,7 +24,11 @@ export class ProfilesResolver{
   };
 
   @ResolveField('books', returns => [Book])
-  async books(@Parent() profile: Profile) {
-    return this.booksService.fetchProfileBooks(profile._id);
+  async books(
+    @Parent() profile: Profile,
+    
+    @Args('limit', { nullable: true, description: 'Number of books we need to get' }) limit: number,
+  ) {
+    return this.booksService.fetchProfileBooks(profile._id, { limit });
   };
 }

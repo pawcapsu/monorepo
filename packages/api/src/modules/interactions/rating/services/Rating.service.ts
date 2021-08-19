@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Book, BookRating, UserRating, UserRatingDocument } from 'src/types/models';
+import { BookRating, UserRating, UserRatingDocument } from 'src/types/models';
 import { EUserRatingType, EUserRatingDirection } from '@app/shared';
-import { IUserRating } from '@app/shared';
 import { ObjectId } from 'src/types';
 import * as mongoose from 'mongoose';
 

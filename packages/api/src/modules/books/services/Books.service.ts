@@ -11,14 +11,6 @@ export class BooksService {
     @InjectModel('book') private readonly bookModel: Model<BookDocument>,
   ) {}
 
-  // testAddBook
-  async testAddBook(uid: string, title: string, description: string) {
-    const _id = mongoose.Types.ObjectId(uid);
-    
-    const book = new this.bookModel({ creator: _id, title, description });
-    return await book.save();
-  };
-
   // fetchBook
   async fetchBook(id: string): Promise<Book | undefined> {
     const _id = mongoose.Types.ObjectId(id);
@@ -26,7 +18,25 @@ export class BooksService {
   };
 
   // fetchProfileBooks
-  async fetchProfileBooks(id: ObjectId): Promise<Book[] | undefined> {
-    return await this.bookModel.find({ creator: id }).exec();
+  async fetchProfileBooks(
+    id: ObjectId,
+  
+    options?: {
+      limit: number
+    },
+  ): Promise<Book[] | undefined> {
+    const books: Book[] = await this.bookModel.find({ creator: id }).exec();
+    return this._applyOptions(books, options);
+  };
+
+  private _applyOptions(books: Book[], options?: { limit?: number }) {
+    let filteredBooks: Book[] = books;
+  
+    // options: limit
+    if (options?.limit) {
+      filteredBooks = filteredBooks.slice(0, options.limit);
+    };
+
+    return filteredBooks;    
   };
 };
