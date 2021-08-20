@@ -12,8 +12,8 @@ export class BooksService {
   ) {}
 
   // fetchBook
-  async fetchBook(id: string): Promise<Book | undefined> {
-    const _id = mongoose.Types.ObjectId(id);
+  async fetchBook(id: ObjectId): Promise<Book | undefined> {
+    const _id = typeof id === "string" ? mongoose.Types.ObjectId(id) : id;
     return await this.bookModel.findOne({ _id }).exec();
   };
 

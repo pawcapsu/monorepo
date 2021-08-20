@@ -24,7 +24,7 @@ scalar DateTime
 type BookChapter {
   _id: String!
   title: String!
-  description: String!
+  description: String
   content: UniversalText!
 }
 
@@ -49,6 +49,7 @@ type Book {
 }
 
 type UniversalText {
+  _id: String!
   version: Float!
   nodes: [UNodeEntity!]!
 }
@@ -85,11 +86,11 @@ type Profile {
 type Query {
   me: Profile!
   profile(uid: String!): Profile!
+  getChapter: BookChapter!
   book(
     """Book _id"""
     bookId: String!
   ): Book!
-  getChapter: BookChapter!
   getText: UniversalText!
   getBookRating(
     """UserRating _id property"""
@@ -102,6 +103,12 @@ type Query {
 }
 
 type Mutation {
+  createChapter(information: ChapterInformationInput!, bookId: String!): BookChapter!
   login(token: String!): Profile!
   postBookRating: BookRating!
+}
+
+input ChapterInformationInput {
+  title: String!
+  description: String
 }

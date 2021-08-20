@@ -4,13 +4,14 @@ import { ModelsImports } from 'src/startup/models';
 import { ProfilesService } from 'src/modules/profiles/services';
 import { RatingService } from 'src/modules/interactions/rating/services';
 import { UniversalTextService } from 'src/modules/text/services';
+import { ChaptersService } from 'src/modules/chapters/services';
 
 import * as resolvers from './resolvers';
 import * as services from './services';
 
 @Module({
   imports: [ModelsImports],
-  providers: [...Object.values(resolvers), ...Object.values(services), ProfilesService, RatingService, UniversalTextService],
+  providers: [...Object.values(resolvers), ...Object.values(services), ProfilesService, RatingService, UniversalTextService, ChaptersService],
   exports: [...Object.values(services)],
 })
 export class BooksModule {};

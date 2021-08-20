@@ -1,7 +1,8 @@
 import { Resolver, Args, Query, ResolveField, Parent } from "@nestjs/graphql";
 import { Book, BookChapter, BookRating, Profile } from 'src/types/models';
 import { EUserRatingType, EUserRatingDirection } from "@app/shared";
-import { BooksService, ChaptersService } from 'src/modules/books/services';
+import { BooksService } from 'src/modules/books/services';
+import { ChaptersService } from "src/modules/chapters/services";
 import { ProfilesService } from 'src/modules/profiles/services';
 import { RatingService } from "src/modules/interactions/rating/services";
 

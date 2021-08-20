@@ -22,9 +22,9 @@ export class BookChapter implements IBookChapter {
   @Prop({ type: mongoose.Schema.Types.ObjectId, required: true })
   bookId: ObjectId;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop({ required: false })
-  description: string;
+  description?: string;
 
   // Chapter content
   @Field(returns => UniversalText, { nullable: true })
