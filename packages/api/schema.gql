@@ -48,6 +48,13 @@ type Book {
   ): [BookChapter!]!
 }
 
+type UniversalText {
+  version: Float!
+  nodes: [UNodeEntity!]!
+}
+
+union UNodeEntity = TextNode | PictureNode
+
 type TextNode {
   type: ENodeType!
   content: String!
@@ -59,9 +66,10 @@ enum ENodeType {
   PICTURE
 }
 
-type UniversalText {
-  version: Float!
-  nodes: [TextNode!]!
+type PictureNode {
+  type: ENodeType!
+  caption: String!
+  url: String!
 }
 
 type Profile {

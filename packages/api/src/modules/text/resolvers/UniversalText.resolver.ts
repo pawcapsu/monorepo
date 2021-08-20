@@ -15,12 +15,10 @@ export class UniversalTextResolver {
   };
 
   // resolve content
-  @ResolveField('nodes', returns => [TextNodeObject])
+  @ResolveField('nodes', returns => [NodeEntityUnion])
   async resolveNodes(
     @Parent() text: UniversalText
   ) {
-    console.log("RESOLVE NODES");
-    console.log(text);
     return text.nodes;
   };
 };

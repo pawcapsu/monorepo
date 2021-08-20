@@ -3,7 +3,7 @@ import { IPictureNode, ENodeType } from '@app/shared';
 
 @ObjectType('PictureNode')
 export class PictureNodeObject implements IPictureNode {
-  @Field(type => String)
+  @Field(type => ENodeType)
   type: ENodeType.PICTURE;
    
   @Field()

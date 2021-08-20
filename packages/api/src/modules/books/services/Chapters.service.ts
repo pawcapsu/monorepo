@@ -5,7 +5,7 @@ import { UniversalText, UniversalTextDocument, BookChapter, BookChapterDocument,
 import { ObjectId } from 'src/types';
 
 import { UniversalTextService } from 'src/modules/text/services';
-import { ENodeType } from '@app/shared';
+import { ENodeType, UNodeEntity } from '@app/shared';
 
 @Injectable()
 export class ChaptersService {
@@ -33,7 +33,18 @@ export class ChaptersService {
     
     const content = <UniversalText>{
       version: 0,
-      nodes: [textNode]
+      nodes: [
+        <TextNodeObject>{
+          type: ENodeType.TEXT,
+          content: 'Just a text node!'
+        },
+
+        <PictureNodeObject>{
+          type: ENodeType.PICTURE,
+          caption: 'Picture caption!',
+          url: 'https://good.dog/best-dog.png'
+        },
+      ]
     };
 
     return content;
