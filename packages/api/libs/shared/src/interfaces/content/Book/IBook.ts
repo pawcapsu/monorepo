@@ -1,10 +1,12 @@
+import { RelationalProp } from "@app/shared/enums";
 import { IBookRating } from "../../interactions";
+import { IUniversalText } from "../Text";
 import { IBookChapter } from "./Chapter";
 
 export interface IBook {
   // General information
   title: string;
-  description: string;
+  description: RelationalProp<IUniversalText | any>;
 
   // Creator information
 

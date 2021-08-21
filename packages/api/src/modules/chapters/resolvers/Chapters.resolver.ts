@@ -34,11 +34,19 @@ export class ChaptersResolver {
 
   // move chapter (+todo)
 
-  // resolve content
-  @ResolveField('content', returns => UniversalText)
-  async resolveChapterContent(
+  // resolve description
+  @ResolveField('description', returns => UniversalText)
+  async resolveDescription(
     @Parent() chapter: BookChapter,
   ) {
-    return await this.service.fetchContent(chapter._id)
+    return await this.service.fetchDescription(chapter);
+  };
+
+  // resolve content
+  @ResolveField('content', returns => UniversalText)
+  async resolveContent(
+    @Parent() chapter: BookChapter,
+  ) {
+    return await this.service.fetchContent(chapter);
   };
 };

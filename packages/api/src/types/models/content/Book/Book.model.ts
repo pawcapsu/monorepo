@@ -1,7 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { IBook } from '@app/shared';
+import { IBook, RelationalProp } from '@app/shared';
 import * as mongoose from 'mongoose';
 
 import { ObjectId } from 'src/types';
@@ -9,6 +9,7 @@ import { ObjectId } from 'src/types';
 import { Profile } from '../../users';
 import { BookRating } from '../../interactions';
 import { BookChapter } from './Chapter.model';
+import { UniversalText } from '../Text';
 
 export type BookDocument = Book & Document;
 

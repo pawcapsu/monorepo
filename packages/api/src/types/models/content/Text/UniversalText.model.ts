@@ -9,16 +9,16 @@ export type UniversalTextDocument = UniversalText & Document;
 @Schema()
 @ObjectType()
 export class UniversalText implements IUniversalText {
-  @Field(type => String)
-  _id: ObjectId;
+  @Field(type => String, { nullable: true })
+  _id?: ObjectId;
 
   @Prop()
-  @Field()
-  version: number;
+  @Field({ nullable: true })
+  version?: number;
   
   @Field(type => [NodeEntityUnion], { nullable: true })
   @Prop({ required: true })
-  nodes: Array<UNodeEntity>;
+  nodes?: Array<UNodeEntity>;
 };
 
 export const UniversalTextSchema = SchemaFactory.createForClass(UniversalText);

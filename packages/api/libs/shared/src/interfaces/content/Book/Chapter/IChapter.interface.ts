@@ -7,7 +7,7 @@ import { IBook } from "../IBook";
 export interface IBookChapter {
   // General information
   title: string;
-  description?: string;
+  description?: RelationalProp<IUniversalText>;
 
   bookId: RelationalProp<IBook>;
 

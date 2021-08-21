@@ -1,2 +1,2 @@
 export * from './Book';
-// export * from './Text';
+export * from './Text';

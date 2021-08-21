@@ -1,4 +1,4 @@
 export interface IUniversalText {
-  version: number;
-  nodes: Array<any>;
+  version?: number;
+  nodes?: Array<any>;
 };
