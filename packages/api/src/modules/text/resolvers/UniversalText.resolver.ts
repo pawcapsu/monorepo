@@ -1,9 +1,12 @@
-import { Resolver, ResolveField, Parent, Query, Mutation, Args } from "@nestjs/graphql";
-import { UniversalText } from "src/types/models";
+import { Resolver, ResolveField, Parent, Query, Mutation, Args, Context } from "@nestjs/graphql";
+import { Profile, UniversalText } from "src/types/models";
 import { NodeEntityUnion } from "src/types/unions";
 import { ObjectId } from 'src/types';
 import { UniversalTextService } from "../services";
 import { TextNodeInput } from "src/types/dto/content/Text/Nodes";
+import { AddNodeOptions } from "src/types/dto";
+import { GqlAuthGuard } from "src/auth";
+import { UseGuards } from "@nestjs/common";
 
 @Resolver(of => UniversalText)
 export class UniversalTextResolver {
@@ -12,15 +15,59 @@ export class UniversalTextResolver {
   ) {}
 
   // mutation addTextNode
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => UniversalText)
   async addTextNode(
     @Args('id', { type: () => String }) id: ObjectId,
     @Args('node') node: TextNodeInput,
+
+    @Args('options', { nullable: true, description: 'Different options' }) options: AddNodeOptions,
+    @Context('user') user: Profile,
   ) {
-    return await this.textService.addNode(id, node);
+    return await this.textService.addNode(user, id, node);
+  };
+  
+  // mutation modifyTextNode
+  @UseGuards(GqlAuthGuard)
+  @Mutation(returns => UniversalText)
+  async modifyTextNode(
+    @Args('id', { type: () => String }) id: ObjectId,
+    @Args('nodeId', { type: () => Number }) nodeId: number,
+    @Args('updatedNode') updatedNode: TextNodeInput,
+
+    @Context('user') user: Profile,
+  ) {
+    return await this.textService.modifyNode(user, id, nodeId, updatedNode);
   };
 
   // mutation addPictureNode (+todo)
+
+  // mutation modifyPictureNode (+todo)
+
+  // mutation deleteNode
+  @UseGuards(GqlAuthGuard)
+  @Mutation(returns => UniversalText)
+  async deleteNode(
+    @Args('id', { type: () => String }) id: ObjectId,
+    @Args('nodeId') nodeId: number,
+    
+    @Context('user') user: Profile,
+  ) {
+    return this.textService.deleteNode(user, id, nodeId);
+  };
+
+  // mutation moveNode
+  @UseGuards(GqlAuthGuard)
+  @Mutation(returns => UniversalText)
+  async moveNode(
+    @Args('id', { type: () => String }) id: ObjectId,
+    @Args('fromNode') fromNodeId: number,
+    @Args('toNode') toNodeId: number,
+
+    @Context('user') user: Profile,
+  ) {
+    return await this.textService.moveNode(user, id, fromNodeId, toNodeId);
+  };
 
   @Query(returns => UniversalText)
   async getText() {

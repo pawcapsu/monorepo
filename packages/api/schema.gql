@@ -58,6 +58,7 @@ union UNodeEntity = TextNode | PictureNode
 
 type TextNode {
   type: ENodeType!
+  index: Float!
   content: String!
 }
 
@@ -69,6 +70,7 @@ enum ENodeType {
 
 type PictureNode {
   type: ENodeType!
+  index: Float!
   caption: String!
   url: String!
 }
@@ -105,12 +107,24 @@ type Query {
 type Mutation {
   createChapter(information: ChapterInformationInput!, bookId: String!): BookChapter!
   login(token: String!): Profile!
-  addTextNode(node: TextNodeInput!, id: String!): UniversalText!
+  addTextNode(
+    """Different options"""
+    options: AddNodeOptions
+    node: TextNodeInput!
+    id: String!
+  ): UniversalText!
+  modifyTextNode(updatedNode: TextNodeInput!, nodeId: Float!, id: String!): UniversalText!
+  deleteNode(nodeId: Float!, id: String!): UniversalText!
+  moveNode(toNode: Float!, fromNode: Float!, id: String!): UniversalText!
   postBookRating: BookRating!
 }
 
 input ChapterInformationInput {
   title: String!
+}
+
+input AddNodeOptions {
+  addAfter: Float
 }
 
 input TextNodeInput {

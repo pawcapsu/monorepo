@@ -6,6 +6,9 @@ export class PictureNodeObject implements IPictureNode {
   @Field(type => ENodeType)
   type: ENodeType.PICTURE;
    
+  @Field({ nullable: false })
+  index: number
+
   @Field()
   caption: string;
 

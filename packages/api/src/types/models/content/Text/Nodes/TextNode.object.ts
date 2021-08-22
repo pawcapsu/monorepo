@@ -5,7 +5,10 @@ import { ITextNode, ENodeType } from '@app/shared';
 export class TextNodeObject implements ITextNode {
   @Field(type => ENodeType)
   type: ENodeType.TEXT;
-   
+
+  @Field({ nullable: false })
+  index: number;
+
   @Field()
   content: string;
 };

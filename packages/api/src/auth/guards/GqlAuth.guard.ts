@@ -20,6 +20,7 @@ export class GqlAuthGuard implements CanActivate {
     ctx.user = await this.validateToken(req);
     if (ctx.user == undefined) {
       throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
+      return false;
     };
     return true;
   };

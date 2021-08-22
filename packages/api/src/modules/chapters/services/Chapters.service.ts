@@ -6,9 +6,8 @@ import { ObjectId } from 'src/types';
 
 import { UniversalTextService } from 'src/modules/text/services';
 import { ChapterInformationInput } from 'src/types/dto';
+import { UserPermissionsService } from 'src/modules/permissions/services';
 import { BooksService } from 'src/modules/books/services';
-import { type } from 'os';
-import { ENodeType } from '@app/shared';
 
 @Injectable()
 export class ChaptersService {
@@ -16,6 +15,7 @@ export class ChaptersService {
     @InjectModel('bookChapter')
     private readonly chapterModel: Model<BookChapterDocument>,
     
+    private readonly permissionsService: UserPermissionsService,
     private readonly bookService: BooksService,
     private readonly textService: UniversalTextService,
   ) {}
@@ -32,7 +32,7 @@ export class ChaptersService {
 
     if (book) {
       // Checking write permissions
-      if (this._checkWritePermissions(user._id, book)) {
+      if (this.permissionsService._checkWritePermissions(user._id, book)) {
         // Creating empty UniversalText object for chapter's description
         const description = await this.textService.createText([]);
 
@@ -109,17 +109,5 @@ export class ChaptersService {
     };
 
     return filteredChapters;    
-  };
-
-  private async _checkWritePermissions(
-    userId: ObjectId,
-    book: Book,
-  ): Promise<boolean> {
-    // +todo
-    if (book.creator == userId) {
-      return true
-    } else {
-      return false;
-    };
   };
 };
