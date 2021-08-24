@@ -46,6 +46,7 @@ type Book {
     """Number of chapters we need to get"""
     limit: Float
   ): [BookChapter!]!
+  chaptersPositions: [String!]!
 }
 
 type UniversalText {
@@ -106,6 +107,8 @@ type Query {
 
 type Mutation {
   createChapter(information: ChapterInformationInput!, bookId: String!): BookChapter!
+  deleteChapter(chapterId: String!): BookChapter!
+  moveChapter(toChapter: String!, fromChapter: String!, bookId: String!): [BookChapter!]!
   login(token: String!): Profile!
   addTextNode(
     """Different options"""

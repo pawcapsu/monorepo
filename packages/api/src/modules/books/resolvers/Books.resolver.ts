@@ -58,6 +58,15 @@ export class BooksResolver {
 
     @Args('limit', { nullable: true, description: 'Number of chapters we need to get' }) limit: number
   ) {
-    return await this.chaptersService.fetchBookChapters(book._id, { limit });
+    const positions = await this.chaptersService.fetchPositions(book._id);
+    return this.chaptersService._positionChapters(await this.chaptersService.fetchBookChapters(book._id, { limit }), positions);
+  };
+
+  // resolve chaptersPositions
+  @ResolveField('chaptersPositions', returns => [String])
+  async resolveChaptersPositions(
+    @Parent() book: Book,
+  ) {
+    return await this.chaptersService.fetchPositions(book._id);
   };
 }

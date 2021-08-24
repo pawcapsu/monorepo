@@ -1,5 +1,5 @@
 import { Resolver, ResolveField, Query, Parent, Args, Mutation, Context } from "@nestjs/graphql";
-import { BookChapter, Profile, UniversalText } from 'src/types/models';
+import { Book, BookChapter, Profile, UniversalText } from 'src/types/models';
 import { ChaptersService } from "src/modules/chapters/services";
 import { ChapterInformationInput } from "src/types/dto";
 import { UseGuards } from "@nestjs/common";
@@ -31,8 +31,25 @@ export class ChaptersResolver {
   // update chapter
 
   // delete chapter
+  @Mutation(returns => BookChapter)
+  async deleteChapter(
+    @Args('chapterId', { type: () => String }) chapterId: ObjectId,
+    @Context('user') user: Profile
+  ) {
+    return await this.service.deleteChapter(user, chapterId);
+  };
 
-  // move chapter (+todo)
+  // move chapter
+  @UseGuards(GqlAuthGuard)
+  @Mutation(returns => [BookChapter])
+  async moveChapter(
+    @Args('bookId', { type: () => String }) bookId: ObjectId,
+    @Args('fromChapter', { type: () => String }) fromChapterId: ObjectId,
+    @Args('toChapter', { type: () => String }) toChapterId: ObjectId,
+    @Context('user') user: Profile,
+  ) {
+    return await this.service.moveChapter(user, bookId, fromChapterId, toChapterId);
+  };
 
   // resolve description
   @ResolveField('description', returns => UniversalText)

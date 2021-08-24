@@ -45,7 +45,11 @@ export class Book implements IBook {
 
   @Prop()
   @Field(returns => [BookChapter])
-  chapters: [BookChapter];
+  chapters: BookChapter[];
+
+  @Prop({ type: [String] })
+  @Field(returns => [String])
+  chaptersPositions: ObjectId[];
 }
 
 export const BookSchema = SchemaFactory.createForClass(Book);

@@ -1,9 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { UniversalText, BookChapter, BookChapterDocument, Profile, Book, TextNodeObject } from 'src/types/models';
+import { Model, Types } from 'mongoose';
+import { UniversalText, BookChapter, BookChapterDocument, Profile, BookDocument } from 'src/types/models';
 import { ObjectId } from 'src/types';
 
+import { arrayMoveMutable } from '@app/shared/helpers';
 import { UniversalTextService } from 'src/modules/text/services';
 import { ChapterInformationInput } from 'src/types/dto';
 import { UserPermissionsService } from 'src/modules/permissions/services';
@@ -14,6 +15,9 @@ export class ChaptersService {
   constructor(
     @InjectModel('bookChapter')
     private readonly chapterModel: Model<BookChapterDocument>,
+
+    @InjectModel('book')
+    private readonly bookModel: Model<BookDocument>,
     
     private readonly permissionsService: UserPermissionsService,
     private readonly bookService: BooksService,
@@ -58,8 +62,27 @@ export class ChaptersService {
   // updateChapter
 
   // deleteChapter
+  public async deleteChapter(
+    user: Profile,
 
-  // moveChapter(+todo)
+    chapterId: ObjectId,
+  ): Promise<BookChapter> {
+    // Getting book
+    const chapter = await this.fetchChapter(chapterId);
+    
+    if (chapter) {
+      // Checking write permissions
+      if (true) {
+        // Changing ids of fromChapter and toChapter
+        await this.chapterModel.deleteOne({ _id: chapterId });
+        return chapter;
+      } else {
+        throw new HttpException('Insufficient permissions', HttpStatus.FORBIDDEN);
+      };
+    } else {
+      throw new HttpException('Invalid chapterId argument', HttpStatus.BAD_REQUEST);
+    };
+  };
 
   // fetchDescription
   public async fetchDescription(
@@ -88,6 +111,70 @@ export class ChaptersService {
     return text;
   };
 
+  // moveChapter
+  public async moveChapter(
+    user: Profile,
+    bookId: ObjectId,
+
+    fromChapterId: ObjectId,
+    toChapterId: ObjectId,
+  ): Promise<BookChapter[]> {
+    // Getting book
+    const book = await this.bookService.fetchBook(bookId);
+    
+    if (book) {
+      // Checking write permissions
+      if (this.permissionsService._checkWritePermissions(user._id, book)) {
+        // Changing positions in book.chaptersPositions
+        const positions = await this.fetchPositions(bookId);
+        arrayMoveMutable(
+          positions, 
+          positions.indexOf(positions.find((x) => x == fromChapterId)), 
+          positions.indexOf(positions.find((x) => x == toChapterId))
+        );
+
+        // Updating database
+        await this.bookModel.updateOne({ _id: bookId }, { chaptersPositions: positions });
+        
+        return await this.fetchBookChapters(bookId);
+      } else {
+        throw new HttpException('Insufficient permissions', HttpStatus.FORBIDDEN);
+      };
+    } else {
+      throw new HttpException('Invalid bookId argument', HttpStatus.BAD_REQUEST);
+    };
+  };
+
+  // fetchPositions
+  public async fetchPositions(
+    bookId: ObjectId,
+  ): Promise<ObjectId[]> {
+    const book = await this.bookService.fetchBook(bookId);
+    const chapters = await this.fetchBookChapters(bookId);
+
+    return [...book.chaptersPositions, ...chapters.filter((x) => !book.chaptersPositions?.includes(x._id)).map((x) => x._id)];
+  };
+
+  // _positionChapters
+  public _positionChapters(
+    chapters: BookChapter[],
+    positions: ObjectId[],
+  ) {
+    const positionedChapters: BookChapter[] = [];
+    positions.forEach((p) => {
+      positionedChapters.push(chapters.find((x) => x._id == p));
+    });
+
+    return positionedChapters;
+  };
+
+  // fetchChapter
+  public async fetchChapter(
+    chapterId: ObjectId,
+  ): Promise<BookChapter | undefined> {
+    return await this.chapterModel.findOne({ _id: chapterId }).exec();
+  };
+
   // fetchBookChapters
   public async fetchBookChapters(
     bookId: ObjectId,
@@ -100,7 +187,8 @@ export class ChaptersService {
     return this._applyFilters(chapters, options);
   };
 
-  private _applyFilters(chapters: BookChapter[], options?: { limit?: number }) {
+  public async _applyFilters(chapters: BookChapter[], options?: { limit?: number }) {
+    // Filters
     let filteredChapters: BookChapter[] = chapters;
   
     // options: limit
@@ -108,6 +196,6 @@ export class ChaptersService {
       filteredChapters = filteredChapters.slice(0, options.limit);
     };
 
-    return filteredChapters;    
+    return filteredChapters;
   };
 };
