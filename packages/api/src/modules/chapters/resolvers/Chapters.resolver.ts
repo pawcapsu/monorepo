@@ -29,8 +29,18 @@ export class ChaptersResolver {
   };
 
   // update chapter
+  @UseGuards(GqlAuthGuard)
+  @Mutation(returns => BookChapter)
+  async updateChapter(
+    @Args('chapterId', { type: () => String }) chapterId: ObjectId,
+    @Args('information') information: ChapterInformationInput,
+    @Context('user') user: Profile,
+  ) {
+    return await this.service.updateChapter(user, chapterId, information);
+  };
 
   // delete chapter
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => BookChapter)
   async deleteChapter(
     @Args('chapterId', { type: () => String }) chapterId: ObjectId,

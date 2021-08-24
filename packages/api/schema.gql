@@ -107,6 +107,7 @@ type Query {
 
 type Mutation {
   createChapter(information: ChapterInformationInput!, bookId: String!): BookChapter!
+  updateChapter(information: ChapterInformationInput!, chapterId: String!): BookChapter!
   deleteChapter(chapterId: String!): BookChapter!
   moveChapter(toChapter: String!, fromChapter: String!, bookId: String!): [BookChapter!]!
   login(token: String!): Profile!

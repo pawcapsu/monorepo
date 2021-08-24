@@ -60,6 +60,27 @@ export class ChaptersService {
   };
 
   // updateChapter
+  public async updateChapter(
+    user: Profile,
+    
+    chapterId: ObjectId,
+    information: ChapterInformationInput,
+  ): Promise<BookChapter> {
+    const chapter = await this.fetchChapter(chapterId);
+
+    if (chapter) {
+      // +todo
+      if (true) {
+        // Updating chapter
+        await this.chapterModel.updateOne({ _id: chapter._id }, information);
+        return await this.fetchChapter(chapter._id);
+      } else {
+        throw new HttpException('Insufficient permissions', HttpStatus.FORBIDDEN);
+      };
+    } else {
+      throw new HttpException('Invalid chapterId argument', HttpStatus.BAD_REQUEST);
+    };
+  };
 
   // deleteChapter
   public async deleteChapter(
