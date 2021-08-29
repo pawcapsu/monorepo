@@ -22,6 +22,7 @@ const config = {
 			},
 			resolve: {
 				alias: {
+          src: resolve('./src'),
 					$stores: resolve('./src/stores'),
 					$services: resolve('/src/services'),
 					$config: resolve('/src/config'),

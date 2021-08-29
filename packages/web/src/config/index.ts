@@ -15,4 +15,4 @@ export class ConfigClass {
 };
 
 // Exporting Config instance
-export const Config = new ConfigClass(production);
+export const Config = new ConfigClass(development);

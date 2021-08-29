@@ -3,25 +3,23 @@
   import { UserStore } from '$stores/user';
 
 	// Importing components
-  import Icon from '../components/Icon.svelte';
+  import { 
+    Button,
+    Logotype,
+    Container,
+  } from 'src/design';
+  
+  import Icon from 'src/components/Icon.svelte';
   import { goto } from "$app/navigation";
 
 	// Test Data
 	let testData = [1,2,3,4,5,6,7,8,9];
 </script>
 
-<!-- Header -->
-
 <!-- Main landing area -->
-<section class="bg-gray-900 w-full h-screen flex justify-center items-center relative">
-  <!-- Text + Logotype -->
-  <div class="w-1/2 px-12">
-    <!-- Logotype -->
-    <div class="flex items-center">
-      <img class="w-10 h-10" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1610810215/logotypes/pawcapsu-white-small.svg" alt="">
-   
-      <p class="ml-2 text-3xl font-bold text-white">pawcapsu</p>
-    </div>
+<Container type='full' flex='centered'>
+  <Container size='half' classes='px-6'>
+    <Logotype type='full' />
 
     <!-- Texts -->
     <div class="my-6">
@@ -31,28 +29,28 @@
     </div>
 
     <!-- Buttons -->
-    <div class="w-full flex items-center justify-center relative">
+    <Container flex='centered'>
       { #if $UserStore.user }
-        <button on:click={() => {
+        <Button on:click={() => {
           goto('/app');
-        }} class="w-1/2 mr-4 bg-indigo-500 rounded-md py-2 flex items-center justify-center">
-          <p class="text-white">Перейти к приложению</p>
-        </button>
+        }} size="full">
+          Перейти к приложению
+        </Button>
       { :else }
-        <button on:click={() => {
-          goto('/login/link');
-        }} class="w-1/2 mr-4 bg-indigo-500 rounded-md py-2 flex items-center justify-center">
+        <Button on:click={() => {
+          // goto('/login/link');
+        }} size="full">
           <p class="text-white">Авторизоваться</p>
 
-          <Icon name="user" attrs={{ class: "w-4 h-4 text-white ml-2" }} />
-        </button>
+          <Icon name="user" attrs={{ class: "w-4 h-4 text-white ml-2" }} />          
+        </Button>
       { /if }
 
-      <button class="w-1/2 bg-gray-800 rounded-md py-2 flex items-center justify-center">
-        <p class="text-white">Хз что</p>
-      </button>
-    </div>
-  </div>
+      <Button type='ghost' size="full">
+        Узнать больше
+      </Button>
+    </Container>
+  </Container>
 
   <!-- Popular books library -->
   <div class="w-1/2 overflow-hidden overflow-y-auto ml-1 bg-gray-800 h-full flex flex-col relative">
@@ -102,9 +100,9 @@
   </div>
 
   <!-- Dots -->
-  <div class="absolute inset-x-0 bottom-0 w-full py-4 flex items-center justify-center">
+  <!-- <div class="absolute inset-x-0 bottom-0 w-full py-4 flex items-center justify-center">
     <div class="w-3 h-3 rounded-full bg-white mx-2"></div>
     <a href="#writings" class="w-2 h-2 rounded-full border-2 border-white mx-2"></a>
     <a href="#groups" class="w-2 h-2 rounded-full border-2 border-white mx-2"></a>
-  </div>
-</section>
+  </div> -->
+</Container>
