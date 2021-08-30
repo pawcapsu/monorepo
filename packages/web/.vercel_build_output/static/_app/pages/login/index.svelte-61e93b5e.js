@@ -1,0 +1,9 @@
+import{R as s,I as e,S as a,i as t,s as n,e as r,t as i,k as c,c as o,a as l,g as u,d as g,n as b,b as h,f,E as d,F as m,D as p,z as x}from"../../chunks/vendor-da42db30.js";import{c as v}from"../../chunks/graphql-d4829eba.js";import{g as k}from"../../chunks/navigation-20968cc5.js";import"../../chunks/index-6b2f5e87.js";import"../../chunks/singletons-bb9012b7.js";const j={subscribe:e=>(()=>{const e=s("__svelte__");return{page:{subscribe:e.page.subscribe},navigating:{subscribe:e.navigating.subscribe},get preloading(){return console.error("stores.preloading is deprecated; use stores.navigating instead"),{subscribe:e.navigating.subscribe}},session:e.session}})().page.subscribe(e)};const y=new class{async loginUser(s){let a=await v.mutate(e.gql`
+        mutation {
+          login(token: "${s}") {
+            _id
+            email
+            username
+          }
+        }
+    `);return console.log(a),a}};function w(s){let e,a,t,n,p,x,v;return{c(){e=r("main"),a=r("div"),t=r("h1"),n=i("Авторизовываем..."),p=c(),x=r("p"),v=i("Авторизовываем Вас в Ваш аккаунт пакапсу..."),this.h()},l(s){e=o(s,"MAIN",{class:!0});var r=l(e);a=o(r,"DIV",{class:!0});var i=l(a);t=o(i,"H1",{class:!0});var c=l(t);n=u(c,"Авторизовываем..."),c.forEach(g),p=b(i),x=o(i,"P",{class:!0});var h=l(x);v=u(h,"Авторизовываем Вас в Ваш аккаунт пакапсу..."),h.forEach(g),i.forEach(g),r.forEach(g),this.h()},h(){h(t,"class","text-2xl text-black font-medium"),h(x,"class","text-black text-sm opacity-80"),h(a,"class","w-1/3 px-12 h-full rounded-xl flex flex-col bg-white items-center justify-center"),h(e,"class","w-full h-screen bg-gray-900 flex justify-center items-center py-16")},m(s,r){f(s,e,r),d(e,a),d(a,t),d(t,n),d(a,p),d(a,x),d(x,v)},p:m,i:m,o:m,d(s){s&&g(e)}}}function E(s,e,a){let t;return p(s,j,(s=>a(0,t=s))),x((()=>{const s=t.query.get("token");y.loginUser(s).then((()=>{k("/")}))})),[]}export default class extends a{constructor(s){super(),t(this,s,E,w,n,{})}}

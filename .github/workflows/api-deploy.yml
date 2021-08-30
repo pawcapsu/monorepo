@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x]
-        
+
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -16,6 +16,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: Update npm to npm@7.x
+      run: npm install npm@7
     - name: Bootstrap application
       run: npm run build
     - name: Deploy application artifact to host
