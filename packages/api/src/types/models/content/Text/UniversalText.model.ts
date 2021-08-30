@@ -12,7 +12,7 @@ export class UniversalText implements IUniversalText {
   @Field(type => String, { nullable: true })
   _id?: ObjectId;
 
-  @Field({ nullable: false, defaultValue: EUniversalTextType.TEXT })
+  @Field(type => EUniversalTextType, { nullable: false, defaultValue: EUniversalTextType.TEXT })
   type?: EUniversalTextType;
 
   @Prop()

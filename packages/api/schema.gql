@@ -51,8 +51,15 @@ type Book {
 
 type UniversalText {
   _id: String
+  type: EUniversalTextType!
   version: Float
   nodes: [UNodeEntity!]!
+}
+
+"""Type of UniversalText instance (TEXT, COMICS, etc...)"""
+enum EUniversalTextType {
+  TEXT
+  COMICS
 }
 
 union UNodeEntity = TextNode | PictureNode
