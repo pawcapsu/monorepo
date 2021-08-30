@@ -23,6 +23,14 @@ jobs:
         local_path: '.'
         remote_path: '/home/ubuntu/monorepo/'
         args: '-o ConnectTimeout=5'
+    - name: Install dependencies
+      uses: JimCronqvist/action-ssh@0.1.1
+      with:
+        hosts: 'ubuntu@140.238.219.21'
+        privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+        command: |
+          cd ./monorepo
+          npm ci
     - name: Bootstrap application
       uses: JimCronqvist/action-ssh@0.1.1
       with:
