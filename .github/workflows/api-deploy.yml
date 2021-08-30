@@ -1,0 +1,37 @@
+name: api.pawcapsu production deployment
+
+on:
+  push:
+    branches: [ $default_branch ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Bootstrap application
+      run: npm run build
+    - name: Deploy application artifact to host
+      uses: wlixcc/SFTP-Deploy-Action@v1.2.1
+      with:
+        username: 'ubuntu'
+        server: ${{ secrets.SSH_IP }}
+        ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+        local_path: './packages/api/*'
+        remote_path: './api.pawcapsu/'
+    - name: Run deployed artifact in pm2 daemon
+      uses: JimCronqvist/action-ssh@0.1.1
+      with:
+        hosts: 'ubuntu@${{ secrets.SSH_IP }}'
+        privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+        command: |
+          cd ./api.pawcapsu
+          pm2 start ecosystem.config.js
