@@ -24,14 +24,14 @@ jobs:
       uses: wlixcc/SFTP-Deploy-Action@v1.2.1
       with:
         username: 'ubuntu'
-        server: ${{ secrets.SSH_IP }}
+        server: '140.238.219.21'
         ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
         local_path: './packages/api/*'
         remote_path: './api.pawcapsu/'
     - name: Run deployed artifact in pm2 daemon
       uses: JimCronqvist/action-ssh@0.1.1
       with:
-        hosts: 'ubuntu@${{ secrets.SSH_IP }}'
+        hosts: 'ubuntu@140.238.219.21'
         privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
         command: |
           cd ./api.pawcapsu
