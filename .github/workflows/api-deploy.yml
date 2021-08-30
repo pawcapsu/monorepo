@@ -5,34 +5,29 @@ on: push
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Update npm to npm@7.x
-      run: npm install npm@7
-    - name: Bootstrap application
-      run: npm run build
     - name: Deploy application artifact to host
       uses: wlixcc/SFTP-Deploy-Action@v1.2.1
       with:
         username: 'ubuntu'
         server: '140.238.219.21'
         ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-        local_path: './packages/api/*'
-        remote_path: './api.pawcapsu/'
+        local_path: './packages/*'
+        remote_path: './monorepo/'
+    - name: Bootstrap application
+      uses: JimCronqvist/action-ssh@0.1.1
+      with:
+        hosts: 'ubuntu@140.238.219.21'
+        privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+        command: |
+          cd ./monorepo
+          npm run build
     - name: Run deployed artifact in pm2 daemon
       uses: JimCronqvist/action-ssh@0.1.1
       with:
         hosts: 'ubuntu@140.238.219.21'
         privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
         command: |
-          cd ./api.pawcapsu
+          cd ./monorepo
           pm2 start ecosystem.config.js
