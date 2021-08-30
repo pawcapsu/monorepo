@@ -7,7 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Deploy application artifact to host
+    - name: Clean artifact cache
+      uses: JimCronqvist/action-ssh@0.1.1
+      with:
+        hosts: 'ubuntu@140.238.219.21'
+        privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+        command: |
+          rm -rf ./monorepo
+    - name: Deploy artifact to host
       uses: wlixcc/SFTP-Deploy-Action@v1.2.1
       with:
         username: 'ubuntu'
@@ -15,6 +22,7 @@ jobs:
         ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
         local_path: './packages/*'
         remote_path: '/home/ubuntu/monorepo/'
+        args: '-o ConnectTimeout=5'
     - name: Bootstrap application
       uses: JimCronqvist/action-ssh@0.1.1
       with:
