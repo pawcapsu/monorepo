@@ -1,8 +1,6 @@
-name: api.pawcapsu production deployment
+name: api production
 
-on:
-  push:
-    branches: [ $default_branch ]
+on: push
 
 jobs:
   deploy:
