@@ -39,11 +39,11 @@ jobs:
         command: |
           cd ./monorepo
           npm run build
-    - name: Run deployed artifact in pm2 daemon
+    - name: Run builded api application in pm2 daemon
       uses: JimCronqvist/action-ssh@0.1.1
       with:
         hosts: 'ubuntu@140.238.219.21'
         privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
         command: |
-          cd ./monorepo
+          cd ./monorepo/packages/api
           pm2 start ecosystem.config.js
