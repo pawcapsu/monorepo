@@ -39,6 +39,13 @@ jobs:
         command: |
           cd ./monorepo
           npm run build
+    - name: Copy SSL secrets into application folder
+      uses: JimCronqvist/action-ssh@0.1.1
+      with:
+        hosts: 'ubuntu@140.238.219.21'
+        privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+        command: |
+          cp -r ./secrets ./monorepo/packages/secrets
     - name: Run builded api application in pm2 daemon
       uses: JimCronqvist/action-ssh@0.1.1
       with:
