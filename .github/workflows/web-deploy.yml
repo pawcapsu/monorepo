@@ -11,7 +11,7 @@ jobs:
     - name: Copy shared package into web production folder
       run: cp -a ./packages/api/libs/shared/. ./packages/web/production/shared
 
-    - name: Copy production configs into web package root folder
+    - name: Copy production configs into web root folder
       run: cp -a ./packages/api/libs/shared/. ./packages/web/production/shared
 
     - name: Deploy application to Vercel
