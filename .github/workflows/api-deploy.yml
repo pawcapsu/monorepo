@@ -20,7 +20,7 @@ jobs:
         username: 'ubuntu'
         server: '140.238.219.21'
         ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-        local_path: './packages/*'
+        local_path: '.'
         remote_path: '/home/ubuntu/monorepo/'
         args: '-o ConnectTimeout=5'
     - name: Bootstrap application
