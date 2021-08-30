@@ -14,7 +14,7 @@ jobs:
         server: '140.238.219.21'
         ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
         local_path: './packages/*'
-        remote_path: './monorepo/'
+        remote_path: '/home/ubuntu/monorepo/'
     - name: Bootstrap application
       uses: JimCronqvist/action-ssh@0.1.1
       with:
