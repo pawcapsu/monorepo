@@ -12,7 +12,8 @@ jobs:
       run: cp -a ./packages/api/libs/shared/. ./packages/web/production/shared
 
     - name: Copy production configs into web root folder
-      run: cp -a ./packages/api/libs/shared/. ./packages/web/production/shared
+      run: |
+        cp -a ./packages/web/production/ ./packages/web/.
 
     - name: Deploy application to Vercel
       uses: amondnet/vercel-action@v20
