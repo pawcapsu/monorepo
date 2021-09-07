@@ -93,6 +93,19 @@ type Profile {
   ): [Book!]!
 }
 
+type PaginatedBooks {
+  docs: [Book!]!
+  totalDocs: Float!
+  limit: Float!
+  page: Float
+  totalPages: Float!
+  nextPage: Float
+  prevPage: Float
+  pagingCounter: Float!
+  hasPrevPage: Boolean!
+  hasNextPage: Boolean!
+}
+
 type Query {
   me: Profile!
   profile(uid: String!): Profile!
@@ -101,6 +114,12 @@ type Query {
     """Book _id"""
     bookId: String!
   ): Book!
+  books(
+    options: BookSearchOptionsInput!
+
+    """Paginated page"""
+    page: Float = 1
+  ): PaginatedBooks!
   getText: UniversalText!
   getBookRating(
     """UserRating _id property"""
@@ -110,6 +129,10 @@ type Query {
     """Book _id property"""
     bookId: String!
   ): [BookRating!]!
+}
+
+input BookSearchOptionsInput {
+  limit: Float!
 }
 
 type Mutation {
