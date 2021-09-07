@@ -32,7 +32,7 @@ type Book {
   _id: String!
   creator: Profile!
   title: String!
-  description: String!
+  description: String
   likes: Float!
   dislikes: Float!
   ratings(
