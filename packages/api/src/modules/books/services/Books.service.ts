@@ -6,11 +6,14 @@ import { ObjectId } from 'src/types';
 import * as mongoose from 'mongoose';
 import { BookSearchOptions } from "@app/shared/dtos";
 import { PaginatedBooks } from "src/types/models/content/Book/PaginatedBooks.model";
+import { UniversalTextService } from "src/modules/text/services";
 
 @Injectable()
 export class BooksService {
   constructor(
     @InjectModel('book') private readonly bookModel: PaginateModel<BookDocument>,
+
+    private readonly textService: UniversalTextService,
   ) {}
 
   // fetchBook
@@ -39,6 +42,24 @@ export class BooksService {
     return this._applyOptions(books, options);
   };
 
+  // fetchDescription
+  async fetchDescription(
+    book: Book
+  ) {
+    let text = await this.textService.fetchText(book?.description);
+
+    // Creating UniversalText object and updating this chapter
+    if (text == null) {
+      text = await this.textService.createText([]);
+      
+      // +todo
+      book.description = text._id;
+      await this.bookModel.updateOne({ _id: book._id }, book);
+    };
+    
+    return text;
+  };
+  
   private _applyOptions(books: Book[], options: BookSearchOptions) {
     let filteredBooks: Book[] = books;
   

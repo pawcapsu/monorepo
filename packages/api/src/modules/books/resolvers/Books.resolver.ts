@@ -1,5 +1,5 @@
 import { Resolver, Args, Query, ResolveField, Parent } from "@nestjs/graphql";
-import { Book, BookChapter, BookRating, Profile } from 'src/types/models';
+import { Book, BookChapter, BookRating, Profile, UniversalText } from 'src/types/models';
 import { EUserRatingType, EUserRatingDirection } from "@app/shared";
 import { BooksService } from 'src/modules/books/services';
 import { ChaptersService } from "src/modules/chapters/services";
@@ -27,9 +27,15 @@ export class BooksResolver {
   @Query(returns => PaginatedBooks)
   async books(
     @Args('page', { description: 'Paginated page', defaultValue: 1, nullable: true }) page: number,
-    @Args('options') options: BookSearchOptionsInput
+    @Args('options', { nullable: true }) options: BookSearchOptionsInput
   ) {
     return this.service.fetchBooks(page, options);
+  };
+
+  // resolve description
+  @ResolveField('description', returns => UniversalText)
+  async resolveDescription(@Parent() book: Book) {
+    return this.service.fetchDescription(book);
   };
 
   // resolve creator

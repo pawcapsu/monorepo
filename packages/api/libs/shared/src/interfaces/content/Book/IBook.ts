@@ -3,6 +3,7 @@ import { ObjectId } from "mongoose";
 import { IBookRating } from "../../interactions";
 import { IUniversalText } from "../Text";
 import { IBookChapter } from "./Chapter";
+import { IProfile } from "../../users";
 
 export interface IBook {
   // General information
@@ -10,6 +11,7 @@ export interface IBook {
   description: RelationalProp<IUniversalText | any>;
 
   // Creator information
+  creator: RelationalProp<IProfile | any>;
 
   // Rating information
   likes: number,

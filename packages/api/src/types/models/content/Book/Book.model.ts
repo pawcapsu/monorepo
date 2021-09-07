@@ -28,9 +28,9 @@ export class Book implements IBook {
   @Field({ nullable: false })
   title: string;
 
-  @Prop()
-  @Field({ nullable: true })
-  description: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, required: false })
+  @Field(returns => UniversalText, { nullable: true })
+  description: ObjectId;
   
   // Ratings
   @Field()
