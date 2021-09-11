@@ -3,15 +3,16 @@ import { client } from '$services/graphql';
 import { gql } from '@apollo/client/core/core.cjs.js';
 
 // Importing types
-import type { IPaginatedBooks, IBook } from '@app/shared';
+import type { IPaginatedBooks, IBook, BookSearchOptions } from '@app/shared';
 
 export class PaginatedBooksClass {
   // get
-  get() {
+  get(options?: BookSearchOptions) {
     return new Promise((resolve) => {
+      console.log(options);
       const store = client.query(gql`
-        query getBooks {
-          books {
+        query getBooks($options: BookSearchOptionsInput!) {
+          books(options: $options) {
             docs {
               title
               creator {
@@ -27,12 +28,23 @@ export class PaginatedBooksClass {
                     type
                     content
                   }
+                  ...on PictureNode {
+                    type
+                    url
+                    caption
+                  }
                 }
               }
             }
           }
         }
-      `);
+      `, {
+        variables: {
+          options: <BookSearchOptions>{
+            limit: options.limit ?? 25,
+          },
+        },
+      });
 
       store.subscribe((obj) => {
         const data = obj.data as any;
