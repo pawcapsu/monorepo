@@ -183,7 +183,8 @@ export class ChaptersService {
   ) {
     const positionedChapters: BookChapter[] = [];
     positions.forEach((p) => {
-      positionedChapters.push(chapters.find((x) => x._id == p));
+      const chapter = chapters.find((x) => String(x._id) === String(p))
+      if (chapter) positionedChapters.push(chapter);
     });
 
     return positionedChapters;
@@ -210,7 +211,7 @@ export class ChaptersService {
 
   public async _applyFilters(chapters: BookChapter[], options?: { limit?: number }) {
     // Filters
-    let filteredChapters: BookChapter[] = chapters;
+    let filteredChapters: BookChapter[] = [...chapters];
   
     // options: limit
     if (options?.limit) {

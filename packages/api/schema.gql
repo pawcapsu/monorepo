@@ -28,27 +28,6 @@ type BookChapter {
   content: UniversalText!
 }
 
-type Book {
-  _id: String!
-  creator: Profile!
-  title: String!
-  description: String!
-  likes: Float!
-  dislikes: Float!
-  ratings(
-    """Is it a Like or a Dislike?"""
-    direction: EUserRatingDirection
-
-    """Number of ratings we need to get"""
-    limit: Float
-  ): [BookRating!]!
-  chapters(
-    """Number of chapters we need to get"""
-    limit: Float
-  ): [BookChapter!]!
-  chaptersPositions: [String!]!
-}
-
 type UniversalText {
   _id: String
   type: EUniversalTextType!
@@ -83,6 +62,27 @@ type PictureNode {
   url: String!
 }
 
+type Book {
+  _id: String!
+  creator: Profile!
+  title: String!
+  description: UniversalText!
+  likes: Float!
+  dislikes: Float!
+  ratings(
+    """Is it a Like or a Dislike?"""
+    direction: EUserRatingDirection
+
+    """Number of ratings we need to get"""
+    limit: Float
+  ): [BookRating!]!
+  chapters(
+    """Number of chapters we need to get"""
+    limit: Float
+  ): [BookChapter!]!
+  chaptersPositions: [String!]!
+}
+
 type Profile {
   _id: String!
   email: String!
@@ -93,6 +93,19 @@ type Profile {
   ): [Book!]!
 }
 
+type PaginatedBooks {
+  docs: [Book!]!
+  totalDocs: Float!
+  limit: Float!
+  page: Float
+  totalPages: Float!
+  nextPage: Float
+  prevPage: Float
+  pagingCounter: Float!
+  hasPrevPage: Boolean!
+  hasNextPage: Boolean!
+}
+
 type Query {
   me: Profile!
   profile(uid: String!): Profile!
@@ -101,6 +114,12 @@ type Query {
     """Book _id"""
     bookId: String!
   ): Book!
+  books(
+    options: BookSearchOptionsInput
+
+    """Paginated page"""
+    page: Float = 1
+  ): PaginatedBooks!
   getText: UniversalText!
   getBookRating(
     """UserRating _id property"""
@@ -110,6 +129,10 @@ type Query {
     """Book _id property"""
     bookId: String!
   ): [BookRating!]!
+}
+
+input BookSearchOptionsInput {
+  limit: Float!
 }
 
 type Mutation {

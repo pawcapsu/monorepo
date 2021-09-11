@@ -154,7 +154,6 @@ export class UniversalTextService {
     id: ObjectId
   ): Promise<UniversalText | undefined> {
     const text = await this.textModel.findOne({ _id: id }).exec();
-    console.log(text);
 
     if (text !== null) {
       return this._prepareText(text);

@@ -1,19 +1,27 @@
-<script>
+<script lang="ts">
   // Importing modules
   import { UserStore } from '$stores/user';
+  import { PaginatedBooksService as Books } from 'src/services/book';
+  import { onMount } from 'svelte';
+
+  // Importing types
+  import type { IBook } from '@app/shared';
 
 	// Importing components
   import { 
     Button,
     Logotype,
     Container,
+    Viewer
   } from 'src/design';
   
   import Icon from 'src/components/Icon.svelte';
   import { goto } from "$app/navigation";
 
-	// Test Data
-	let testData = [1,2,3,4,5,6,7,8,9];
+  let books: IBook[];
+  onMount(async () => {
+    books = (await Books.get()) as IBook[];
+  });
 </script>
 
 <!-- Main landing area -->
@@ -56,27 +64,29 @@
   <div class="w-1/2 overflow-hidden overflow-y-auto ml-1 bg-gray-800 h-full flex flex-col relative">
     <!-- Books -->
     <div class="w-full flex flex-wrap flex-grow px-12 py-12">
-      { #each testData as entry }
-        <div class="w-1/2 p-2 relative">
-          <div style="z-index: 2;" class="w-full h-full rounded-xl bg-gray-900 p-4">
-            <!-- Title -->
-            <div class="mb-2">
-              <div class="flex items-center mt-0.5 opacity-70 text-white">
-                <Icon name="link-2" attrs={{ class: "w-4 h-4" }} />
-                
-                <p class="ml-1.5 text-xs">Гарри Поттер</p>
+      { #if books }
+        { #each books as entry }
+          <div class="w-1/2 p-2 relative">
+            <div style="z-index: 2;" class="w-full h-full rounded-xl bg-gray-900 p-4">
+              <!-- Title -->
+              <div class="mb-2">
+                <div class="flex items-center mt-0.5 opacity-70 text-white">
+                  <Icon name="link-2" attrs={{ class: "w-4 h-4" }} />
+                  
+                  <p class="ml-1.5 text-xs">{ entry.creator.username }</p>
+                </div>
+
+                <h1 class="text-xl text-white font-medium">{ entry.title }</h1>
               </div>
 
-              <h1 class="text-xl text-white font-medium">Невероятно крутой рассказ который прям вау...</h1>
-            </div>
-
-            <!-- Description -->
-            <div class="text-sm text-white opacity-70">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Asperiores, quo reprehenderit. Facere porro odio cum, repudiandae omnis ipsa amet corporis quos qui! Sed voluptatem dolorum repudiandae? Fugit rem aspernatur ratione.  
+              <!-- Description -->
+              <div class="text-sm text-white opacity-70">
+                <Viewer input={ entry.description.nodes } />
+              </div>
             </div>
           </div>
-        </div>
-      { /each }
+        { /each }
+      { /if }
       
       <div class="w-1/2 p-2 relative">
         <div style="z-index: 2;" class="w-full h-full rounded-xl border-4 border-dotted border-gray-900 bg-gray-900 bg-opacity-40 flex flex-col items-center justify-center p-4">

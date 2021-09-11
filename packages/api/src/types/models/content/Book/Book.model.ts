@@ -25,12 +25,12 @@ export class Book implements IBook {
 
   // General information
   @Prop()
-  @Field()
+  @Field({ nullable: false })
   title: string;
 
-  @Prop()
-  @Field()
-  description: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, required: false })
+  @Field(returns => UniversalText, { nullable: true })
+  description: ObjectId;
   
   // Ratings
   @Field()
@@ -44,11 +44,11 @@ export class Book implements IBook {
   ratings: BookRating[];
 
   @Prop()
-  @Field(returns => [BookChapter])
+  @Field(returns => [BookChapter], { nullable: false })
   chapters: BookChapter[];
 
   @Prop({ type: [String] })
-  @Field(returns => [String])
+  @Field(returns => [String], { nullable: false })
   chaptersPositions: ObjectId[];
 }
 

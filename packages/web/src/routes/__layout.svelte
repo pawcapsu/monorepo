@@ -3,6 +3,8 @@
   import { UserStore } from '$stores/user/User.store';
   import { onMount } from 'svelte';
 
+  import { Logotype } from 'src/design'
+
   onMount(() => {
     UserStore.authMe();
   });
@@ -12,6 +14,6 @@
   <slot></slot>
 { :else }
   <main class="absolute w-full h-screen bg-gray-900 flex justify-center items-center">
-    <img class="w-12 h-12" src="https://res.cloudinary.com/lococovu-cdn/image/upload/v1610810215/logotypes/pawcapsu-white-small.svg" alt="">
+    <Logotype type="icon" />
   </main>
 { /if }
