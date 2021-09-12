@@ -14,7 +14,8 @@
     Container,
     Viewer,
     Heading,
-    Paragraph
+    Paragraph,
+    BookCard,
   } from 'src/design';
   
   import Icon from 'src/components/Icon.svelte';
@@ -68,29 +69,7 @@
     <div class="w-full flex flex-wrap flex-grow px-12 py-12">
       { #if books }
         { #each books as entry }
-          <div class="w-1/2 relative" style="padding-bottom: 50%">
-            <div class="absolute w-full h-full p-2">
-              <div style="z-index: 2;" class="w-full h-full flex flex-col rounded-xl bg-gray-900 p-4">
-                <!-- Title -->
-                <div class="mb-2">
-                  <div class="flex items-center mt-0.5 opacity-70 text-white">
-                    <Icon name="link-2" attrs={{ class: "w-4 h-4" }} />
-                    
-                    <p class="ml-1.5 text-xs">{ entry.creator.username }</p>
-                  </div>
-
-                  <h1 class="text-xl text-white font-medium">{ entry.title }</h1>
-                </div>
-
-                <!-- Description -->
-                <div class="text-sm text-white opacity-70 flex-grow overflow-hidden relative">
-                  <div class="absolute w-full h-full overflow-auto">
-                    <Viewer input={ entry.description.nodes } />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <BookCard book="{ entry }" type="compact" size="medium" />
         { /each }
       { /if }
       

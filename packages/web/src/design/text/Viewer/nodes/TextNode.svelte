@@ -2,8 +2,11 @@
   // Importing types
   import type { ITextNode } from '@app/shared';
  
+  // Importing components
+  import { Paragraph } from 'src/design';
+
   // Exporting variables
   export let node: ITextNode;
 </script>
 
-<p>{ node.content }</p>
+<Paragraph>{ node.content }</Paragraph>
