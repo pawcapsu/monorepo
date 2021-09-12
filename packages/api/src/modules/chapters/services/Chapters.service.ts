@@ -9,6 +9,7 @@ import { UniversalTextService } from 'src/modules/text/services';
 import { ChapterInformationInput } from 'src/types/dto';
 import { UserPermissionsService } from 'src/modules/permissions/services';
 import { BooksService } from 'src/modules/books/services';
+import { ENodeType } from '@app/shared';
 
 @Injectable()
 export class ChaptersService {
@@ -207,6 +208,30 @@ export class ChaptersService {
   ): Promise<BookChapter[] | undefined> {
     const chapters = await this.chapterModel.find({ bookId }).exec();
     return this._applyFilters(chapters, options);
+  };
+
+  // calculateBookSize
+  public async calculateBookSize(
+    bookId: ObjectId,
+  ): Promise<Number> {
+    const chapters = await this.chapterModel.find({ bookId }).exec();
+    const contents: UniversalText[] = [];
+
+    for (const chapter of chapters) {
+      contents.push(await this.textService.fetchText(chapter.content));
+    };
+
+    // Looping through content nodes
+    let bookSize: number = 0;
+    contents.forEach((content) => {
+      content.nodes?.forEach((node) => {
+        if (node.type === ENodeType.TEXT) {
+          bookSize += node.content.split("").length;
+        };
+      });
+    });
+
+    return bookSize;
   };
 
   public async _applyFilters(chapters: BookChapter[], options?: { limit?: number }) {

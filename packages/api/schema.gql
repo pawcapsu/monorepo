@@ -81,6 +81,7 @@ type Book {
     limit: Float
   ): [BookChapter!]!
   chaptersPositions: [String!]!
+  bookSize: Float!
 }
 
 type Profile {

@@ -8,7 +8,7 @@ import { ObjectId } from 'src/types';
 
 import { Profile } from '../../users';
 import { BookRating } from '../../interactions';
-import { BookChapter } from './Chapter.model';
+import { BookChapter } from './Chapter/Chapter.model';
 import { UniversalText } from '../Text';
 
 export type BookDocument = Book & Document;
@@ -50,6 +50,13 @@ export class Book implements IBook {
   @Prop({ type: [String] })
   @Field(returns => [String], { nullable: false })
   chaptersPositions: ObjectId[];
+
+  @Field({ nullable: false })
+  bookSize: number;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, required: false, unique: false })
+  // @Field(returns => { nullable: true })
+  tags: ObjectId[]
 }
 
 export const BookSchema = SchemaFactory.createForClass(Book);

@@ -1,9 +1,10 @@
-import { RelationalProp } from "@app/shared/enums";
+import { RelationalProp } from "../../../enums";
 import { ObjectId } from "mongoose";
 import { IBookRating } from "../../interactions";
 import { IUniversalText } from "../Text";
 import { IBookChapter } from "./Chapter";
 import { IProfile } from "../../users";
+import { IBookTag } from "../../interactions";
 
 export interface IBook {
   // General information
@@ -21,4 +22,8 @@ export interface IBook {
   // Chapters information
   chapters: Array<IBookChapter | any>;
   chaptersPositions: Array<ObjectId | any>;
+
+  // Meta-information
+  bookSize: number,
+  tags: Array<IBookTag | any>;
 };

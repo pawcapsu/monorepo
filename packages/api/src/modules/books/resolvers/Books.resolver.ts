@@ -86,4 +86,12 @@ export class BooksResolver {
   ) {
     return await this.chaptersService.fetchPositions(book._id);
   };
+
+  // resolve bookSize
+  @ResolveField('bookSize', returns => Number)
+  async resolveBookSize(
+    @Parent() book: Book,
+  ) {
+    return await this.chaptersService.calculateBookSize(book._id);
+  };
 }

@@ -26,4 +26,8 @@ export const ModelsImports = MongooseModule.forFeature([
     name: 'bookChapter',
     schema: models.BookChapterSchema,
   },
+  {
+    name: 'tag',
+    schema: models.TagSchema,
+  },
 ]);
