@@ -27,7 +27,7 @@ export class BooksService {
     page: number,
     options: BookSearchOptions,
   ): Promise<PaginatedBooks> {
-    const limit = options?.limit | 20;
+    const limit = options?.limit ?? 25;
     const query = this._buildFindOptions(options);
 
     return await this.bookModel.paginate(query, {

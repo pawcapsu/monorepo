@@ -9,7 +9,6 @@ export class PaginatedBooksClass {
   // get
   get(options?: BookSearchOptions) {
     return new Promise((resolve) => {
-      console.log(options);
       const store = client.query(gql`
         query getBooks($options: BookSearchOptionsInput!) {
           books(options: $options) {
@@ -40,9 +39,7 @@ export class PaginatedBooksClass {
         }
       `, {
         variables: {
-          options: <BookSearchOptions>{
-            limit: options.limit ?? 25,
-          },
+          options
         },
       });
 
