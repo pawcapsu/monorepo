@@ -12,7 +12,6 @@
     Button,
     Logotype,
     Container,
-    Viewer,
     Heading,
     Paragraph,
     BookCard,
@@ -23,7 +22,7 @@
 
   let books: IBook[];
   onMount(async () => {
-    books = (await Books.get({ limit: 1 })) as IBook[];
+    books = (await Books.get({ limit: 3 })) as IBook[];
   });
 </script>
 
