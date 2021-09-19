@@ -25,5 +25,5 @@ export interface IBook {
 
   // Meta-information
   bookSize: number,
-  tags: Array<IBookTag | any>;
+  tags: Array<ObjectId | any>;
 };

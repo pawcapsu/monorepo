@@ -10,6 +10,7 @@ import { Profile } from '../../users';
 import { BookRating } from '../../interactions';
 import { BookChapter } from './Chapter/Chapter.model';
 import { UniversalText } from '../Text';
+import { BookTag } from '../../interactions';
 
 export type BookDocument = Book & Document;
 
@@ -54,8 +55,8 @@ export class Book implements IBook {
   @Field({ nullable: false })
   bookSize: number;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, required: false, unique: false })
-  // @Field(returns => { nullable: true })
+  @Prop({ type: [String] })
+  @Field(returns => [BookTag], { nullable: true })
   tags: ObjectId[]
 }
 

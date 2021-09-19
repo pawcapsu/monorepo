@@ -5,3 +5,4 @@ export * from 'src/modules/auth/module';
 export * from 'src/modules/text/module';
 export * from 'src/modules/permissions/module';
 export * from 'src/modules/interactions/rating/module';
+export * from 'src/modules/interactions/tag/module';

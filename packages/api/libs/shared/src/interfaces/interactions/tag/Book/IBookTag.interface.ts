@@ -1,3 +1,11 @@
-import { ITag } from '../';
+import { IUniversalText } from "../../../../interfaces";
+import { RelationalProp } from "../../../../enums";
+import { IProfile } from '../../../users';
 
-export type IBookTag = Omit<ITag, 'type'>;
+export interface IBookTag {
+  icon?: string,
+  title: string,
+  description?: RelationalProp<IUniversalText>,
+
+  creator?: RelationalProp<IProfile | any>
+};

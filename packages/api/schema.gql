@@ -21,6 +21,15 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type BookTag {
+  _id: String!
+  book: Book!
+  icon: String
+  title: String
+  description: UniversalText!
+  creator: Profile!
+}
+
 type BookChapter {
   _id: String!
   title: String!
@@ -82,6 +91,11 @@ type Book {
   ): [BookChapter!]!
   chaptersPositions: [String!]!
   bookSize: Float!
+  tags(filters: TagFilterOptionsInput): [BookTag!]!
+}
+
+input TagFilterOptionsInput {
+  limit: Float
 }
 
 type Profile {
@@ -130,6 +144,8 @@ type Query {
     """Book _id property"""
     bookId: String!
   ): [BookRating!]!
+  getBookTag(id: String!): BookTag!
+  getBookTags(filters: TagFilterOptionsInput, bookId: String!): [BookTag!]!
 }
 
 input BookSearchOptionsInput {
@@ -152,6 +168,8 @@ type Mutation {
   deleteNode(nodeId: Float!, id: String!): UniversalText!
   moveNode(toNode: Float!, fromNode: Float!, id: String!): UniversalText!
   postBookRating: BookRating!
+  createBookTag(information: BookTagInformationInput!): BookTag!
+  assignBookTag(tagId: String!, bookId: String!): Book!
 }
 
 input ChapterInformationInput {
@@ -165,4 +183,9 @@ input AddNodeOptions {
 input TextNodeInput {
   type: String = "TEXT"
   content: String!
+}
+
+input BookTagInformationInput {
+  icon: String
+  title: String!
 }

@@ -1,12 +1,14 @@
 import { Resolver, Args, Query, ResolveField, Parent } from "@nestjs/graphql";
-import { Book, BookChapter, BookRating, Profile, UniversalText } from 'src/types/models';
-import { EUserRatingType, EUserRatingDirection } from "@app/shared";
+import { Book, BookChapter, BookRating, BookTag, Profile, UniversalText } from 'src/types/models';
+import { EUserRatingType, EUserRatingDirection, ETagType } from "@app/shared";
 import { BooksService } from 'src/modules/books/services';
 import { ChaptersService } from "src/modules/chapters/services";
 import { ProfilesService } from 'src/modules/profiles/services';
 import { RatingService } from "src/modules/interactions/rating/services";
 import { BookSearchOptionsInput } from "src/types/dto/content/Book/SearchOptions.dto";
 import { PaginatedBooks } from "src/types/models/content/Book/PaginatedBooks.model";
+import { TagService } from "src/modules/interactions/tag/services";
+import { TagFilterOptionsInput } from "src/types/dto/interactions";
 
 @Resolver(of => Book)
 export class BooksResolver {
@@ -15,6 +17,7 @@ export class BooksResolver {
     private readonly profilesService: ProfilesService,
     private readonly ratingService: RatingService,
     private readonly chaptersService: ChaptersService,
+    private readonly tagsService: TagService,
   ) {}
 
   @Query(returns => Book)
@@ -93,5 +96,15 @@ export class BooksResolver {
     @Parent() book: Book,
   ) {
     return await this.chaptersService.calculateBookSize(book._id);
+  };
+
+  // resolve tags
+  @ResolveField('tags', returns => [BookTag])
+  async resolveBookTags(
+    @Parent() book: Book,
+
+    @Args('filters', { nullable: true }) filters?: TagFilterOptionsInput,
+  ) {
+    return await this.tagsService.fetchTags(book._id, ETagType.BOOK, filters);
   };
 }

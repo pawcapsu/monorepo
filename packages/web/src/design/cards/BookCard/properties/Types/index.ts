@@ -1,6 +1,6 @@
 const types = {
   compact: {
-    hide: ['author', 'tags', 'buttons'],
+    hide: ['author', 'buttons'],
     classes: ['w-full h-full flex flex-col rounded-xl bg-gray-900 p-4'],
   },
   default: {

@@ -1,26 +1,61 @@
-import { Resolver, Query, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver, Query, ResolveField, Parent, Args, Mutation, Context } from '@nestjs/graphql';
 import { ProfilesService } from 'src/modules/profiles/services';
-import { BookTag, Profile } from 'src/types/models';
+import { Book, BookTag, Profile, UniversalText } from 'src/types/models';
 import { TagService } from '../services';
 import * as mongoose from 'mongoose';
+import { BookTagInformationInput, TagFilterOptionsInput } from 'src/types/dto/interactions';
+import { ETagType } from '@app/shared';
+import { GqlAuthGuard } from 'src/auth';
+import { UseGuards } from '@nestjs/common';
+import { UniversalTextService } from 'src/modules/text/services';
+import { BooksService } from 'src/modules/books/services';
 
 @Resolver(of => BookTag)
 export class BookTagResolver {
   constructor(
     private readonly tagService: TagService,
     private readonly profilesService: ProfilesService,
+    private readonly textService: UniversalTextService,
+    private readonly bookService: BooksService,
   ) {}
+
+  // createBookTag
+  @UseGuards(GqlAuthGuard)
+  @Mutation(returns => BookTag)
+  public async createBookTag(
+    @Args('information') information: BookTagInformationInput,
+    @Context('user') user: Profile,
+  ) {
+    return await this.tagService.createTag(user, ETagType.BOOK, information);
+  };
+
+  // assignBookTag
+  @UseGuards(GqlAuthGuard)
+  @Mutation(returns => Book)
+  public async assignBookTag(
+    @Args('bookId') id: string,
+    @Args('tagId') tagId: string,
+
+    @Context('user') user: Profile,
+  ) {
+    return await this.tagService.assignTag(user, ETagType.BOOK, tagId, id);
+  };
 
   // getBookTag
   @Query(returns => BookTag)
-  public async getBookTag() {
-
+  public async getBookTag(
+    @Args('id') id: string,
+  ) {
+    return this.tagService.fetchTag(id, ETagType.BOOK);
   };
 
   // getBookTag[s]
   @Query(returns => [BookTag])
-  public async getBookTags() {
-
+  public async getBookTags(
+    @Args('bookId') id: string,
+    @Args('filters', { nullable: true }) filters: TagFilterOptionsInput,
+  ) {
+    return this.tagService.fetchTags(id, ETagType.BOOK, filters);
   };
 
   // resolve creator
@@ -33,5 +68,25 @@ export class BookTagResolver {
     } else {
       return undefined;
     };
+  };
+
+  // resolve descripton
+  @ResolveField('description', returns => UniversalText)
+  public async resolveTagDescription(
+    @Parent() tag: BookTag,
+  ): Promise<UniversalText | undefined> {
+    if (tag.description) {
+      return await this.textService.fetchText(tag.description as mongoose.Schema.Types.ObjectId);
+    } else {
+      return undefined;
+    };
+  };
+
+  // resolve book
+  @ResolveField('book', returns => Book)
+  public async resolveTagBook(
+    @Parent() tag: BookTag,
+  ) {
+    return await this.bookService.fetchBook(tag.book as mongoose.Schema.Types.ObjectId);
   };
 }

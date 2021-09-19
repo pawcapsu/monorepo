@@ -19,7 +19,7 @@ export class Tag implements ITag {
   @Prop({ type: String, required: false })
   icon?: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String, required: true, unique: true })
   title: string;
 
   @Prop({ type: String, required: false })
