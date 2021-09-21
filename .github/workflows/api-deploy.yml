@@ -61,5 +61,6 @@ jobs:
         hosts: 'ubuntu@140.238.219.21'
         privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
         command: |
+          cd ./monorepo/packages/api
           export GRAPHCDN_TOKEN=${{ secrets.GRAPHCDN_TOKEN }}
           npx graphcdn push schema
