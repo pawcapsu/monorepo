@@ -55,3 +55,11 @@ jobs:
         command: |
           cd ./monorepo/packages/api
           pm2 start ecosystem.config.js
+    - name: Push GraphQL schema to CDN service
+      uses: JimCronqvist/action-ssh@0.1.1
+      with:
+        hosts: 'ubuntu@140.238.219.21'
+        privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+        command: |
+          export GRAPHCDN_TOKEN=${{ secrets.GRAPHCDN_TOKEN }}
+          npx graphcdn push schema
