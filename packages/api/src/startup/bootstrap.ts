@@ -5,16 +5,16 @@ import * as session from 'express-session';
 import * as fs from 'fs';
 
 export default async function(): Promise<void> {
-  let httpsOptions;
-  try {
-    httpsOptions = {
-      key: fs.readFileSync('../secrets/server.key'),
-      cert: fs.readFileSync('../secrets/server.cert'),
-    };
-  } catch(error) {};
+  // let httpsOptions;
+  // try {
+  //   httpsOptions = {
+  //     key: fs.readFileSync('../secrets/server.key'),
+  //     cert: fs.readFileSync('../secrets/server.cert'),
+  //   };
+  // } catch(error) {};
  
   const app = await NestFactory.create(AppModule, {
-    httpsOptions: process.env.MODE === 'PRODUCTION' ? httpsOptions : null,
+    // httpsOptions: process.env.MODE === 'PRODUCTION' ? httpsOptions : null,
   });
 
   app.use(
