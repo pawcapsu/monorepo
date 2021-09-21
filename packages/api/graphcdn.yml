@@ -9,4 +9,10 @@ rules:
     swr: 900
     types:
       Query: true
+  - maxAge: 900
+    scope: AUTHENTICATED
+    swr: 900
+    types:
+      Query:
+        me: true
 schema: 'https://api.pawcapsu.ml/graphql'
