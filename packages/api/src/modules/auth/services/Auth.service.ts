@@ -26,7 +26,7 @@ export class AuthService {
 
     return profile;
   };
-
+  
   // fetchToken
   async fetchToken(token: string) {
     return await axios.get(`https://api.odzi.dog/${token}`)
