@@ -29,7 +29,7 @@ export class AuthService {
 
   // fetchToken
   async fetchToken(token: string) {
-    return await axios.get(`https://api.odzi.dog:3000/${token}`)
+    return await axios.get(`https://api.odzi.dog/${token}`)
       .then((res) => res.data)
   };
 };
