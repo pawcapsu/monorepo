@@ -8,9 +8,16 @@ jobs:
     strategy:
       matrix:
         node-version: [16]
+        npm-version: [7]
     if: "contains(github.event.head_commit.message, 'api:')"
     steps:
     - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Update npm ${{ matrix.npm-version }}
+      run: npm install -g npm@${{ matrix.npm-version }}
     - name: Aga
       run: |
         node --version
