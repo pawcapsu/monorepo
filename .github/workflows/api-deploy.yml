@@ -8,14 +8,14 @@ jobs:
     if: "contains(github.event.head_commit.message, 'api:')"
     steps:
     - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: npm ci
-    - name: Bootstrap and Build application
-      run: npm run build:api
     - name: Aga
       run: |
         node --version
         npm --version
+    - name: Install dependencies
+      run: npm ci
+    - name: Bootstrap and Build application
+      run: npm run build:api
     - name: Prepare cloud instance for artifact upload
       uses: JimCronqvist/action-ssh@0.1.1
       with:
