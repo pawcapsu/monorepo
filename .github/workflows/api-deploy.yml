@@ -16,12 +16,8 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Update npm ${{ matrix.npm-version }}
+    - name: Use npm@${{ matrix.npm-version }}
       run: npm install -g npm@${{ matrix.npm-version }}
-    - name: Aga
-      run: |
-        node --version
-        npm --version
     - name: Install dependencies
       run: npm ci
     - name: Bootstrap and Build application
@@ -44,7 +40,7 @@ jobs:
         username: 'ubuntu'
         server: '140.238.219.21'
         ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-        local_path: './packages/api/dist'
+        local_path: './packages/api/dist/*'
         remote_path: '/home/ubuntu/pawcapsu/'
         args: '-o ConnectTimeout=5'
     - name: Install dependencies on cloud server
