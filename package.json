@@ -2,7 +2,10 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "build": "lerna clean -y && lerna bootstrap && lerna run build"
+    "bootstrap": "lerna clean -y && lerna bootstrap",
+    "build:all": "npm run bootstrap && lerna run build",
+    "build:api": "npm run bootstrap && lerna run build --scope @pawcapsu/api",
+    "build:web": "npm run bootstrap && lerna run build --scope @pawcapsu/web"
   },
   "devDependencies": {
     "lerna": "^4.0.0"
