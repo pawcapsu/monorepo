@@ -12,6 +12,10 @@ jobs:
       run: npm ci
     - name: Bootstrap and Build application
       run: npm run build:api
+    - name: Aga
+      run: |
+        node --version
+        npm --version
     - name: Prepare cloud instance for artifact upload
       uses: JimCronqvist/action-ssh@0.1.1
       with:
