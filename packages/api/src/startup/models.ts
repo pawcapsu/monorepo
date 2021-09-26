@@ -30,4 +30,8 @@ export const ModelsImports = MongooseModule.forFeature([
     name: 'tag',
     schema: models.TagSchema,
   },
+  {
+    name: 'exploreBadge',
+    schema: models.ExploreBadgeSchema,
+  }
 ]);

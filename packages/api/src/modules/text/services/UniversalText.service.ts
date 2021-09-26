@@ -152,7 +152,7 @@ export class UniversalTextService {
   // fetchText
   async fetchText(
     id: ObjectId
-  ): Promise<UniversalText | undefined> {
+  ): Promise<UniversalText | null> {
     const text = await this.textModel.findOne({ _id: id }).exec();
 
     if (text !== null) {

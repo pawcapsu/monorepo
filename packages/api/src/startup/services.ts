@@ -7,6 +7,7 @@ import * as GlobalPlacesServices from 'src/modules/places/global/services';
 import * as ProfilesServices from 'src/modules/profiles/services';
 import * as TextServices from 'src/modules/text/services';
 import * as TagServices from 'src/modules/interactions/tag/services';
+import * as ExploreServices from 'src/modules/explore/services';
 
 export const Services = [
   ...Object.values(AuthServices),
@@ -18,4 +19,5 @@ export const Services = [
   ...Object.values(ProfilesServices),
   ...Object.values(TextServices),
   ...Object.values(TagServices),
+  ...Object.values(ExploreServices),
 ];

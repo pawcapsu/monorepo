@@ -108,6 +108,26 @@ type Profile {
   ): [Book!]!
 }
 
+type ExploreBadge {
+  _id: String!
+  title: String!
+  color: String
+  description: UniversalText!
+}
+
+type PaginatedExploreBadges {
+  docs: [ExploreBadge!]!
+  totalDocs: Float!
+  limit: Float!
+  page: Float
+  totalPages: Float!
+  nextPage: Float
+  prevPage: Float
+  pagingCounter: Float!
+  hasPrevPage: Boolean!
+  hasNextPage: Boolean!
+}
+
 type PaginatedBooks {
   docs: [Book!]!
   totalDocs: Float!
@@ -146,9 +166,15 @@ type Query {
   ): [BookRating!]!
   getBookTag(id: String!): BookTag!
   getBookTags(filters: TagFilterOptionsInput, bookId: String!): [BookTag!]!
+  getExploreBadge(id: String!): ExploreBadge!
+  getExploreBadges(options: ExploreBadgesSearchOptionsInput, page: Float): PaginatedExploreBadges!
 }
 
 input BookSearchOptionsInput {
+  limit: Float!
+}
+
+input ExploreBadgesSearchOptionsInput {
   limit: Float!
 }
 

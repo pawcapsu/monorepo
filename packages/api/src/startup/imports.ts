@@ -6,3 +6,4 @@ export * from 'src/modules/text/module';
 export * from 'src/modules/permissions/module';
 export * from 'src/modules/interactions/rating/module';
 export * from 'src/modules/interactions/tag/module';
+export * from 'src/modules/explore/module';
