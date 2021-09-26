@@ -43,15 +43,14 @@ jobs:
         local_path: './packages/api/dist/*'
         remote_path: '/home/ubuntu/pawcapsu/'
         args: '-o ConnectTimeout=5'
-    - name: Push node dependencies to cloud server
-      uses: wlixcc/SFTP-Deploy-Action@v1.2.1
+    - name: Install dependencies on cloud server
+      uses: JimCronqvist/action-ssh@0.1.1
       with:
-        username: 'ubuntu'
-        server: '140.238.219.21'
-        ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-        local_path: './packages/api/node_modules'
-        remote_path: '/home/ubuntu/pawcapsu/'
-        args: '-o ConnectTimeout=5'
+        hosts: 'ubuntu@140.238.219.21'
+        privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+        command: |
+          cd ./pawcapsu
+          npm ci
     - name: Start application in pm2 daemon
       uses: JimCronqvist/action-ssh@0.1.1
       with:
