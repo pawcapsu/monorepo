@@ -7,3 +7,4 @@ export * from 'src/modules/permissions/module';
 export * from 'src/modules/interactions/rating/module';
 export * from 'src/modules/interactions/tag/module';
 export * from 'src/modules/explore/module';
+export * from 'src/modules/services/main.module';

@@ -34,4 +34,4 @@ export const ModelsImports = MongooseModule.forFeature([
     name: 'exploreBadge',
     schema: models.ExploreBadgeSchema,
   }
-]);
+], 'paw');
