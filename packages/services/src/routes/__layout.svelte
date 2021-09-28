@@ -3,8 +3,6 @@
   import { UserStore } from '$stores/user/User.store';
   import { onMount } from 'svelte';
 
-  import { Logotype } from 'src/design'
-
   onMount(() => {
     UserStore.authMe();
   });
@@ -14,6 +12,5 @@
   <slot></slot>
 { :else }
   <main class="absolute w-full h-screen bg-gray-900 flex justify-center items-center">
-    <Logotype type="icon" />
   </main>
 { /if }
