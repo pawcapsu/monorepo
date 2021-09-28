@@ -1,27 +1,27 @@
-name: web production
+name: services production
 
 on: push
 
 jobs:
-  deploy:
+  landing:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [16]
-    if: "contains(github.event.head_commit.message, 'web:')"
+    if: "contains(github.event.head_commit.message, 'services:')"
     steps:
     - uses: actions/checkout@v2
     - name: Copy shared package into web production folder
-      run: cp -a ./packages/api/libs/shared/. ./packages/web/production/shared
+      run: cp -a ./packages/api/libs/shared/. ./packages/services/production/shared
 
     - name: Copy production configs into web root folder
-      run: cp -a ./packages/web/production/* ./packages/web
+      run: cp -a ./packages/services/production/* ./packages/services
 
     - name: Deploy application to Vercel
       uses: amondnet/vercel-action@v20
       with:
         vercel-token: ${{ secrets.VERCEL_TOKEN }}
         vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_SERVICES_LANDING }}
         vercel-args: '--prod'
-        working-directory: ./packages/web
+        working-directory: ./packages/services

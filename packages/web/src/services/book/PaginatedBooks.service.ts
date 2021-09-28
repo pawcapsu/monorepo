@@ -7,7 +7,7 @@ import type { IPaginatedBooks, IBook, BookSearchOptions } from '@app/shared';
 
 export class PaginatedBooksClass {
   // get
-  get(options?: BookSearchOptions) {
+  get(options?: BookSearchOptions): Promise<Array<IBook>> {
     return new Promise((resolve) => {
       const store = client.query(gql`
         query getBooks($options: BookSearchOptionsInput!) {

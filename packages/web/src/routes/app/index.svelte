@@ -549,20 +549,6 @@
 
 
       </div>
-
-      <!-- New books -->
-      <div class="w-1/3 relative p-2">
-        <div class="w-full bg-gray-900 h-full">
-          da
-        </div>
-      </div>
-
     </div>
-
-    <!-- Posts -->
-    <div class="flex flex-wrap">
-
-    </div>
-
   </section>
 </div>
