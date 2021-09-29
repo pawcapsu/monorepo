@@ -3,7 +3,7 @@ name: api production
 on: push
 
 jobs:
-  pawcapsu api deploy:
+  pawcapsu_deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -60,7 +60,7 @@ jobs:
           cd ./pawcapsu
           pm2 start ecosystem.config.js
 
-  notifier api deploy:
+  notifier_deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:
