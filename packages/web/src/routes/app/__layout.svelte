@@ -7,7 +7,7 @@
   import {
     Container,
     Logotype,
-  } from 'src/design';
+  } from '@pawcapsu/design';
 
   onMount(() => {
     if ($UserStore.user == null) {

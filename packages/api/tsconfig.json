@@ -13,6 +13,15 @@
     "incremental": true,
     "skipLibCheck": true,
     "paths": {
+      // Applications
+      "@pawcapsu/*": [
+        "apps/pawcapsu-api/src/*"
+      ],
+      "@notifier/*": [
+        "apps/notifier/src/*"
+      ],
+
+      // Libraries
       "@app/shared": [
         "libs/shared/src"
       ],
@@ -24,6 +33,12 @@
       ],
       "@app/services/*": [
         "libs/services/src/*"
+      ],
+      "@app/bootstrap": [
+        "libs/bootstrap/src"
+      ],
+      "@app/bootstrap/*": [
+        "libs/bootstrap/src/*"
       ]
     }
   }

@@ -1,5 +1,5 @@
 import { TTelegramConsumer } from '@app/services';
-import { ObjectId } from 'src/types';
+import { ObjectId } from '@pawcapsu/types';
 import { EScrapperAgentType } from '../..';
 
 export interface IScrapperAgent<T> {

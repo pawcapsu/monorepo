@@ -1,7 +1,7 @@
 <script lang="ts">
   // Importing modules
   import { UserStore } from '$stores/user';
-  import { PaginatedBooksService as Books } from 'src/services/book';
+  import { PaginatedBooksService as Books } from '@pawcapsu/services/book';
   import { onMount } from 'svelte';
 
   // Importing types
@@ -15,9 +15,9 @@
     Heading,
     Paragraph,
     BookCard,
-  } from 'src/design';
+  } from '@pawcapsu/design';
   
-  import Icon from 'src/components/Icon.svelte';
+  import Icon from '@pawcapsu/components/Icon.svelte';
   import { goto } from "$app/navigation";
 
   let books: IBook[];

@@ -1,6 +1,6 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
+  "sourceRoot": "apps/pawcapsu-api/src",
   "projects": {
     "shared": {
       "type": "library",
@@ -19,9 +19,39 @@
       "compilerOptions": {
         "tsConfigPath": "libs/services/tsconfig.lib.json"
       }
+    },
+    "pawcapsu-api": {
+      "type": "application",
+      "root": "apps/pawcapsu-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/pawcapsu-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/pawcapsu-api/tsconfig.app.json"
+      }
+    },
+    "bootstrap": {
+      "type": "library",
+      "root": "libs/bootstrap",
+      "entryFile": "index",
+      "sourceRoot": "libs/bootstrap/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/bootstrap/tsconfig.lib.json"
+      }
+    },
+    "notifier": {
+      "type": "application",
+      "root": "apps/notifier",
+      "entryFile": "main",
+      "sourceRoot": "apps/notifier/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/notifier/tsconfig.app.json"
+      }
     }
   },
   "compilerOptions": {
-    "webpack": true
-  }
+    "webpack": true,
+    "tsConfigPath": "apps/pawcapsu-api/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/pawcapsu-api"
 }

@@ -4,7 +4,8 @@
   "scripts": {
     "bootstrap": "lerna clean -y && lerna bootstrap",
     "build:all": "npm run bootstrap && lerna run build",
-    "build:api": "npm run bootstrap && lerna run build --scope @pawcapsu/api",
+    "build:api/pawcapsu": "npm run bootstrap && lerna run build --scope @pawcapsu/api",
+    "build:api/notifier": "npm run bootstrap && lerna run build --scope @pawcapsu/api",
     "build:web": "npm run bootstrap && lerna run build --scope @pawcapsu/web"
   },
   "devDependencies": {

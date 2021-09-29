@@ -3,7 +3,7 @@
   import { UserStore } from '$stores/user/User.store';
   import { onMount } from 'svelte';
 
-  import { Logotype } from 'src/design'
+  import { Logotype } from '@pawcapsu/design'
 
   onMount(() => {
     UserStore.authMe();

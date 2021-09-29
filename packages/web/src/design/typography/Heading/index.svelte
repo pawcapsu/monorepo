@@ -1,6 +1,6 @@
 <script lang="typescript">
   // Importing theme wrapper
-  import theme from 'src/design/Wrapper'
+  import theme from '@pawcapsu/design/Wrapper'
 
   // Importing properties-related data
   // -sizes

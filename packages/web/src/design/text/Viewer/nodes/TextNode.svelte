@@ -3,7 +3,7 @@
   import type { ITextNode } from '@app/shared';
  
   // Importing components
-  import { Paragraph } from 'src/design';
+  import { Paragraph } from '@pawcapsu/design';
 
   // Exporting variables
   export let node: ITextNode;

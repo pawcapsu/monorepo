@@ -1,13 +1,13 @@
 <script lang="typescript">
   // Importing theme wrapper
-  import theme from 'src/design/Wrapper'
+  import theme from '@pawcapsu/design/Wrapper'
 
   // Importing components
   import {
     Viewer
-  } from 'src/design';
+  } from '@pawcapsu/design';
 
-  import Icon from 'src/components/Icon.svelte';
+  import Icon from '@pawcapsu/components/Icon.svelte';
 
   // Importing types
   import type { IBook, IProfile, IBookChapter, IBookRating, IUniversalText } from '@app/shared';
