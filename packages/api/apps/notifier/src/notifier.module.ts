@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { BotsService } from './bots/Bots.service';
 import { BullModule, BullModuleOptions } from '@nestjs/bull';
+import { ScheduleModule } from '@nestjs/schedule';
 import { EQueueNames } from 'apps/notifier/src/types';
 import { ScrapperAgentSchema } from 'apps/notifier/src/types';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -8,10 +9,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import * as Services from './services';
 import * as Processors from './processors';
 import * as Controllers from './controllers';
+
 import { TestBotService } from './bots/Telegram/services';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     MongooseModule.forRoot('mongodb+srv://paws:kxz2zyGxIO28JaCR@cluster0.03jyp.mongodb.net/notifier?retryWrites=true&w=majority', {
       connectionName: 'service/notifier'
     }),
