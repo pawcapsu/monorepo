@@ -7,8 +7,8 @@ export class AgentsController {
     private readonly service: AgentsService,
   ) {}
 
-  // @Get('test')
-  // public async test() {
-  //   return await this.service.createAgent();
-  // };
+  @Get('test')
+  public async test() {
+    return await this.service.createAgent();
+  };
 };

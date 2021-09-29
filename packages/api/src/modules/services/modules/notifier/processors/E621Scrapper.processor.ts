@@ -24,7 +24,7 @@ export class E621ScrapperProcessor {
       const { posts } = await fetchLatest(agent.data.tags);
       const [post] = posts;
 
-      if (agent.lastPostId != String(post.id)) {
+      if (post && agent.lastPostId != String(post.id)) {
         // Notify user
         cb(null, { agent, post });
       } else {

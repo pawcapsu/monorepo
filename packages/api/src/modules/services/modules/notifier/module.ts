@@ -5,15 +5,16 @@ import { EQueueNames } from 'src/types/enums';
 import { ScrapperAgentSchema } from 'src/types/models';
 import { MongooseModule } from '@nestjs/mongoose';
 import * as Processors from './processors';
-import { AgentsService } from './services';
 
 import * as Services from './services';
 // import * as Processors from './processors';
 import * as Controllers from './controllers';
+import { TestBotService } from './bots/Telegram/services';
+
+// const bots = new BotsService();
 
 @Module({
   imports: [
-    BotsService,
     MongooseModule.forFeature([
       {
         name: 'agent',
@@ -35,6 +36,10 @@ import * as Controllers from './controllers';
   providers: [
     ...Object.values(Services),
     // ...Object.values(Processors),
+
+    // BotServices
+    BotsService,
+    TestBotService,
   ],
   controllers: [
     ...Object.values(Controllers)

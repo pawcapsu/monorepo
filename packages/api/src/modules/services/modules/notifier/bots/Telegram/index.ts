@@ -11,7 +11,7 @@ export class TelegramNotifierBot implements BotInstance {
   private readonly logger = new Logger(TelegramNotifierBot.name);
 
   constructor() {
-    this.bot = new Bot("2038924887:AAFNNfJh_lXG2ur6Bpw87F_zFRYzGA7pbco");
+    this.bot = new Bot("2038924887:AAHsd5yZUjNizuFDve2oSzPGz8SWOVMmu-c");
 
     // Initializing bot commands
     [...Object.values(BotCommands)].forEach((command) => {
@@ -29,7 +29,8 @@ export class TelegramNotifierBot implements BotInstance {
   };
 
   // start action
-  start() {
+  start(): Bot {
     this.bot.start();
+    return this.bot;
   };
 };
