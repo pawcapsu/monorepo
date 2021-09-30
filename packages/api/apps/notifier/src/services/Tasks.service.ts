@@ -20,7 +20,7 @@ export class TasksService {
   @Cron(CronExpression.EVERY_10_SECONDS)
   async handleCron() {
     for await (const doc of this.agentsService.getCursor()) {
-      const jobId = `scrape-${doc.consumer.chatId}`;
+      const jobId = `scrape-${doc.consumer.chatId}-${doc.data.tags.join("_")}`;
 
       const job = await this.scrapperQueue.getJob(jobId)
       if (!job || job && job.isCompleted) {
