@@ -17,7 +17,7 @@ export class TasksService {
 
   private readonly logger = new Logger(TasksService.name);
 
-  @Cron(CronExpression.EVERY_10_SECONDS)
+  @Cron(CronExpression.EVERY_MINUTE)
   async handleCron() {
     for await (const doc of this.agentsService.getCursor()) {
       const jobId = `scrape-${doc.consumer.chatId}-${doc.data.tags.join("_")}`;
