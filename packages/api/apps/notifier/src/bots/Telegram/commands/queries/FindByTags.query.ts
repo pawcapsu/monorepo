@@ -74,7 +74,7 @@ export class SubscribeQuery implements BotCommand {
               .url('About this Bot', 'https://services.pawcapsu.ml/leggydog')
           }
         }),
-        { cache_time: 600 }
+        { cache_time: 10 }
       );
     });
   };

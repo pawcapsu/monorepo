@@ -28,18 +28,17 @@ export class ApiService {
   public async fetchManyByTags(tags: String[], numberToFetch = 5, options?: {
     page?: number,
   }): Promise<UnifiedPost[]> {
-    const { data } = await axios.get(`https://e621.net/posts.json`, {
+    const request = await axios.get(`https://e621.net/posts.json?tags=${ tags.join("+") }`, {
       headers: {
         'User-Agent': 'LeggydogBot/1.0 (@SniperFox213 on github)'
       },
       params: {
-        tags: tags.join('+'),
         limit: numberToFetch,
         page: options?.page ?? null,
       }
     });
 
-    const posts: Post[] = data.posts;
+    const posts: Post[] = request.data.posts;
     const unifiedPosts: Array<UnifiedPost> = [];
     posts.forEach(post => {
       unifiedPosts.push({
