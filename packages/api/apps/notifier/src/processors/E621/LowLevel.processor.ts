@@ -33,13 +33,12 @@ export class E621SeparateProcessor {
         url: unparsedPost.file.url,
       };
 
-      cb(null, { agent, post });
-      // if (post && agent.lastPostId != String(post.id)) {
-      //   // Notify user
-      //   cb(null, { agent, post });
-      // } else {
-      //   cb(null, null);
-      // };
+      if (post && agent.lastPostId != String(post.id)) {
+        // Notify user
+        cb(null, { agent, post });
+      } else {
+        cb(null, null);
+      };
     };
   };
 };
