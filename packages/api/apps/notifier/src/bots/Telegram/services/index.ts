@@ -1,1 +1,2 @@
-export * from './Test.BotService';
+export * from './LowLevel.BotService';
+export * from './Gateway.BotService';

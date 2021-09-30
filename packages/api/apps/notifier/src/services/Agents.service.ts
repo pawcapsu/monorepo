@@ -1,14 +1,14 @@
-import { EParseMode, IE621ScrapperData, IScrapperAgent, ISendPhotoOptions } from "@app/services"
-import { Post } from "@app/services/notifier/imported";
-import { Injectable } from "@nestjs/common";
+import { EConsumerType, EMessageActionType, EScrapperAgentType, IE621ScrapperData, IScrapperAgent, UnifiedPost } from "@app/services"
+import { Injectable, Logger } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Job } from "bull";
-import { InlineKeyboard } from "grammy";
-import { EScrapperAgentType } from "@app/services";
 import { Model, QueryCursor } from "mongoose";
 import { ObjectId } from "@pawcapsu/types";
 import { ScrapperAgentDocument } from "apps/notifier/src/types";
-import { TestBotService } from "../bots/Telegram/services";
+import { TelegramGatewayService } from "@notifier/bots/Telegram/services";
+import { InjectQueue } from '@nestjs/bull';
+import { EQueueNames } from 'apps/notifier/src/types';
+import { Queue } from 'bull';
 
 @Injectable()
 export class AgentsService {
@@ -16,8 +16,13 @@ export class AgentsService {
     @InjectModel('agent')
     private readonly agentModel: Model<ScrapperAgentDocument>,
 
-    private readonly telegramBotService: TestBotService,
+    @InjectQueue(EQueueNames.E621)
+    private scrapperQueue: Queue,
+    
+    private readonly telegramGateway: TelegramGatewayService,
   ) {}
+
+  private readonly logger = new Logger(AgentsService.name);
 
   // createAgent
   public async createAgent() {
@@ -28,54 +33,44 @@ export class AgentsService {
         tags: ['male/male', 'dalmatian', 'cute']
       }
     });
-
+  
     return await agent.save();
   };
 
-  // notify
-  public async notify<T>(
-    agent: IScrapperAgent<T>,
-    post: Post,
-  ): Promise<void> {
-    this.telegramBotService.sendPhoto(
-      agent.consumer as number,
-      post.file.url,
-      this._generateCaption(post),
-    )
-  };
-
-  // private generateCaption
-  private _generateCaption(post: Post): ISendPhotoOptions {
-    return {
-      caption: `*New image*\n\n\`${ post.description }\`\n*Score*: ${ post.score.total }\n`,
-      parse_mode: EParseMode.MARKDOWNV2,
-      reply_markup: new InlineKeyboard()
-        .text("⭐ Like it", `favourite-${ post.id }`)
-        .text("🗑️ I don't like it", `delete-me`)
-    };
-  };
-
   // handleQueue
-  public async handleQueue(queue: Job) {
-    // Waiting for task to finish
-    queue.finished()
-    .then(async (results) => {
-      if (results != null) {
-        const result: { agent: IScrapperAgent<IE621ScrapperData>, post: Post } = results;
+  public async handleQueue(jobId: string, _actionType?: EMessageActionType) {
+    const job = await this.scrapperQueue.getJob(jobId);
+    
+    if (job) {
+      job.finished()
+      .then(async (results) => {
+        if (results != null) {
+          // +todo Check agent type and dynamically
+          // set Data
+          type Data = IE621ScrapperData;
+          const result: { agent: IScrapperAgent<Data>, post: UnifiedPost } = results;
+          
+          if (_actionType != null) result.post._actionType = _actionType;
 
-        // Notifing user
-        await this.notify(
-          result.agent,
-          result.post,
-        );
+          // Updating agent
+          await this.updateLatestPostId(
+            result.agent._id,
+            String(result.post.id)
+          );
 
-        // Updating agent
-        await this.updateLatestPostId(
-          result.agent._id,
-          String(result.post.id)
-        );
-      };
-    });    
+          // Notifing user
+          // Telegram Consumer
+          if (result.agent.consumer.type === EConsumerType.TELEGRAM) {
+            await this.telegramGateway.handlePost(
+              result.agent,
+              result.post,
+            );
+          } else if (result.agent.consumer.type === EConsumerType.DISCORD) {
+            console.log("DISCORD CONSUMER");
+          };
+        };
+      });
+    };
   };
 
   // updateLatestPostId

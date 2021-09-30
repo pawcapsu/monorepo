@@ -3,8 +3,9 @@ import { Job, DoneCallback } from 'bull';
 import { EQueueNames } from 'apps/notifier/src/types';
 import { Post } from '@app/services/notifier/imported';
 import { default as axios } from 'axios';
+import { UnifiedPost } from '@app/services';
 
-export class E621ScrapperProcessor {
+export class E621SeparateProcessor {
   public readonly type = EQueueNames.E621;
 
   public initialize(): BullQueueProcessor {
@@ -22,14 +23,23 @@ export class E621ScrapperProcessor {
       const agent = job.data;
 
       const { posts } = await fetchLatest(agent.data.tags);
-      const [post] = posts;
+      const [unparsedPost] = posts;
 
-      if (post && agent.lastPostId != String(post.id)) {
-        // Notify user
-        cb(null, { agent, post });
-      } else {
-        cb(null, null);
+      // Parsing {post} request
+      const post: UnifiedPost = {
+        id: unparsedPost.id,
+        description: unparsedPost.description,
+        score: unparsedPost.score.total,
+        url: unparsedPost.file.url,
       };
+
+      cb(null, { agent, post });
+      // if (post && agent.lastPostId != String(post.id)) {
+      //   // Notify user
+      //   cb(null, { agent, post });
+      // } else {
+      //   cb(null, null);
+      // };
     };
   };
 };

@@ -7,10 +7,12 @@ import { ScrapperAgentSchema } from 'apps/notifier/src/types';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import * as Services from './services';
-import * as Processors from './processors';
+import { SeparateProcessors } from './processors';
 import * as Controllers from './controllers';
 
-import { TestBotService } from './bots/Telegram/services';
+import * as TelegramBotServices from './bots/Telegram/services';
+import { Job, DoneCallback } from 'bull';
+import { createBrotliCompress } from 'zlib';
 
 @Module({
   imports: [
@@ -26,22 +28,32 @@ import { TestBotService } from './bots/Telegram/services';
     ], 'service/notifier'),
     BullModule.forRoot({
       redis: {
-        host: "redis-16613.c244.us-east-1-2.ec2.cloud.redislabs.com",
-        port: 16613,
-        password: "cD14ZkN8VIKgEUMUJrC2ciEfAGzFMCze"
-      }
+        host: "redis-14306.c16.us-east-1-2.ec2.cloud.redislabs.com",
+        port: 14306,
+        password: "4nRAVFYOr6xZTnjHMyR978j7DSQYOzYp"
+      },
+      defaultJobOptions: {
+        removeOnComplete: true,
+        removeOnFail: true,
+      },
     }),
-    BullModule.registerQueue(...Object.keys(EQueueNames).map((name) => {
-      return <BullModuleOptions>{
-        name,
-        processors: [
-          ...Object.values(Processors)
-          .map((processor) => new processor())
-          .filter((processor) => processor.type == name)
-          .map((processor) => processor.initialize())
-        ]
-      };
-    })),
+    BullModule.registerQueue(
+      {
+        name: EQueueNames.E621,
+        processors: [ new SeparateProcessors[0]().initialize() ]
+      }
+    ),
+    // BullModule.registerQueue(...Object.keys(EQueueNames).map((name) => {
+    //   return <BullModuleOptions>{
+    //     name,
+    //     processors: [
+    //       ...Object.values(SeparateProcessors)
+    //       .map((processor) => new processor())
+    //       .filter((processor) => processor.type == name)
+    //       .map((processor) => processor.initialize())
+    //     ],
+    //   };
+    // })),
   ],
   providers: [
     ...Object.values(Services),
@@ -49,7 +61,7 @@ import { TestBotService } from './bots/Telegram/services';
 
     // BotServices
     BotsService,
-    TestBotService,
+    ...Object.values(TelegramBotServices),
   ],
   controllers: [
     ...Object.values(Controllers)

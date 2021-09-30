@@ -1,5 +1,5 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { EScrapperAgentType, IScrapperAgent, TScrapperAgentData, TTelegramConsumer } from '@app/services';
+import { EScrapperAgentType, IScrapperAgent, TScrapperAgentData, TScrapperConsumer } from '@app/services';
 import { ObjectId } from '@pawcapsu/types';
 import { Document } from 'mongoose';
 
@@ -12,8 +12,8 @@ export class ScrapperAgent implements IScrapperAgent<TScrapperAgentData> {
   @Prop({ type: String, enum: Object.keys(EScrapperAgentType), required: true })
   type: EScrapperAgentType;
 
-  @Prop({ type: Number, required: true })
-  consumer: TTelegramConsumer
+  @Prop({ type: Object, required: true })
+  consumer: TScrapperConsumer
 
   @Prop({ type: Object, required: true })
   data: TScrapperAgentData;

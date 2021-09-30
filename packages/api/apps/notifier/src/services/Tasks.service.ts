@@ -2,9 +2,9 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectQueue } from '@nestjs/bull';
 import { EQueueNames } from 'apps/notifier/src/types';
-import { IE621ScrapperData, IScrapperAgent } from '@app/services';
+import { IE621ScrapperData, IScrapperAgent, EMessageActionType } from '@app/services';
 import { AgentsService } from '.';
-import { Job, Queue } from 'bull';
+import { Queue } from 'bull';
 
 @Injectable()
 export class TasksService {
@@ -20,10 +20,19 @@ export class TasksService {
   @Cron(CronExpression.EVERY_10_SECONDS)
   async handleCron() {
     for await (const doc of this.agentsService.getCursor()) {
-      this.scrapperQueue.add(<IScrapperAgent<IE621ScrapperData>>doc)
-      .then((queue: Job) => {
-        this.agentsService.handleQueue(queue);
-      });
+      const jobId = `scrape-${doc.consumer.chatId}`;
+
+      const job = await this.scrapperQueue.getJob(jobId)
+      if (!job || job && job.isCompleted) {
+        await this.scrapperQueue.add(<IScrapperAgent<IE621ScrapperData>>doc, { 
+          removeOnComplete: true, 
+          removeOnFail: true,
+          jobId,
+        })
+        .then(() => {
+          this.agentsService.handleQueue(jobId, EMessageActionType.NEW_POST);
+        });
+      };
     };
   };
 };

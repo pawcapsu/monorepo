@@ -1,11 +1,12 @@
 import { ISendPhotoOptions } from '@app/services';
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { BotsService } from '../../Bots.service';
 
 @Injectable()
-export class TestBotService implements OnModuleInit {
+export class LowLevelBotService implements OnModuleInit {
   private service: BotsService;
+  private readonly logger = new Logger(LowLevelBotService.name);
   constructor(private moduleRef: ModuleRef) {}
 
   onModuleInit() {
@@ -22,6 +23,10 @@ export class TestBotService implements OnModuleInit {
       caption: options?.caption,
       parse_mode: options?.parse_mode,
       reply_markup: options?.reply_markup,
+    })
+    .catch((error) => {
+      this.logger.error(`Error sending message to chatId ${to} in Telegram's LowLevelBotService`);
+      this.logger.error(error);
     });
   };
 };

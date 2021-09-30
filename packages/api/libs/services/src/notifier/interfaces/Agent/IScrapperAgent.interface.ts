@@ -1,4 +1,4 @@
-import { TTelegramConsumer } from '@app/services';
+import { TScrapperConsumer } from '@app/services';
 import { ObjectId } from '@pawcapsu/types';
 import { EScrapperAgentType } from '../..';
 
@@ -7,7 +7,7 @@ export interface IScrapperAgent<T> {
 
   // Common scrapper properties
   type: EScrapperAgentType;
-  consumer: TTelegramConsumer;
+  consumer: TScrapperConsumer;
 
   // Type-defined data
   data: T;
