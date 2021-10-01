@@ -1,5 +1,5 @@
-import { Bot } from 'grammy';
+import { Bot } from "grammy";
 
 export interface BotCommand {
-  initialize: (bot: Bot) => void
-};
+  initialize: (bot: Bot) => void;
+}

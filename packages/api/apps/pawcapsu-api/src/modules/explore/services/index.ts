@@ -1,1 +1,1 @@
-export * from './ExploreBadge.service';
+export * from "./ExploreBadge.service";

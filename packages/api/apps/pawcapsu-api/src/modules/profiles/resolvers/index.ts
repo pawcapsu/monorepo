@@ -1,1 +1,1 @@
-export * from './Profiles.resolver';
+export * from "./Profiles.resolver";

@@ -1,9 +1,9 @@
 import { ObjectType, Field } from "@nestjs/graphql";
-import { ITextNode, ENodeType } from '@app/shared';
+import { ITextNode, ENodeType } from "@app/shared";
 
-@ObjectType('TextNode')
+@ObjectType("TextNode")
 export class TextNodeObject implements ITextNode {
-  @Field(type => ENodeType)
+  @Field((type) => ENodeType)
   type: ENodeType.TEXT;
 
   @Field({ nullable: false })
@@ -11,4 +11,4 @@ export class TextNodeObject implements ITextNode {
 
   @Field()
   content: string;
-};
+}

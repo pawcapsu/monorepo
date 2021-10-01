@@ -1,9 +1,9 @@
 import { createUnionType } from "@nestjs/graphql";
 import { ENodeType } from "@app/shared";
-import * as nodes from '@pawcapsu/types/models/content/Text/Nodes';
+import * as nodes from "@pawcapsu/types/models/content/Text/Nodes";
 
 export const NodeEntityUnion = createUnionType({
-  name: 'UNodeEntity',
+  name: "UNodeEntity",
   types: () => Object.values(nodes),
   resolveType(value) {
     switch (value.type) {
@@ -14,4 +14,4 @@ export const NodeEntityUnion = createUnionType({
         return nodes.TextNodeObject;
     }
   },
-})
+});

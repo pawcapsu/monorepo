@@ -1,2 +1,2 @@
-export * from './BookRating.object';
-export * from './ProfileRating.object';
+export * from "./BookRating.object";
+export * from "./ProfileRating.object";

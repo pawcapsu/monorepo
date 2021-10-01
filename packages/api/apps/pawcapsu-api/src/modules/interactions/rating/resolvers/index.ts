@@ -1,1 +1,1 @@
-export * from './BookRating.resolver';
+export * from "./BookRating.resolver";

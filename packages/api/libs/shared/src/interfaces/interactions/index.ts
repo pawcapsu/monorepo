@@ -1,2 +1,2 @@
-export * from './rating';
-export * from './tag';
+export * from "./rating";
+export * from "./tag";

@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common';
-import { Services } from '@pawcapsu/startup/services';
+import { Module } from "@nestjs/common";
+import { Services } from "@pawcapsu/startup/services";
 
-import * as services from './services';
+import * as services from "./services";
 
 Module({
   providers: [...Object.values(Services)],
-  exports: [...Object.values(services)]
-})
-export class PermissionsModule {};
+  exports: [...Object.values(services)],
+});
+export class PermissionsModule {}

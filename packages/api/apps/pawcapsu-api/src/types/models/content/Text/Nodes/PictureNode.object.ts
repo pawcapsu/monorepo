@@ -1,17 +1,17 @@
 import { ObjectType, Field } from "@nestjs/graphql";
-import { IPictureNode, ENodeType } from '@app/shared';
+import { IPictureNode, ENodeType } from "@app/shared";
 
-@ObjectType('PictureNode')
+@ObjectType("PictureNode")
 export class PictureNodeObject implements IPictureNode {
-  @Field(type => ENodeType)
+  @Field((type) => ENodeType)
   type: ENodeType.PICTURE;
-   
+
   @Field({ nullable: false })
-  index: number
+  index: number;
 
   @Field()
   caption: string;
 
   @Field()
   url: string;
-};
+}

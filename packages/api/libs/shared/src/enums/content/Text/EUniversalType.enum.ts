@@ -1,4 +1,4 @@
 export enum EUniversalTextType {
-  TEXT = 'TEXT',
-  COMICS = 'COMICS',
-};
+  TEXT = "TEXT",
+  COMICS = "COMICS",
+}

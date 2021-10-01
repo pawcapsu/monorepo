@@ -4,4 +4,4 @@ import { InputType, Field } from "@nestjs/graphql";
 export class ChapterInformationInput {
   @Field({ nullable: false })
   title: string;
-};
+}

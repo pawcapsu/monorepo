@@ -1,2 +1,2 @@
-export * from './TextNode.object';
-export * from './PictureNode.object';
+export * from "./TextNode.object";
+export * from "./PictureNode.object";

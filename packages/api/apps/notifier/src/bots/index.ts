@@ -1,2 +1,2 @@
 // export * from './Discord';
-export * from './Telegram';
+export * from "./Telegram";

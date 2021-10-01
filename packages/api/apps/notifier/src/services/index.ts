@@ -1,3 +1,2 @@
-export * from './Agents.service';
-export * from './Tasks.service';
-export * from './Queue.service';
+export * from "./GlobalQueue.service";
+export * from "./Subscriber";

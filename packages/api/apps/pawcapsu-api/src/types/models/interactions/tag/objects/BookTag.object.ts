@@ -1,25 +1,27 @@
 import { ObjectType, Field } from "@nestjs/graphql";
-import { Book, Profile, UniversalText } from '@pawcapsu/types/models';
+import { Book, Profile, UniversalText } from "@pawcapsu/types/models";
 import { RelationalProp, IBookTag } from "@app/shared";
-import { ObjectId } from '@pawcapsu/types';
+import { ObjectId } from "@pawcapsu/types";
 
 @ObjectType()
 export class BookTag implements IBookTag {
-  @Field(type => String, { nullable: false })
+  @Field((type) => String, { nullable: false })
   _id: ObjectId;
 
-  @Field(type => Book, { description: 'Entity (Book) which this tag belongs to.' })
+  @Field((type) => Book, {
+    description: "Entity (Book) which this tag belongs to.",
+  })
   book: RelationalProp<Book>;
 
-  @Field(type => String, { nullable: true })
+  @Field((type) => String, { nullable: true })
   icon?: string;
-  
-  @Field(type => String, { nullable: true })
+
+  @Field((type) => String, { nullable: true })
   title: string;
 
-  @Field(type => UniversalText, { nullable: true })
+  @Field((type) => UniversalText, { nullable: true })
   description?: RelationalProp<UniversalText>;
 
-  @Field(type => Profile, { nullable: true })
+  @Field((type) => Profile, { nullable: true })
   creator?: RelationalProp<Profile>;
-};
+}

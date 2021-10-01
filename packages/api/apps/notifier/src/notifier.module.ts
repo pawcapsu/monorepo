@@ -1,48 +1,50 @@
-import { Module } from '@nestjs/common';
-import { BotsService } from './bots/Bots.service';
-import { BullModule, BullModuleOptions } from '@nestjs/bull';
-import { ScheduleModule } from '@nestjs/schedule';
-import { EQueueNames } from 'apps/notifier/src/types';
-import { ScrapperAgentSchema } from 'apps/notifier/src/types';
-import { MongooseModule } from '@nestjs/mongoose';
+import { Module } from "@nestjs/common";
+import { BotsService } from "./bots/Bots.service";
+import { BullModule } from "@nestjs/bull";
+import { ScheduleModule } from "@nestjs/schedule";
+import { EQueueNames } from "apps/notifier/src/types";
+import { ScrapperAgentSchema } from "apps/notifier/src/types";
+import { MongooseModule } from "@nestjs/mongoose";
 
-import * as Services from './services';
-import { SeparateProcessors } from './processors';
-import * as Controllers from './controllers';
+import * as Services from "./services";
+import { SubscribeProcessors } from "./services/Sources";
+import * as Controllers from "./controllers";
 
-import * as TelegramBotServices from './bots/Telegram/services';
-import { Job, DoneCallback } from 'bull';
-import { createBrotliCompress } from 'zlib';
+import * as TelegramBotServices from "./bots/Telegram/services";
 
 @Module({
   imports: [
     ScheduleModule.forRoot(),
-    MongooseModule.forRoot('mongodb+srv://paws:kxz2zyGxIO28JaCR@cluster0.03jyp.mongodb.net/notifier?retryWrites=true&w=majority', {
-      connectionName: 'service/notifier'
-    }),
-    MongooseModule.forFeature([
+    MongooseModule.forRoot(
+      "mongodb+srv://paws:kxz2zyGxIO28JaCR@cluster0.03jyp.mongodb.net/notifier?retryWrites=true&w=majority",
       {
-        name: 'agent',
-        schema: ScrapperAgentSchema,
+        connectionName: "service/notifier",
       }
-    ], 'service/notifier'),
+    ),
+    MongooseModule.forFeature(
+      [
+        {
+          name: "agent",
+          schema: ScrapperAgentSchema,
+        },
+      ],
+      "service/notifier"
+    ),
     BullModule.forRoot({
       redis: {
         host: "redis-14306.c16.us-east-1-2.ec2.cloud.redislabs.com",
         port: 14306,
-        password: "4nRAVFYOr6xZTnjHMyR978j7DSQYOzYp"
+        password: "4nRAVFYOr6xZTnjHMyR978j7DSQYOzYp",
       },
       defaultJobOptions: {
         removeOnComplete: true,
         removeOnFail: true,
       },
     }),
-    BullModule.registerQueue(
-      {
-        name: EQueueNames.E621,
-        processors: [ new SeparateProcessors[0]().initialize() ]
-      }
-    ),
+    BullModule.registerQueue({
+      name: EQueueNames.E621,
+      processors: [new SubscribeProcessors[0]().initialize()],
+    }),
     // BullModule.registerQueue(...Object.keys(EQueueNames).map((name) => {
     //   return <BullModuleOptions>{
     //     name,
@@ -57,14 +59,11 @@ import { createBrotliCompress } from 'zlib';
   ],
   providers: [
     ...Object.values(Services),
-    // ...Object.values(Processors),
 
     // BotServices
     BotsService,
     ...Object.values(TelegramBotServices),
   ],
-  controllers: [
-    ...Object.values(Controllers)
-  ]
+  controllers: [...Object.values(Controllers)],
 })
-export class NotifierModule {};
+export class NotifierModule {}

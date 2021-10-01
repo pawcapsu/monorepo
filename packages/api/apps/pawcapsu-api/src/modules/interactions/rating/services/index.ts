@@ -1,1 +1,1 @@
-export * from './Rating.service';
+export * from "./Rating.service";

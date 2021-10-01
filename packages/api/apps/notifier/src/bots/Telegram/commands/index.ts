@@ -1,2 +1,2 @@
-export * from './Start.command';
-export * from './queries';
+export * from "./Start.command";
+export * from "./queries";

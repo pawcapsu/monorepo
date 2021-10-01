@@ -1,1 +1,1 @@
-export * from './ScrapperAgent.model';
+export * from "./ScrapperAgent.model";

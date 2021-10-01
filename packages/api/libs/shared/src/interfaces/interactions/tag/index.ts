@@ -1,2 +1,2 @@
-export * from './Book';
-export * from './ITag.interface';
+export * from "./Book";
+export * from "./ITag.interface";

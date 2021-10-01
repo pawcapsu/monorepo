@@ -1,15 +1,15 @@
 import { EMessageActionType } from "@app/services";
 
 export interface UnifiedPost {
-  _actionType?: EMessageActionType
+  _actionType?: EMessageActionType;
 
   // Common properties
-  id: number,
-  url: string,
+  id: number;
+  url: string;
 
   // Text properties (description, tags and so on)
-  description: string,
+  description: string;
 
   // Social properties
-  score: number,
-};
+  score: number;
+}

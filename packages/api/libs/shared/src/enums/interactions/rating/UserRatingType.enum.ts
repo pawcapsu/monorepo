@@ -1,4 +1,4 @@
 export enum EUserRatingType {
-  PROFILE = 'PROFILE',
-  BOOK = 'BOOK',
-};
+  PROFILE = "PROFILE",
+  BOOK = "BOOK",
+}

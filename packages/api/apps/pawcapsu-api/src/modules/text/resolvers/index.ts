@@ -1,1 +1,1 @@
-export * from './UniversalText.resolver';
+export * from "./UniversalText.resolver";

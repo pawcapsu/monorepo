@@ -1,12 +1,12 @@
 import { ETagType, RelationalProp } from "../../../enums";
-import { IProfile } from '../../users';
+import { IProfile } from "../../users";
 
 export interface ITag {
-  type: ETagType,
+  type: ETagType;
 
-  icon?: string,
-  title: string,
-  description?: string,
+  icon?: string;
+  title: string;
+  description?: string;
 
-  creator?: RelationalProp<IProfile | any>
-};
+  creator?: RelationalProp<IProfile | any>;
+}

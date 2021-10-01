@@ -4,4 +4,4 @@ import { InputType, Field } from "@nestjs/graphql";
 export class AddNodeOptions {
   @Field({ nullable: true })
   addAfter: number;
-};
+}

@@ -1,1 +1,1 @@
-export * from './FindByTags.query';
+export * from "./FindByTags.query";

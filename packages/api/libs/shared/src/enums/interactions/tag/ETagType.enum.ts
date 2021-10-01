@@ -1,3 +1,3 @@
 export enum ETagType {
-  BOOK = 'BOOK'
+  BOOK = "BOOK",
 }

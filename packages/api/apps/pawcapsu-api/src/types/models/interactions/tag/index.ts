@@ -1,2 +1,2 @@
-export * from './Tag.model';
-export * from './objects';
+export * from "./Tag.model";
+export * from "./objects";

@@ -1,4 +1,4 @@
 export interface BookTagInformation {
-  icon?: string
-  title: string,
-};
+  icon?: string;
+  title: string;
+}

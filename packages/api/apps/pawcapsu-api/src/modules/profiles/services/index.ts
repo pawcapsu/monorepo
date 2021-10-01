@@ -1,1 +1,1 @@
-export * from './Profiles.service';
+export * from "./Profiles.service";

@@ -1,1 +1,1 @@
-export * from './BookTag.resolver';
+export * from "./BookTag.resolver";

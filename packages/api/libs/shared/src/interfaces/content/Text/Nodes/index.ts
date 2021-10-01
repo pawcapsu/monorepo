@@ -1,2 +1,2 @@
-export * from './IPictureNode.interface';
-export * from './ITextNode.interface';
+export * from "./IPictureNode.interface";
+export * from "./ITextNode.interface";

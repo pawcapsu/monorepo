@@ -1,1 +1,1 @@
-export * from './ObjectId.type';
+export * from "./ObjectId.type";

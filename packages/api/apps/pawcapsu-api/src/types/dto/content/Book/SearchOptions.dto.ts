@@ -3,6 +3,6 @@ import { InputType, Field } from "@nestjs/graphql";
 
 @InputType()
 export class BookSearchOptionsInput implements BookSearchOptions {
-  @Field({ nullable: false, })
+  @Field({ nullable: false })
   limit: number;
-};
+}

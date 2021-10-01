@@ -1,1 +1,1 @@
-export * from './QueueNames.enum';
+export * from "./QueueNames.enum";

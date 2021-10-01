@@ -1,8 +1,8 @@
 import { ENodeType } from "../../../../enums";
 
 export interface ITextNode {
-  index?: number,
+  index?: number;
 
-  type: ENodeType.TEXT,
-  content: string,
-};
+  type: ENodeType.TEXT;
+  content: string;
+}

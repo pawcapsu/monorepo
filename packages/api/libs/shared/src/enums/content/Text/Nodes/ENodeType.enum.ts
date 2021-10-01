@@ -1,4 +1,4 @@
 export enum ENodeType {
-  TEXT = 'TEXT',
-  PICTURE = 'PICTURE',
-};
+  TEXT = "TEXT",
+  PICTURE = "PICTURE",
+}

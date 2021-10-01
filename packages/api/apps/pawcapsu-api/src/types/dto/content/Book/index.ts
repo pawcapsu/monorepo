@@ -1,1 +1,1 @@
-export * from './ChapterInformation.dto';
+export * from "./ChapterInformation.dto";

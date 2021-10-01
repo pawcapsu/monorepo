@@ -1,2 +1,2 @@
-export * from './ETagType.enum';
-export * from './TTagEntity.enum';
+export * from "./ETagType.enum";
+export * from "./TTagEntity.enum";

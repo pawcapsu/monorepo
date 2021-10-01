@@ -3,4 +3,4 @@ export enum EMessageActionType {
   INTERESTING = "INTERESTING",
   RECOMMENDED = "RECOMMENDED",
   NEWS = "NEWS",
-};
+}

@@ -1,1 +1,1 @@
-export * from './UnifiedPost.interface';
+export * from "./UnifiedPost.interface";

@@ -3,4 +3,4 @@ import { IProfile } from "@app/shared/interfaces/users";
 
 export interface IChapterEditor {
   user: RelationalProp<IProfile>;
-};
+}

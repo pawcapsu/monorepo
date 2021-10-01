@@ -9,4 +9,4 @@ export interface IProfile {
   books: Array<any>;
 
   // Interactions
-};
+}

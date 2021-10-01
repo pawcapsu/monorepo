@@ -1,3 +1,3 @@
 export interface BookSearchOptions {
-  limit?: number
-};
+  limit?: number;
+}

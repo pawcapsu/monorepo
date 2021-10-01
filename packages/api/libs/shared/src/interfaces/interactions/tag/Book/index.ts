@@ -1,1 +1,1 @@
-export * from './IBookTag.interface';
+export * from "./IBookTag.interface";

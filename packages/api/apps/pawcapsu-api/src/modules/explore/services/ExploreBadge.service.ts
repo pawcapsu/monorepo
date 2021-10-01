@@ -1,27 +1,30 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model, PaginateModel } from 'mongoose';
-import { ObjectId } from '@pawcapsu/types';
-import { ExploreBadge, ExploreBadgeDocument, PaginatedExploreBadges, UniversalText } from '@pawcapsu/types/models';
-import { UniversalTextService } from '@pawcapsu/modules/text/services';
-import * as mongoose from 'mongoose';
-import { ExploreBadgesSearchOptions } from '@app/shared';
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model, PaginateModel } from "mongoose";
+import { ObjectId } from "@pawcapsu/types";
+import {
+  ExploreBadge,
+  ExploreBadgeDocument,
+  PaginatedExploreBadges,
+  UniversalText,
+} from "@pawcapsu/types/models";
+import { UniversalTextService } from "@pawcapsu/modules/text/services";
+import * as mongoose from "mongoose";
+import { ExploreBadgesSearchOptions } from "@app/shared";
 
 @Injectable()
 export class ExploreBadgeService {
   constructor(
-    @InjectModel('exploreBadge')
+    @InjectModel("exploreBadge")
     private readonly badgeModel: PaginateModel<ExploreBadgeDocument>,
 
-    private readonly textService: UniversalTextService,
+    private readonly textService: UniversalTextService
   ) {}
 
   // fetchBadge
-  public async fetchBadge(
-    id: ObjectId
-  ): Promise<ExploreBadge | null> {
+  public async fetchBadge(id: ObjectId): Promise<ExploreBadge | null> {
     return await this.badgeModel.findOne({ _id: id }).exec();
-  };
+  }
 
   // fetchBadges
   public async fetchBadges(
@@ -41,18 +44,18 @@ export class ExploreBadgeService {
 
     return await this.badgeModel.paginate(query, {
       page,
-      limit
+      limit,
     });
-  };
+  }
 
-  private _buildFindOptions(options: ExploreBadgesSearchOptions): mongoose.FilterQuery<ExploreBadgeDocument> {
+  private _buildFindOptions(
+    options: ExploreBadgesSearchOptions
+  ): mongoose.FilterQuery<ExploreBadgeDocument> {
     return {};
-  };
+  }
 
   // fetchDescription
-  public async fetchDescription(
-    id: ObjectId
-  ): Promise<UniversalText> {
+  public async fetchDescription(id: ObjectId): Promise<UniversalText> {
     // Fetching this ExploreBadge
     const badge = await this.fetchBadge(id);
 
@@ -62,17 +65,17 @@ export class ExploreBadgeService {
       if (text == null) {
         // Creating new universal text and updating badge model
         text = await this.textService.createText([]);
-        
+
         // Updating this exploreBadge
         badge.description = text._id;
-        await this.badgeModel.updateOne({ _id: badge._id }, badge); 
-        
+        await this.badgeModel.updateOne({ _id: badge._id }, badge);
+
         return text;
       } else {
         return text;
-      };
+      }
     } else {
-      throw new HttpException('Document not found', HttpStatus.NOT_FOUND);
-    };
-  };
-};
+      throw new HttpException("Document not found", HttpStatus.NOT_FOUND);
+    }
+  }
+}

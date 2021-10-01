@@ -1,1 +1,1 @@
-export * from './ExploreBadge.resolver';
+export * from "./ExploreBadge.resolver";

@@ -1,2 +1,2 @@
-export * from './UserRating.model';
-export * from './objects';
+export * from "./UserRating.model";
+export * from "./objects";

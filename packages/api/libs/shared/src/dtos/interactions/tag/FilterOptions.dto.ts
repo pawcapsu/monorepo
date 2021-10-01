@@ -1,3 +1,3 @@
 export interface TagFilterOptions {
-  limit?: number,
-};
+  limit?: number;
+}

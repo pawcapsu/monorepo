@@ -1,3 +1,3 @@
-export * from './content';
-export * from './interactions';
-export * from './RelationalProp.enum';
+export * from "./content";
+export * from "./interactions";
+export * from "./RelationalProp.enum";

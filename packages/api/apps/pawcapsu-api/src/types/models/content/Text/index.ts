@@ -1,2 +1,2 @@
-export * from './Nodes';
-export * from './UniversalText.model';
+export * from "./Nodes";
+export * from "./UniversalText.model";

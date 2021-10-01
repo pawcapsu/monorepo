@@ -1,2 +1,2 @@
-export * from './IUserRating.interface';
-export * from './Book';
+export * from "./IUserRating.interface";
+export * from "./Book";

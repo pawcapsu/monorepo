@@ -1,3 +1,3 @@
-import { IBook } from "../../.."
+import { IBook } from "../../..";
 
 export type TTagEntity = IBook;

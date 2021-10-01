@@ -1,3 +1,6 @@
-import * as mongoose from 'mongoose';
+import * as mongoose from "mongoose";
 
-export type ObjectId = mongoose.Schema.Types.ObjectId | mongoose.Types.ObjectId | string;
+export type ObjectId =
+  | mongoose.Schema.Types.ObjectId
+  | mongoose.Types.ObjectId
+  | string;

@@ -1,1 +1,1 @@
-export * from './BookTag.object';
+export * from "./BookTag.object";

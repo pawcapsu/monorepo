@@ -1,2 +1,2 @@
-export * from './ENodeType.enum';
-export * from './EUniversalType.enum';
+export * from "./ENodeType.enum";
+export * from "./EUniversalType.enum";

@@ -1,2 +1,2 @@
-export * from './IChapter.interface';
-export * from './IChapterEditor.interface';
+export * from "./IChapter.interface";
+export * from "./IChapterEditor.interface";

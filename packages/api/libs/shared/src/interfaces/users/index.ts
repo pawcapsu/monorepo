@@ -1,1 +1,1 @@
-export * from './IProfile';
+export * from "./IProfile";

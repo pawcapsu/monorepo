@@ -1,1 +1,1 @@
-export * from './arrayMove.helper';
+export * from "./arrayMove.helper";

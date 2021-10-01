@@ -15,8 +15,8 @@ export interface IBook {
   creator: RelationalProp<IProfile | any>;
 
   // Rating information
-  likes: number,
-  dislikes: number,
+  likes: number;
+  dislikes: number;
   ratings: Array<IBookRating | any>;
 
   // Chapters information
@@ -24,6 +24,6 @@ export interface IBook {
   chaptersPositions: Array<ObjectId | any>;
 
   // Meta-information
-  bookSize: number,
+  bookSize: number;
   tags: Array<ObjectId | any>;
-};
+}

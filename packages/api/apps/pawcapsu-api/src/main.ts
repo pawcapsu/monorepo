@@ -1,3 +1,3 @@
-import bootstrap from './startup/bootstrap';
+import bootstrap from "./startup/bootstrap";
 
 bootstrap();

@@ -1,1 +1,1 @@
-export * from './Chapters.resolver';
+export * from "./Chapters.resolver";

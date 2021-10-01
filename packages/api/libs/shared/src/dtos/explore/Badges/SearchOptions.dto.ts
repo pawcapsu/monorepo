@@ -1,3 +1,3 @@
 export interface ExploreBadgesSearchOptions {
-  limit?: number,
-};
+  limit?: number;
+}

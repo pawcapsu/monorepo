@@ -1,2 +1,2 @@
-export * from './ExploreBadge.model';
-export * from './PaginatedExploreBadges.model';
+export * from "./ExploreBadge.model";
+export * from "./PaginatedExploreBadges.model";

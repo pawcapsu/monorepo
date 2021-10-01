@@ -1,2 +1,2 @@
-export * from './IExploreBadge.interface';
-export * from './IPaginatedExploreBadges.interface';
+export * from "./IExploreBadge.interface";
+export * from "./IPaginatedExploreBadges.interface";

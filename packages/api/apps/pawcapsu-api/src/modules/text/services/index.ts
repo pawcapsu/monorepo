@@ -1,1 +1,1 @@
-export * from './UniversalText.service';
+export * from "./UniversalText.service";

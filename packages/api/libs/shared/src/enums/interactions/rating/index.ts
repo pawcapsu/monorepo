@@ -1,3 +1,3 @@
-export * from './UserRatingType.enum';
-export * from './UserRatingEntity.enum';
-export * from './UserRatingDirection.enum';
+export * from "./UserRatingType.enum";
+export * from "./UserRatingEntity.enum";
+export * from "./UserRatingDirection.enum";
