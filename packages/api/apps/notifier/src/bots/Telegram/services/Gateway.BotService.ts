@@ -9,10 +9,30 @@ import {
   UnifiedPost,
 } from "@app/services";
 import { LowLevelBotService } from ".";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { ScrapperAgentDocument } from "@notifier/types";
 
 @Injectable()
 export class TelegramGatewayService {
-  constructor(private readonly service: LowLevelBotService) {}
+  constructor(
+    private readonly service: LowLevelBotService,
+
+    @InjectModel("agent")
+    private readonly subscriberModel: Model<ScrapperAgentDocument>,
+  ) {}
+
+  // public fetchSubscribers
+  public async fetchSubscribers(chat_id: number) {
+    const subscribers = await this.subscriberModel.find({ "consumer.chatId": String(chat_id) }).exec();
+    return subscribers;
+  };
+
+  // public addSubscriber
+
+  // public removeSubscriber
+
+  // public editSubscriber
 
   // public handlePost
   public async handlePost(
@@ -28,8 +48,6 @@ export class TelegramGatewayService {
     } else {
       caption = this._generateCaption(agent, post, post._actionType);
     }
-
-    console.log(caption);
 
     // Sending message
     this.service.sendPhoto(agent.consumer.chatId, post.url, caption);

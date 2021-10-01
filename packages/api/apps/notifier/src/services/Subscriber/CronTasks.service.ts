@@ -7,7 +7,7 @@ import {
   IScrapperAgent,
   EMessageActionType,
 } from "@app/services";
-import { SubscribersService } from "..";
+import { SubscribersService } from ".";
 import { Queue } from "bull";
 
 @Injectable()

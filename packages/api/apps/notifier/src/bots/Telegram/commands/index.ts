@@ -1,2 +1,4 @@
+export * from './DeleteMe.command';
 export * from "./Start.command";
-export * from "./queries";
+export * from "./Queries";
+export * from "./Subscriber";

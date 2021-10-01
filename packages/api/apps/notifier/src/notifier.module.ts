@@ -5,12 +5,13 @@ import { ScheduleModule } from "@nestjs/schedule";
 import { EQueueNames } from "apps/notifier/src/types";
 import { ScrapperAgentSchema } from "apps/notifier/src/types";
 import { MongooseModule } from "@nestjs/mongoose";
+import { SubscribeProcessors } from "./services/Sources";
 
 import * as Services from "./services";
-import { SubscribeProcessors } from "./services/Sources";
 import * as Controllers from "./controllers";
 
 import * as TelegramBotServices from "./bots/Telegram/services";
+import { SubscribersService } from "./services";
 
 @Module({
   imports: [
@@ -59,7 +60,7 @@ import * as TelegramBotServices from "./bots/Telegram/services";
   ],
   providers: [
     ...Object.values(Services),
-
+    
     // BotServices
     BotsService,
     ...Object.values(TelegramBotServices),

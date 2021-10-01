@@ -1,1 +1,1 @@
-export * from "./ISendPhotoOptions.interface";
+export * from './ISendPhotoOptions.interface';

@@ -1,1 +1,1 @@
-export function ExtractTags() {}
+export function _extractTags() {}
