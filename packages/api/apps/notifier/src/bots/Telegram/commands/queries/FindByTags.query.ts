@@ -20,6 +20,7 @@ export class SubscribeQuery implements BotCommand {
     bot.on("inline_query", async (ctx) => {
       // Getting parameters
       let tags = ctx.update.inline_query.query.split(" ");
+      
       // Bot-related tags
       // -limit tag
       let limit: number;
@@ -29,15 +30,15 @@ export class SubscribeQuery implements BotCommand {
         limit = Number(limitTag[0].replace('limit:', ''));
         
         // Check
-        if (limit > 30) {
-          limit = 30;
+        if (limit > 50) {
+          limit = 50;
         };
 
         if (limit < 1) {
           limit = 1;
         };
       } else {
-        limit = 5;
+        limit = 30;
       };
 
       // -page tag
@@ -46,14 +47,19 @@ export class SubscribeQuery implements BotCommand {
       if (pageTag.length > 0) {
         tags = tags.filter((x) => !x.includes('page:'));
         page = Number(pageTag[0].replace('page:', ''));
-
+        
         // Check
         if (page > 750) {
           page = 750;
         };
-
-        if (limit < 1) {
+        
+        if (page < 1) {
           page = 1;
+        };
+      } else {
+        // checking for offset property
+        if (ctx.update?.inline_query?.offset) {
+          page = Number(ctx.update.inline_query.offset);
         };
       };
 
@@ -74,7 +80,11 @@ export class SubscribeQuery implements BotCommand {
               .url('About this Bot', 'https://services.pawcapsu.ml/leggydog')
           }
         }),
-        { cache_time: 10 }
+        { 
+          is_personal: true,
+          cache_time: 10,
+          next_offset: pageTag.length > 0 ? null : String((typeof page == 'number' ? page : 1) + 1),
+        }
       );
     });
   };
