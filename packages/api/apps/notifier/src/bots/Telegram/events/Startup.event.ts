@@ -5,12 +5,12 @@ export class StartupEvent implements BotEvent {
   initialize(bot: Bot) {
     bot.api.setMyCommands([
       {
-        command: 'start',
-        description: 'Get bot-related information',
+        command: "menu",
+        description: "Main menu",
       },
       {
-        command: 'subscribers',
-        description: 'Menu, where you can configure which images this bot will send to this channel',
+        command: "subscribers",
+        description: "Your Subscribes",
       },
     ]);
   }

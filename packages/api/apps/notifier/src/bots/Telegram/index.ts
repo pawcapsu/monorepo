@@ -1,6 +1,6 @@
 import { BotCommand, BotEvent, BotInstance } from "libs/services/src";
 import { Logger } from "@nestjs/common";
-import { Bot } from "grammy";
+import { Bot, GrammyError, HttpError } from "grammy";
 
 // Importing events and commands
 import * as BotEvents from "./events";
@@ -35,7 +35,18 @@ export class TelegramNotifierBot implements BotInstance {
 
   // start action
   start(): Bot {
-    this.bot.start();
+    this.bot.start().catch((err) => {
+      const ctx = err.ctx;
+      this.logger.error(`Error while handling update ${ctx.update.update_id}:`);
+      const e = err.error;
+      if (e instanceof GrammyError) {
+        this.logger.error("Error in request:", e.description);
+      } else if (e instanceof HttpError) {
+        this.logger.error("Could not contact Telegram:", e);
+      } else {
+        this.logger.error("Unknown error:", e);
+      } 
+    });
     return this.bot;
   }
 }

@@ -12,7 +12,7 @@ export class SubscriberCommand implements BotCommand {
           parse_mode: EParseMode.MARKDOWNV2,
           reply_markup: new InlineKeyboard()
             // Subscriber Menu
-            .text("Subscribe to tags")
+            .text("Subscribe to tags", "subscriberCreate")
             .text("Edit/Delete Subscribes", "subscriberMenu-subscribersKeyboard")
             .text("How to use this?")
             

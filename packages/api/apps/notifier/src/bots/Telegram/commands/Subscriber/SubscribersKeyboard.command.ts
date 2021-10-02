@@ -16,28 +16,47 @@ export class SubscribersKeyboard implements BotCommand {
     }) {
       const keyboard = new InlineKeyboard()
 
+      // Edit/Delete/Stop Subscriber
+      if (subscriber) {
+        keyboard
+          .text("🗑️ Delete", `deleteSubscribe-${ subscriber._id }`)
+          .text("✏️ Edit", `editSubscriber-${ subscriber._id }`)
+          .text("🏠 Go back", "openSubscriberMenu")
+          .row()
+      } else {
+        keyboard.text("🏠 Go back", "openSubscriberMenu");
+      };
+
       // Checking for previos subscriber
       if (options.previousSubscriber) {
         keyboard.text("Previous", `previousSubsciberInfo-${ options.previousSubscriber }`)
       };
 
-      // Back button
-      keyboard.text("Go back", "openSubscriberMenu");
-
       // Checking for next subscriber
       if (options.nextSubscriber) {
         keyboard.text("Next", `nextSubsciberInfo-${ options.nextSubscriber }`);
       } else {
-        keyboard.text("Create new Subscriber", 'createNewSubscriber')
+        keyboard.text("➕ Create new Subscriber", "subscriberCreate")
       };
 
-      return {
-        text: `*Информация о подписке №${ options.currentSubscriber } из ${ options.subscribersLength } подписок*\n\n*ID Подписки*: \`${ subscriber._id }\`\n_Ид подписки в системе_\n\n*Теги*: \`${ subscriber.data.tags.join(", ") }\`\n_Теги, по которым мы ищем новые картинки_\n\n*Последнее обновление:*\n_Дата самого нового поста_\n\n\n[Удалить подписку](https://google.com)\n[Редактировать подписку](https://google.com)`,
-        options: {
-          parse_mode: EParseMode.MARKDOWNV2,
-          reply_markup: keyboard,
-        },
-      }
+
+      if (subscriber) {
+        return {
+          text: _escapeCharacters(`*Информация о подписке №${ options.currentSubscriber } из ${ options.subscribersLength } подписок*\n\n*ID Подписки*: \`${ subscriber._id }\`\n_Ид подписки в системе_\n\n*Теги*: \`${ subscriber.data.tags.join(", ") }\`\n_Теги, по которым мы ищем новые картинки_\n\n*Последнее обновление:*\n_Дата самого нового поста_\n\n\n`),
+          options: {
+            parse_mode: EParseMode.MARKDOWNV2,
+            reply_markup: keyboard,
+          },
+        }
+      } else {
+        return {
+          text: _escapeCharacters(`*0 Подписок*\n\nДанный канал не подписан ни на один тег! Время это исправить, не думаешь?\n\nДля того, что бы подписаться на теги, нажмите на кнопку \`➕ Create new Subscriber\`, я вам там всё расскажу и объясню!`),
+          options: {
+            parse_mode: EParseMode.MARKDOWNV2,
+            reply_markup: keyboard,
+          },
+        }
+      };
     };
     
     // private _determineOptions

@@ -5,5 +5,5 @@ export { Chat };
 // todo: +Chat type
 export type ITelegramChatConsumer = {
   type: EConsumerType.TELEGRAM;
-  chatId: number;
+  chatId: string;
 };

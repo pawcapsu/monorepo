@@ -1,26 +1,34 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { InlineKeyboard } from "grammy";
 import {
   EMessageActionType,
   EParseMode,
+  EScrapperAgentType,
   IE621ScrapperData,
   IScrapperAgent,
   ISendPhotoOptions,
   UnifiedPost,
 } from "@app/services";
-import { LowLevelBotService } from ".";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { ScrapperAgentDocument } from "@notifier/types";
+import { ChannelAction, ScrapperAgentDocument } from "@notifier/types";
+import { TScrapperConsumer } from "@app/services";
+import { ChannelActionService } from "@notifier/services";
+import { ModuleRef } from "@nestjs/core";
+import { BotsService } from "@notifier/bots/Bots.service";
+import { _escapeCharacters } from "@notifier/helpers";
 
 @Injectable()
 export class TelegramGatewayService {
   constructor(
-    private readonly service: LowLevelBotService,
+    private readonly moduleRef: ModuleRef,
+    private readonly channelActionService: ChannelActionService,
 
     @InjectModel("agent")
     private readonly subscriberModel: Model<ScrapperAgentDocument>,
   ) {}
+
+  private readonly logger = new Logger(TelegramGatewayService.name);
 
   // public fetchSubscribers
   public async fetchSubscribers(chat_id: number) {
@@ -29,8 +37,37 @@ export class TelegramGatewayService {
   };
 
   // public addSubscriber
+  public async addSubscriber(consumer: TScrapperConsumer, tags: String[]) {
+    const subscriber = new this.subscriberModel({
+      type: EScrapperAgentType.E621,
+      consumer,
+      data: {
+        tags,
+      },
+    });
+
+    return await subscriber.save();
+  };
+
+  // getCurrentChannelAction
+  public async getCurrentChannelAction(chat_id: string) {
+    return await this.channelActionService.getCurrentAction(chat_id);
+  };
+
+  // setCurrentChannelAction
+  public async setCurrentChannelAction(chat_id: string, action: ChannelAction) {
+    return await this.channelActionService.setCurrentAction(chat_id, action);
+  };
+
+  // deleteCurrentChannelAction
+  public async deleteCurrentChannelAction(chat_id: string) {
+    return await this.channelActionService.deleteCurrentAction(chat_id);
+  };
 
   // public removeSubscriber
+  public async removeSubscriber(subscriber: ScrapperAgentDocument) {
+    return await this.subscriberModel.remove({ _id: subscriber._id });
+  };
 
   // public editSubscriber
 
@@ -50,7 +87,7 @@ export class TelegramGatewayService {
     }
 
     // Sending message
-    this.service.sendPhoto(agent.consumer.chatId, post.url, caption);
+    this._sendPhoto(Number(agent.consumer.chatId), post.url, caption);
   }
 
   // private _generateCaption
@@ -64,20 +101,54 @@ export class TelegramGatewayService {
     switch (type) {
       // New Post Caption Generator
       case EMessageActionType.NEW_POST:
-        return {
-          caption: `*New image*\n\n*Score*: ${
-            post.score
-          }\n*Watch tags*: \`${agent.data.tags.join(
-            ", "
-          )}\`\n*Source*: [link to e621](https://e621.net/posts/${post.id})\n`,
-          parse_mode: EParseMode.MARKDOWNV2,
-          reply_markup: new InlineKeyboard()
-            .text("⭐ Like it", `favourite-${post.id}`)
-            .text("🗑️ I don't like it", `delete-me`),
+        // Checking if it's first post or no
+        if (agent.lastPostId == null) {
+          return {
+            caption: _escapeCharacters(`*First New Image!*\nА вот и первая ваша картинки по тегам, на которые вы недавно подписались!\n\nВы можете либо добавить эту картинку в Сохранёнки, нажав на \`⭐ Like it\`, либо же удалить её, нажав на \`🗑️ I don't like it\`\n\nСледующие сообщения будут намного компактнее!\n\n*Score*: ${
+              post.score
+            }\n*Watch tags*: \`${agent.data.tags.join(
+              ", "
+            )}\`\n*Source*: [link to e621](https://e621.net/posts/${post.id})\n`),
+            parse_mode: EParseMode.MARKDOWNV2,
+            reply_markup: new InlineKeyboard()
+              .text("⭐ Like it", `favourite-${post.id}`)
+              .text("🗑️ I don't like it", `delete-me`),
+          };
+        } else {
+          // Else
+          return {
+            caption: `*New image*\n\n*Score*: ${
+              post.score
+            }\n*Watch tags*: \`${agent.data.tags.join(
+              ", "
+            )}\`\n*Source*: [link to e621](https://e621.net/posts/${post.id})\n`,
+            parse_mode: EParseMode.MARKDOWNV2,
+            reply_markup: new InlineKeyboard()
+              .text("⭐ Like it", `favourite-${post.id}`)
+              .text("🗑️ I don't like it", `delete-me`),
+          };
         };
 
       default:
         break;
     }
   }
+
+  // private _sendPhoto
+  private _sendPhoto(to: number, photo_url: string, options?: ISendPhotoOptions) {
+    const instance = this.moduleRef.get(BotsService);
+    const bot = instance.getInstance();
+    bot.api
+      .sendPhoto(to, photo_url, {
+        caption: options?.caption,
+        parse_mode: options?.parse_mode,
+        reply_markup: options?.reply_markup,
+      })
+      .catch((error) => {
+        this.logger.error(
+          `Error sending message to chatId ${to} in Telegram's LowLevelBotService`
+        );
+        this.logger.error(error);
+      });
+  };
 }

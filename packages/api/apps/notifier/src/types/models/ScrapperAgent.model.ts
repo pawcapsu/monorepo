@@ -24,7 +24,7 @@ export class ScrapperAgent implements IScrapperAgent<TScrapperAgentData> {
   data: TScrapperAgentData;
 
   @Prop({ required: false })
-  lastPostId: String;
+  lastPostId?: String;
 }
 
 export const ScrapperAgentSchema = SchemaFactory.createForClass(ScrapperAgent);

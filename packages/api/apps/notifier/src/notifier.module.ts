@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { BotsService } from "./bots/Bots.service";
 import { BullModule } from "@nestjs/bull";
 import { ScheduleModule } from "@nestjs/schedule";
-import { EQueueNames } from "apps/notifier/src/types";
+import { ChannelStateSchema, EQueueNames } from "apps/notifier/src/types";
 import { ScrapperAgentSchema } from "apps/notifier/src/types";
 import { MongooseModule } from "@nestjs/mongoose";
 import { SubscribeProcessors } from "./services/Sources";
@@ -10,8 +10,7 @@ import { SubscribeProcessors } from "./services/Sources";
 import * as Services from "./services";
 import * as Controllers from "./controllers";
 
-import * as TelegramBotServices from "./bots/Telegram/services";
-import { SubscribersService } from "./services";
+import { TelegramGatewayService } from "./bots/Telegram/services";
 
 @Module({
   imports: [
@@ -28,6 +27,10 @@ import { SubscribersService } from "./services";
           name: "agent",
           schema: ScrapperAgentSchema,
         },
+        {
+          name: "channelState",
+          schema: ChannelStateSchema,
+        }
       ],
       "service/notifier"
     ),
@@ -59,11 +62,11 @@ import { SubscribersService } from "./services";
     // })),
   ],
   providers: [
-    ...Object.values(Services),
-    
     // BotServices
+    ...Object.values(Services),
+
     BotsService,
-    ...Object.values(TelegramBotServices),
+    TelegramGatewayService,
   ],
   controllers: [...Object.values(Controllers)],
 })

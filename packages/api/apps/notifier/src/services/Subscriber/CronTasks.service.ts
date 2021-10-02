@@ -7,7 +7,7 @@ import {
   IScrapperAgent,
   EMessageActionType,
 } from "@app/services";
-import { SubscribersService } from ".";
+import { QueueHandlerService } from ".";
 import { Queue } from "bull";
 
 @Injectable()
@@ -16,7 +16,7 @@ export class CronTasksService {
     @InjectQueue(EQueueNames.E621)
     private scrapperQueue: Queue,
 
-    private readonly agentsService: SubscribersService
+    private readonly agentsService: QueueHandlerService
   ) {}
 
   private readonly logger = new Logger(CronTasksService.name);

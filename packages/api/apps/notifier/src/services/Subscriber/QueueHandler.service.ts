@@ -15,9 +15,10 @@ import { TelegramGatewayService } from "@notifier/bots/Telegram/services";
 import { InjectQueue } from "@nestjs/bull";
 import { EQueueNames } from "apps/notifier/src/types";
 import { Queue } from "bull";
+import { ModuleRef } from "@nestjs/core";
 
 @Injectable()
-export class SubscribersService {
+export class QueueHandlerService {
   constructor(
     @InjectModel("agent")
     private readonly agentModel: Model<ScrapperAgentDocument>,
@@ -25,10 +26,10 @@ export class SubscribersService {
     @InjectQueue(EQueueNames.E621)
     private scrapperQueue: Queue,
 
-    private readonly telegramGateway: TelegramGatewayService
+    private readonly moduleRef: ModuleRef,
   ) {}
 
-  private readonly logger = new Logger(SubscribersService.name);
+  private readonly logger = new Logger(QueueHandlerService.name);
 
   // createAgent
   public async createAgent() {
@@ -67,7 +68,8 @@ export class SubscribersService {
           // Notifing user
           // Telegram Consumer
           if (result.agent.consumer.type === EConsumerType.TELEGRAM) {
-            await this.telegramGateway.handlePost(result.agent, result.post);
+            const gateway = this.moduleRef.get(TelegramGatewayService);
+            await gateway.handlePost(result.agent, result.post);
           } else if (result.agent.consumer.type === EConsumerType.DISCORD) {
             console.log("DISCORD CONSUMER");
           }

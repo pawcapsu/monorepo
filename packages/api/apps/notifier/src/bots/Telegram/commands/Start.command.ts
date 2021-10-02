@@ -59,8 +59,13 @@ export class StartCommand implements BotCommand {
 
     // Start command
     bot.command("start", async (ctx) => {
+      const message = await _messageBuilder(0);
+      ctx.reply(message.text, message.options);
+    });
+
+    // Menu command
+    bot.command("menu", async (ctx) => {
       const message = await _messageBuilder(ctx.update?.message?.chat?.id);
-      console.log(ctx.update.message.chat);
       ctx.reply(message.text, message.options);
     });
   }
