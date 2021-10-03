@@ -6,6 +6,7 @@ import { Bot, GrammyError, HttpError } from "grammy";
 import * as BotEvents from "./events";
 import * as BotCommands from "./commands";
 import { TelegramGatewayService } from "./services";
+import { CallbackInitializer } from "./callbacks/CallbackInitializer";
 
 export class TelegramNotifierBot implements BotInstance {
   private bot: Bot;
@@ -18,11 +19,13 @@ export class TelegramNotifierBot implements BotInstance {
     this.gateway = gateway;
     this.bot = new Bot("2038924887:AAHsd5yZUjNizuFDve2oSzPGz8SWOVMmu-c");
 
+    CallbackInitializer(this.bot, this.gateway);
+
     // Initializing bot commands
     [...Object.values(BotCommands)].forEach((command) => {
       this.logger.log(`Initialize ${command.name} BotCommand`);
-      const instance: BotCommand = new command();
-      instance.initialize(this.bot, gateway);
+      const instance: BotCommand = new command(gateway);
+      instance.initialize(this.bot);
     });
 
     // Initializing all bot events and commands

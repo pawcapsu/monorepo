@@ -10,7 +10,7 @@ import {
   UnifiedPost,
 } from "@app/services";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import { Model, ObjectId, Types } from "mongoose";
 import { ChannelAction, ScrapperAgentDocument } from "@notifier/types";
 import { TScrapperConsumer } from "@app/services";
 import { ChannelActionService } from "@notifier/services";
@@ -47,6 +47,11 @@ export class TelegramGatewayService {
     });
 
     return await subscriber.save();
+  };
+
+  // public deleteSubscriber
+  public async deleteSubscriber(subscriberId: Types.ObjectId) {
+    return await this.subscriberModel.deleteOne({ _id: subscriberId });
   };
 
   // getCurrentChannelAction
