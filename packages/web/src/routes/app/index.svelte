@@ -1,10 +1,36 @@
-<script>
+<script lang="typescript">
+  // Importing modules
   import Icon from '../../components/Icon.svelte';
+  import { onMount } from 'svelte';
+  import { ExploreVariantsService as ExploreVariants } from '$services/explore';
+  import { PaginatedBooksService as Books } from '$services/book';
+
+  // Importing types
+  import type { IExploreBadge, IPaginatedBooks } from '@app/shared';
+
+  // Importing components
+  import {
+    Container,
+    Heading,
+    Paragraph,
+    Footer,
+    BookCard,
+  } from 'src/design';
+
+  let exploreBadges: IExploreBadge[];
+  let books: IPaginatedBooks;
+  onMount(async () => {
+    // Getting exploreBadges
+    exploreBadges = (await ExploreVariants.get({ limit: 5 })) as IExploreBadge[];
+  
+    // Getting books
+    books = (await Books.paginate({ limit: 25 })) as IPaginatedBooks;
+  });
 </script>
 
-<div class="flex">
+<Container flex="flex">
   <!-- Sidebar -->
-  <div class="px-3 py-2 bg-gray-800 h-screen flex flex-col items-center justify-between">
+  <Container classes="px-3 py-2 h-screen flex flex-col items-center justify-between">
     <div class="flex flex-col items-center">
       <!-- Account Icon -->
       <div class="my-1.5 w-10 h-10 rounded-full flex items-center justify-center" style="background: url('https://cdn.discordapp.com/banners/155749532615966720/cac172ea1db4be9f83dfc7232062e944.png?size=512'); background-position: center; background-size: cover;"></div>
@@ -28,79 +54,17 @@
     
       <div style="background: url('https://cdn.discordapp.com/icons/794490811639267339/f63b8efdecb1930a6ecfb98512547362.png?size=128'); background-size: cover; background-position: center;" class="rounded-full my-2 w-12 h-12 bg-gray-500 flex items-center justify-center relative">
       </div>
-    
-      <div style="background: url('https://cdn.discordapp.com/icons/846488670046781490/a_5830499ede6d67378121769c9a11027a.png?size=128'); background-size: cover; background-position: center;" class="rounded-full my-2 w-12 h-12 bg-gray-500 flex items-center justify-center relative">
-      </div>
-    
-      <div class="my-2 w-12 h-12 rounded-full bg-blue-400 flex items-center justify-center relative">
-        <div style="background: url('https://res.cloudinary.com/lococovu-cdn/image/upload/v1610810215/logotypes/pawcapsu-white-small.svg'); background-position: center; background-size: 50%; background-repeat: no-repeat;" class="absolute rounded-full w-full h-full"></div>
-      </div>
-
-      <div class="my-2 relative">
-        <div style="background: url('https://cdn.discordapp.com/icons/733758953208676383/99ae171e7bdb006d6dcd0f5887ad3835.png?size=128'); background-size: cover; background-position: center;" class="rounded-full my-2 w-12 h-12 bg-gray-500 flex items-center justify-center relative">
-        </div>
-
-        <!-- Arrow -->
-        <div style="z-index: 2; margin-right: -3.8rem; margin-top: 0.75rem;" class="rotate-45 top-0 right-0 w-10 h-10 bg-gray-900 absolute"></div>
-
-        <!-- Side panel -->
-        <div style="z-index: 2; margin-right: -14.5rem;" class="w-52 shadow-2xl absolute rounded-md p-2 top-0 right-0 bg-gray-900">
-          <!-- Place Title -->
-          <div>
-            <div class="flex items-center">
-              <h1 class="text-md text-white font-bold">fictale</h1>
-            </div>
-
-            <p class="text-xs text-white opacity-70">Убийца всех и вся. Отец демократии и мать тво...</p>
-          </div>
-
-          <!-- Place Statistics -->
-          <div class="my-4">
-            <!-- Members -->
-            <div class="flex items-center">
-              <!-- Icons -->
-              <div class="flex items-center relative w-14">
-                <!-- background: url(''); background-size: cover; background-position: center; -->
-                <div style="" class="absolute rounded-full w-6 h-6 bg-red-500"></div>
-                <div style="margin-left: 0.8rem;" class="absolute rounded-full w-6 h-6 bg-green-500"></div>
-                <div style="margin-left: 1.8rem;" class="absolute rounded-full w-6 h-6 bg-blue-500"></div>
-              </div>
-
-              <!-- Text -->
-              <div class="ml-2">
-                <h2 class="text-sm text-white font-medium">5000 участников</h2>
-                <p class="text-xs text-white opacity-70">Из них 3 друга</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Buttons -->
-          <div class="w-full flex items-center justify-center relative">
-
-            <!-- Open place -->
-            <div class="mr-1 w-1/2 rounded-md bg-gray-800 py-1 flex items-center justify-center text-white text-xs font-bold">
-              Чёто
-            </div>
-
-            <!-- Open book -->
-            <div class="ml-1 w-1/2 rounded-md bg-gray-800 py-1 flex items-center justify-center text-white text-xs font-bold">
-              Чёто #2
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
-      
+
     <!-- Settings -->
     <div class="flex flex-col items-center">
       <div class="my-1.5 w-10 h-10 rounded-full bg-gray-500 flex items-center justify-center">
         <Icon name="settings" attrs={{ class: "w-5 h-5 text-white", "stroke-width": "2.5" }} />
       </div>
     </div>
-  </div>
+  </Container>
 
-  <!-- Channels -->
+  <!-- Places -->
   <div class="w-1/4 h-screen overflow-y-auto bg-gray-800 bg-opacity-95 flex flex-col">    
     <!-- Page title -->
     <div class="w-full px-3 pt-4">
@@ -310,245 +274,52 @@
   </div>
 
   <!-- Content -->
-  <section class="w-full h-screen bg-gray-800 bg-opacity-90 p-4 overflow-y-scroll">
-    
-    <!-- Promoted list -->
-    <div class="w-full flex items-stretch p-6">
-      <!-- Book of the day -->
-      <div class="w-full px-2 relative">
-        <!-- Title -->
-        <div class="w-full flex justify-between">
-          <div>
-            <div class="flex items-center">
-              <h1 class="text-3xl text-white font-bold">Книга дня</h1>
-              <p class="mt-1 text-xs text-white opacity-50 ml-1.5">1 из 3</p>
-            </div>
-            
-            <p class="text-sm text-white opacity-70">Lorem ipsum dolor sit amet.</p>
-          </div>
-
-          <div class="flex items-center">
-            <div class="mx-1 opacity-60 w-6 h-6 rounded-full bg-gray-500 flex items-center justify-center">
-              <Icon name="chevron-left" attrs={{ class: "w-4 h-4 text-white font-bold", "stroke-width": "3" }} />
-            </div>
-
-            <div class="mx-1 w-6 h-6 rounded-full bg-gray-500 flex items-center justify-center">
-              <Icon name="chevron-right" attrs={{ class: "w-4 h-4 text-white font-bold", "stroke-width": "3" }} />
-            </div>
-          </div>
-        </div>
-
-        <!-- Container -->
-        <div class="w-full mt-6 flex items-stretch border-2 border-gray-600 rounded-2xl p-3">
-
-          <!-- Image -->
-          <div class="w-1/6">
-            <div style="padding-top: 150%;" class="relative">
-              <div class="absolute top-0 w-full h-full rounded-2xl bg-gray-900 shadow-md">
-
-              </div>
-            </div>
-
-            <!-- Badge -->
-            <div class="flex items-center justify-center bg-yellow-400 rounded-md mt-2 px-2 py-1.5">
-              <Icon name="star" attrs={{ class: "w-4 h-4 text-white", "stroke-width": "2.5" }} />
-
-              <p class="text-base text-white font-bold ml-1.5">Лучший экшн</p>
-            </div>
-          </div>
-
-          <!-- Text -->
-          <div class="w-2/3 h-full px-4">
-            <!-- Title -->
-            <div class="flex items-center mt-0.5 opacity-70 text-white">
-              <Icon name="link-2" attrs={{ class: "w-5 h-5" }} />
-              
-              <p class="ml-1.5 text-sm">Гарри Поттер</p>
-            </div>
-
-            <h1 class="text-4xl text-white font-medium">Lorem ipsum dolor sit amet.</h1>
-            
-            <div class="w-full flex flex-wrap mt-2">
-              <div class="m-0.5 px-2 py-1 rounded-full bg-pink-500 flex items-center justify-center">
-                <!-- Icon -->
-                <p class="text-white font-medium text-sm">⚣</p>
-               
-                <p class="ml-1 text-xs text-white font-medium">Гей</p>
-              </div>
-
-              <div class="m-0.5 px-2 py-1 rounded-full bg-purple-600 flex items-center justify-center">
-                <p class="text-xs text-white font-medium">Драма</p>
-              </div>
-
-              <div class="m-0.5 px-2 py-1 rounded-full bg-gray-500 flex items-center justify-center">
-                <p class="text-xs text-white font-medium">До 5000 слов</p>
-              </div>
-            </div>
-
-            <!-- Description -->
-            <div class="mt-2">
-              <p class="text-base text-white opacity-70">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius illo vero minus hic neque necessitatibus delectus voluptas officiis numquam, ratione quod? Quas voluptates doloremque corrupti consequuntur impedit. Nulla libero minima, beatae, blanditiis odit ad recusandae quo perspiciatis iste nihil harum earum culpa error eius perferendis tempore porro sit reprehenderit nam.</p>
-            </div>
-
-            <!-- Statistics -->
-            
-          </div>
-
-
-        </div>
-      </div>
-    </div>
-
+  <Container background="light-dark" type="full" classes="overflow-y-scroll">
     <!-- Explorer -->
-    <div class="px-6 mt-4">
+    <Container background="light-dark" classes="px-6 mt-4">
       <!-- Title -->
-      <div class="mb-2 px-2 w-2/3">
-        <h1 class="text-3xl text-white font-bold">Исследовать</h1>
-        <p class="text-sm text-white opacity-70">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est iusto quia odit nam exercitationem quae quis amet hic ratione ipsum!</p>
-      </div>
+      <Container background="light-dark" classes="mb-2 px-2" size="two-thirds">
+        <Heading size="xl">Исследовать</Heading>
+        <Paragraph>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est iusto quia odit nam exercitationem quae quis amet hic ratione ipsum!</Paragraph>
+      </Container>
 
       <!-- List Categories -->
-      <div class="w-full flex justify-between"> 
-        <div class="flex">
-          <div class="mx-1 px-4 py-2 rounded-full flex items-center justify-center bg-blue-500">
+      <Container background="light-dark" flex="between">
+        <Container background="light-dark" flex="flex">
+          { #if exploreBadges }
+            { #each exploreBadges as badge }
+              <div class="mx-1 px-2 py-1 rounded-full flex items-center justify-center bg-gray-500">
+                <p class="text-sm text-white font-medium">{ badge.title }</p>
+              </div>
+            { /each }
+          { /if }
+
+          <!-- <div class="mx-1 px-4 py-2 rounded-full flex items-center justify-center bg-blue-500">
             <p class="mr-2 text-md text-white font-medium">Новые рассказы</p>
 
             <Icon name="x" attrs={{ class: "w-5 h-5 text-white", "stroke-width": "3" }} />
-          </div>
+          </div> -->
+        </Container>
+        
+        <div class="mx-1 px-4 py-2 rounded-full flex items-center justify-center bg-gray-900 bg-opacity-70">
+          <Icon name="more-horizontal" attrs={{ class: "w-4 h-4 text-white mr-2", "stroke-width": "3" }} />
 
-          <div class="mx-1 px-4 py-2 rounded-full flex items-center justify-center bg-gray-500">
-            <p class="text-md text-white font-medium">Случайные работы</p>
-          </div>
-
-          <div class="mx-1 px-4 py-2 rounded-full flex items-center justify-center bg-gray-500">
-            <p class="text-md text-white font-medium">Популярные</p>
-          </div>
-
-          <div class="mx-1 px-4 py-2 rounded-full flex items-center justify-center bg-gray-500">
-            <p class="text-md text-white font-medium">Интересное для вас</p>
-          </div>
+          <p class="text-md text-white font-medium">Больше</p>
         </div>
-
-        <div class="">
-          <div class="mx-1 px-4 py-2 rounded-full flex items-center justify-center bg-gray-900 bg-opacity-70">
-            <Icon name="more-horizontal" attrs={{ class: "w-4 h-4 text-white mr-2", "stroke-width": "3" }} />
-
-            <p class="text-md text-white font-medium">Больше</p>
-          </div>
-        </div>
-      </div>
-    </div>
+      </Container>
+    </Container>
 
     <!-- Book list -->
-    <div class="w-full flex items-stretch p-6">
+    <Container background="light-dark" size="full" flex="flex" classes="flex-wrap relative p-6">
+      { #if books }
+        { #each books.docs as entry }
+          <BookCard book="{ entry }" type="default" size="base" />
+        { /each }
+      { /if }
+    </Container>
 
-      <!-- Three promoted books -->
-      <div class="w-2/3 relative flex items-stretch">
-        <!-- Entry -->
-        <div class="w-1/2 p-2 relative">
-          <div style="z-index: 2;" class="w-full h-full rounded-xl bg-gray-900 p-4">
+    <!-- Footer -->
+    <Footer />
 
-            <!-- Author -->
-            <div class="w-full flex items-center justify-between">
-              <!-- Author and fandom -->
-              <div class="py-1.5 px-3">
-                <!-- Author -->
-                <div class="flex items-center">
-                  <div class="bg-red-500 rounded-full w-7 h-7"></div>
-
-                  <div class="ml-2">
-                    <h2 class="text-sm text-white font-medium">Март Доглиш</h2>
-                    <p class="text-xs text-white opacity-70">Lorem, ipsum dolor.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Buttons -->
-              <div>
-                <Icon name="more-horizontal" attrs={{ class: "w-5 h-5 text-white", "stroke-width": "3" }} />
-              </div>
-            </div>
-
-            <!-- Title -->
-            <div class="mt-8 mb-2">
-              <div class="flex items-center mt-0.5 opacity-70 text-white">
-                <Icon name="link-2" attrs={{ class: "w-4 h-4" }} />
-                
-                <p class="ml-1.5 text-xs">Гарри Поттер</p>
-              </div>
-
-              <h1 class="text-3xl text-white font-medium">Невероятно крутой рассказ который прям вау...</h1>
-            
-              <!-- Tags -->
-              <div class="w-full flex flex-wrap mt-2">
-                <div class="m-0.5 px-2 py-1 rounded-full bg-pink-500 flex items-center justify-center">
-                  <!-- Icon -->
-                  <p class="text-white font-medium text-sm">⚣</p>
-                 
-                  <p class="ml-1 text-xs text-white font-medium">Гей</p>
-                </div>
-
-                <div class="m-0.5 px-2 py-1 rounded-full bg-purple-600 flex items-center justify-center">
-                  <p class="text-xs text-white font-medium">Драма</p>
-                </div>
-
-                <div class="m-0.5 px-2 py-1 rounded-full bg-gray-500 flex items-center justify-center">
-                  <p class="text-xs text-white font-medium">До 5000 слов</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Description -->
-            <div class="text-sm text-white opacity-70">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores ipsam aliquam, atque eos hic autem tempore. Iusto ipsa sint laboriosam inventore dolor, illo ex cum vitae tenetur sed impedit ut modi veniam ducimus numquam vel dolores delectus aperiam cumque adipisci, nam placeat voluptatum sequi! Ex ipsam minus illo rem fugit.  
-            </div>
-
-            <!-- Buttons -->
-            <div class="mt-8 w-full flex items-center">
-              <div class="mr-1.5 w-1/2 rounded-xl bg-gray-800 bg-opacity-90 py-2 text-center">
-                <p class="text-white font-medium">Читать</p>
-              </div>
-
-              <div class="ml-1.5 w-1/2 rounded-xl bg-gray-800 bg-opacity-90 py-2 text-center">
-                <p class="text-white font-medium">На потом</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Entry #2 -->
-        <div class="w-1/2 p-2 relative">
-          <div style="background-image: url('./cover.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center;" class="w-full h-full rounded-xl bg-gray-900 p-4">
-            <!-- Author -->
-            <div class="w-full flex items-center justify-between">
-              <!-- Author and fandom -->
-              <div class="px-3 py-1.5 rounded-xl bg-gray-900 bg-opacity-60">
-                <!-- Author -->
-                <div class="flex items-center">
-                  <div class="bg-red-500 rounded-full w-7 h-7"></div>
-
-                  <div class="ml-2">
-                    <h2 class="text-sm text-white font-medium">Март Доглиш</h2>
-                    
-                    <div class="flex items-center opacity-70 text-white">
-                      <Icon name="link-2" attrs={{ class: "w-4 h-4" }} />
-                      
-                      <p class="ml-1.5 text-xs">Гарри Поттер</p>
-                    </div>      
-                  </div>
-                </div>
-              </div>
-
-              <!-- Buttons -->
-              <div>
-                <Icon name="more-horizontal" attrs={{ class: "w-5 h-5 text-white", "stroke-width": "3" }} />
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-      </div>
-    </div>
-  </section>
-</div>
+  </Container>
+</Container>

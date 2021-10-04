@@ -1,13 +1,11 @@
 <script lang="typescript">
   // Importing theme wrapper
-  import theme from '@pawcapsu/design/Wrapper'
+  import theme from 'src/design/Wrapper'
 
   // Importing components
-  import {
-    Viewer
-  } from '@pawcapsu/design';
+  import Viewer from 'src/design/text/Viewer/index.svelte';
 
-  import Icon from '@pawcapsu/components/Icon.svelte';
+  import Icon from 'src/components/Icon.svelte';
 
   // Importing types
   import type { IBook, IProfile, IBookChapter, IBookRating, IUniversalText } from '@app/shared';
@@ -35,7 +33,7 @@
   $: currentType = types[type];
 </script>
 
-<div class="{ theme.$(`cards.book.size.${size}`, sizes[size]) } relative" style="padding-bottom: 50%;">
+<div class="{ theme.$(`cards.book.size.${size}`, sizes[size]) } relative" style="padding-bottom: 60%;">
   <div class="absolute w-full h-full p-2">
     <div style="z-index: 2;" class="{ theme.$(`cards.book.${type}`, types[type].classes) }">
 

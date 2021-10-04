@@ -53,6 +53,54 @@ export class PaginatedBooksClass {
       });
     });
   };
+
+  // paginate books
+  paginate(options?: BookSearchOptions): Promise<IPaginatedBooks> {
+    return new Promise((resolve) => {
+      const store = client.query(gql`
+        query getBooks($options: BookSearchOptionsInput!) {
+          books(options: $options) {
+            docs {
+              title
+              creator {
+                _id
+                username
+              }
+              description {
+                _id
+                type
+                nodes {
+                  __typename
+                  ...on TextNode {
+                    type
+                    content
+                  }
+                  ...on PictureNode {
+                    type
+                    url
+                    caption
+                  }
+                }
+              }
+            }
+          }
+        }
+      `, {
+        variables: {
+          options
+        },
+      });
+
+      store.subscribe((obj) => {
+        const data = obj.data as any;
+      
+        if (data) {
+          const response = data.books as IPaginatedBooks;
+          resolve(response as IPaginatedBooks);
+        };
+      });
+    });
+  };
 };
 
 export const PaginatedBooksService = new PaginatedBooksClass();

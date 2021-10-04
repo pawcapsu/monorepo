@@ -3,7 +3,7 @@
   import type { ITextNode } from '@app/shared';
  
   // Importing components
-  import { Paragraph } from '@pawcapsu/design';
+  import Paragraph from 'src/design/typography/Paragraph/index.svelte';
 
   // Exporting variables
   export let node: ITextNode;

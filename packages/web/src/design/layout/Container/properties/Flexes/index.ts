@@ -2,6 +2,7 @@ const flexes = {
   none: [],
   flex: ['flex'],
   centered: ['flex justify-center items-center'],
+  between: ['flex justify-between items-center']
 };
 
 type EContainerFlex = keyof typeof flexes;
