@@ -5,13 +5,19 @@ import { default as axios } from "axios";
 
 @Injectable()
 export class ApiService {
+  public readonly url = "https://e621.net";
+  public readonly headers = {
+    headers: {
+      "User-Agent": "LeggydogBot/1.0 (@SniperFox213 on github)",
+    },
+  };
+
+  // fetchOneByTags
   public async fetchOneByTags(tags: String[]): Promise<UnifiedPost> {
     const { data } = await axios.get(
-      `https://e621.net/posts.json?tags=${tags.join("+")}&limit=1`,
+      `${this.url}/posts.json?tags=${tags.join("+")}&limit=1`,
       {
-        headers: {
-          "User-Agent": "LeggydogBot/1.0 (@SniperFox213 on github)",
-        },
+        ...this.headers
       }
     );
 
@@ -28,6 +34,7 @@ export class ApiService {
     return post;
   }
 
+  // fetchManyByTags
   public async fetchManyByTags(
     tags: String[],
     numberToFetch = 5,
@@ -36,11 +43,9 @@ export class ApiService {
     }
   ): Promise<UnifiedPost[]> {
     const request = await axios.get(
-      `https://e621.net/posts.json?tags=${tags.join("+")}`,
+      `${this.url}/posts.json?tags=${tags.join("+")}`,
       {
-        headers: {
-          "User-Agent": "LeggydogBot/1.0 (@SniperFox213 on github)",
-        },
+        ...this.headers,
         params: {
           limit: numberToFetch,
           page: options?.page ?? null,
@@ -60,5 +65,21 @@ export class ApiService {
     });
 
     return unifiedPosts;
-  }
+  };
+
+  // fetchTag
+  public async fetchTag(
+    tag: String,
+  // +todo add typings
+  ): Promise<Array<any>> {
+    const request = await axios.get(
+      `${this.url}/tags.json?search[name_matches]=${tag}`,
+      {
+        ...this.headers
+      }
+    );
+
+    const tags = request.data.tags || request.data;
+    return tags ?? [];
+  };
 }

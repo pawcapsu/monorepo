@@ -17,6 +17,7 @@ import { ChannelActionService } from "@notifier/services";
 import { ModuleRef } from "@nestjs/core";
 import { BotsService } from "@notifier/bots/Bots.service";
 import { _escapeCharacters } from "@notifier/helpers";
+import { ApiService } from "@notifier/services/Sources/E621";
 
 @Injectable()
 export class TelegramGatewayService {
@@ -27,7 +28,8 @@ export class TelegramGatewayService {
     @InjectModel("agent")
     private readonly subscriberModel: Model<ScrapperAgentDocument>,
   ) {}
-
+ 
+  public readonly api = new ApiService();
   private readonly logger = new Logger(TelegramGatewayService.name);
 
   // public fetchSubscribers

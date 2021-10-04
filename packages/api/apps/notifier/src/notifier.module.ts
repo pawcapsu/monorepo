@@ -10,6 +10,8 @@ import { SubscribeProcessors } from "./services/Sources";
 import * as Services from "./services";
 import * as Controllers from "./controllers";
 
+import { ApiService as E621ApiService } from "./services/Sources/E621";
+
 import { TelegramGatewayService } from "./bots/Telegram/services";
 
 @Module({
@@ -65,8 +67,14 @@ import { TelegramGatewayService } from "./bots/Telegram/services";
     // BotServices
     ...Object.values(Services),
 
+    // Bots
     BotsService,
+
+    // Bot Gateways
     TelegramGatewayService,
+
+    // ApiServices
+    E621ApiService,
   ],
   controllers: [...Object.values(Controllers)],
 })
