@@ -40,7 +40,7 @@ export class TelegramNotifierBot implements BotInstance {
   start(): Bot {
     this.bot.start().catch((err) => {
       const ctx = err.ctx;
-      this.logger.error(`Error while handling update ${ctx.update.update_id}:`);
+      this.logger.error(`Error while handling update ${ctx.update?.update_id}:`);
       const e = err.error;
       if (e instanceof GrammyError) {
         this.logger.error("Error in request:", e.description);
