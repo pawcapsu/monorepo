@@ -18,9 +18,11 @@ export class PaginatedBooksClass {
                 _id
                 username
               }
+              tags(filters: { limit: 4 }) {
+                icon
+                title
+              }
               description {
-                _id
-                type
                 nodes {
                   __typename
                   ...on TextNode {
@@ -66,9 +68,13 @@ export class PaginatedBooksClass {
                 _id
                 username
               }
+              tags(filters: { limit: 4 }) {
+                icon
+                title
+                color
+              }
+              bookSize
               description {
-                _id
-                type
                 nodes {
                   __typename
                   ...on TextNode {

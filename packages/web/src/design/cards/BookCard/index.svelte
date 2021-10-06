@@ -8,7 +8,7 @@
   import Icon from 'src/components/Icon.svelte';
 
   // Importing types
-  import type { IBook, IProfile, IBookChapter, IBookRating, IUniversalText } from '@app/shared';
+  import type { IBook, IProfile, IBookChapter, IBookRating, IUniversalText, IBookTag } from '@app/shared';
 
   // Importing properties-related data
   // -types
@@ -22,10 +22,11 @@
   // Exporting variables
   export let type: EBookCardType = 'default';
   export let size: EBookCardSize = 'base';
-  export let book: IBook | undefined;
+  export let book: IBook;
 
   // Destructuring variables
   $: creator = book.creator as IProfile;
+  $: tags = book.tags as Array<IBookTag>;
   $: chapters = book.chapters as Array<IBookChapter>;
   $: ratings = book.ratings as Array<IBookRating>;
   $: description = book.description as IUniversalText;
@@ -79,8 +80,16 @@
         { #if !currentType.hide.includes('tags') }
           <!-- Tags -->
           <div class="w-full flex flex-wrap mt-2">
-            <div class="m-0.5 px-2 py-1 rounded-full bg-pink-500 flex items-center justify-center">
-              <!-- Icon -->
+            <!-- Tags -->
+            { #if tags }
+              { #each tags as tag }
+                <div class="m-0.5 px-2 py-1 rounded-full bg-indigo-500 flex items-center justify-center">
+                  <p class="text-xs text-white font-medium">{ tag.title }</p>
+                </div>
+              { /each }
+            { /if }
+            <!-- <div class="m-0.5 px-2 py-1 rounded-full bg-pink-500 flex items-center justify-center">
+              Icon
               <p class="text-white font-medium text-sm">⚣</p>
             
               <p class="ml-1 text-xs text-white font-medium">Гей</p>
@@ -88,11 +97,14 @@
 
             <div class="m-0.5 px-2 py-1 rounded-full bg-purple-600 flex items-center justify-center">
               <p class="text-xs text-white font-medium">Драма</p>
-            </div>
+            </div> -->
 
-            <div class="m-0.5 px-2 py-1 rounded-full bg-gray-500 flex items-center justify-center">
-              <p class="text-xs text-white font-medium">До 5000 слов</p>
-            </div>
+            <!-- BookSize -->
+            { #if book.bookSize }
+              <div class="m-0.5 px-2 py-1 rounded-full bg-gray-500 flex items-center justify-center">
+                <p class="text-xs text-white font-medium">{ book.bookSize } слов</p>
+              </div>
+            { /if }
           </div>
         { /if }
       </div>
