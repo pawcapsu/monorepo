@@ -25,6 +25,9 @@ export class Tag implements ITag {
   @Prop({ type: String, required: false })
   description?: string;
 
+  @Prop({ type: String, required: false, default: () => "bg-purple-500" })
+  color?: string;
+
   @Prop({
     unique: false,
     type: mongoose.Schema.Types.ObjectId,

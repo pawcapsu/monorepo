@@ -22,6 +22,9 @@ export class BookTag implements IBookTag {
   @Field((type) => UniversalText, { nullable: true })
   description?: RelationalProp<UniversalText>;
 
+  @Field({ nullable: false, defaultValue: () => "bg-indigo-500" })
+  color?: string;
+
   @Field((type) => Profile, { nullable: true })
   creator?: RelationalProp<Profile>;
 }

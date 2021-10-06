@@ -7,6 +7,7 @@ export interface ITag {
   icon?: string;
   title: string;
   description?: string;
+  color?: string;
 
   creator?: RelationalProp<IProfile | any>;
 }

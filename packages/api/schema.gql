@@ -27,6 +27,7 @@ type BookTag {
   icon: String
   title: String
   description: UniversalText!
+  color: String!
   creator: Profile!
 }
 
