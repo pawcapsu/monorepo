@@ -6,6 +6,7 @@ import { ChannelStateSchema, EQueueNames } from "apps/notifier/src/types";
 import { ScrapperAgentSchema } from "apps/notifier/src/types";
 import { MongooseModule } from "@nestjs/mongoose";
 import { SubscribeProcessors } from "./services/Sources";
+import { ConfigModule } from "@nestjs/config";
 
 import * as Services from "./services";
 import * as Controllers from "./controllers";
@@ -16,6 +17,7 @@ import { TelegramGatewayService } from "./bots/Telegram/services";
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     ScheduleModule.forRoot(),
     MongooseModule.forRoot(
       "mongodb+srv://paws:kxz2zyGxIO28JaCR@cluster0.03jyp.mongodb.net/notifier?retryWrites=true&w=majority",

@@ -15,36 +15,9 @@ export class ApiService {
   };
 
   public async getAxiosClient() {
-    const proxies: Array<{ host: string, port: number, username: string, password: string }> = [
-      {
-        host: "209.127.191.180",
-        port: 9279,
-        username: "oejfvhuk",
-        password: "hcm2e0anok5g",
-      },
-      {
-        host: "45.95.99.20",
-        port: 7580,
-        username: "oejfvhuk",
-        password: "hcm2e0anok5g",
-      },
-      {
-        host: "45.95.99.226",
-        port: 7786,
-        username: "oejfvhuk",
-        password: "hcm2e0anok5g",
-      }
-    ];
-
-    const proxy = proxies[Math.floor(Math.random() * proxies.length)];
-
     // Checking data
-    if (proxy) {
-      const agent = new SocksProxyAgent(`socks5://${proxy.username}:${proxy.password}@${proxy.host}:${proxy.port}`);
-      return axios.create({ httpsAgent: agent });
-    } else {
-      return axios.create();
-    };
+    // const agent = new SocksProxyAgent(`socks5://oejfvhuk-rotate:hcm2e0anok5g@p.webshare.io:80`);
+    return axios.create();
   };
 
   // fetchOneByTags
