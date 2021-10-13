@@ -29,8 +29,11 @@ jobs:
     - name: Install CapRover
       run: npm install -g caprover
     - name: Zip aftifact into .tar file
-      uses: NSCoder/archive-action@v1.0.0
-      with: zip -r output.tar ./backend/notifier/dist
+      uses: thedoctor0/zip-release@master
+      with:
+        type: 'tar'
+        filename: 'output.tar'
+        directory: 'backend/notifier/dist'
     - name: Push artifact to private Odzi Platform instance
       run: |
         caprover deploy -h https://captain.app.odzi.dog -p ${{ secrets.CAPROVER_PASSWORD }} -t output.tar -a pawcapsu-notifier
