@@ -32,9 +32,9 @@ jobs:
       uses: thedoctor0/zip-release@master
       with:
         type: 'tar'
-        filename: 'output.tar'
+        filename: 'backend/notifier/dist/output.tar'
         path: 'backend/notifier/dist'
     - name: Push artifact to private Odzi Platform instance
       run: |
-        ls
+        cd backend/notifier/dist
         caprover deploy -h https://captain.app.odzi.dog -p ${{ secrets.CAPROVER_PASSWORD }} -t output.tar -a pawcapsu-notifier
