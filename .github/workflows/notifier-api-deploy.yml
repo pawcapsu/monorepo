@@ -34,6 +34,7 @@ jobs:
         type: 'tar'
         filename: 'output.tar'
         directory: 'backend/notifier/dist/'
+        exclusions: 'output.tar'
     - name: Push artifact to private Odzi Platform instance
       run: |
         cd backend/notifier/dist
