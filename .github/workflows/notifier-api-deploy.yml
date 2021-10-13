@@ -31,17 +31,17 @@ jobs:
     - name: Zip aftifact into .tar file
       uses: thedoctor0/zip-release@master
       with:
-        type: 'tar'
-        filename: 'output.tar'
+        type: 'zip'
+        filename: 'output.zip'
         path: 'backend/notifier/dist'
     - name: test
       uses: TonyBogdanov/zip@1.0
       with:
-        args: unzip -qq ./output.tar -d ./target
+        args: unzip -qq ./output -d ./target
     - name: Push artifact to private Odzi Platform instance
       run: |
         ls
         cd target
         ls
         cd ..
-        caprover deploy -h https://captain.app.odzi.dog -p ${{ secrets.CAPROVER_PASSWORD }} --tarFile=output.tar -a pawcapsu-notifier
+        caprover deploy -h https://captain.app.odzi.dog -p ${{ secrets.CAPROVER_PASSWORD }} --tarFile=output.zip -a pawcapsu-notifier
