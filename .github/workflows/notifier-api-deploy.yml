@@ -34,6 +34,10 @@ jobs:
         type: 'tar'
         filename: 'output.tar'
         path: 'backend/notifier/dist'
+    - name: test
+      uses: actions/upload-artifact@v2
+      with:
+        path: output.tar
     - name: Push artifact to private Odzi Platform instance
       run: |
         ls
