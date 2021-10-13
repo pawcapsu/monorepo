@@ -5,7 +5,7 @@
     "bootstrap": "lerna clean -y && lerna bootstrap",
     "build:all": "npm run bootstrap && lerna run build",
     "build:api/pawcapsu": "npm run bootstrap && lerna run build:pawcapsu --scope @pawcapsu/api",
-    "build:api/notifier": "npm run bootstrap && lerna run build:notifier --scope @pawcapsu/api",
+    "build:notifier": "npm run bootstrap && lerna run build --scope @pawcapsu/notifier",
     "build:web": "npm run bootstrap && lerna run build --scope @pawcapsu/web"
   },
   "devDependencies": {
