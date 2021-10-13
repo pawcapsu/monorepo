@@ -31,7 +31,7 @@ export class ApiService {
     );
 
     const { posts } = data;
-    const [unparsedPost] = posts;
+    const unparsedPost: any = posts[0];
 
     const post: UnifiedPost = {
       id: unparsedPost.id,
@@ -63,9 +63,8 @@ export class ApiService {
       }
     );
 
-    console.log(request);
-    
-    const posts: Post[] = request.data.posts;
+    const data: any = request.data;
+    const posts: Post[] = data.posts;
     const unifiedPosts: Array<UnifiedPost> = [];
     posts.forEach((post) => {
       unifiedPosts.push({
@@ -92,7 +91,8 @@ export class ApiService {
       }
     );
 
-    const tags = request.data.tags || request.data;
+    const data: any = request.data; 
+    const tags = data.tags || request.data;
     return tags ?? [];
   };
 }

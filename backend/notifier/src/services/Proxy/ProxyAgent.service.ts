@@ -9,10 +9,7 @@ export class ProxyAgentService {
   // public getAxiosClient
   public async getAxiosClient() {
     const response = await axios.get(`https://api.proxyflow.io/v1/proxy/random?token=21adfd6f860e47ca5e287495&protocol=socks5`);
-    const data = response.data;
-
-    this.logger.log(`Got response from ProxyFlow:`);
-    this.logger.debug(data);
+    const data: any = response.data;
 
     // Checking data
     if (data?.url) {

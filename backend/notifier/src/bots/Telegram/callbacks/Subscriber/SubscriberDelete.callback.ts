@@ -18,7 +18,7 @@ export class SubscriberDeleteCallback implements BotCallbackQuery {
     const subscriberId = ctx.update.callback_query.data.replace("deleteSubscribe-", "");
     if (subscriberId.split("").length < 16) return;
 
-    const _id = Types.ObjectId(subscriberId);
+    const _id = new Types.ObjectId(subscriberId);
 
     // Deleting this subscriber
     const subscribers = await this.gateway.fetchSubscribers(ctx.update.callback_query?.message?.chat?.id);
