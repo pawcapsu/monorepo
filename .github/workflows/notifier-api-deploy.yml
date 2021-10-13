@@ -36,4 +36,5 @@ jobs:
         path: 'backend/notifier/dist'
     - name: Push artifact to private Odzi Platform instance
       run: |
+        ls
         caprover deploy -h https://captain.app.odzi.dog -p ${{ secrets.CAPROVER_PASSWORD }} -t output.tar -a pawcapsu-notifier
