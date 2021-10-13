@@ -33,14 +33,13 @@ jobs:
       with:
         type: 'zip'
         filename: 'output.zip'
-        path: 'backend/notifier/dist'
+        directory: 'backend/notifier/dist'
     - name: test
       uses: TonyBogdanov/zip@1.0
       with:
         args: unzip -qq ./output -d ./target
     - name: Push artifact to private Odzi Platform instance
       run: |
-        ls
         cd target
         ls
         cd ..
