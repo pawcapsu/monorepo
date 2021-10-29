@@ -6,6 +6,7 @@
     "build:all": "npm run bootstrap && lerna run build",
     "build:api/pawcapsu": "npm run bootstrap && lerna run build:pawcapsu --scope @pawcapsu/api",
     "build:notifier": "npm run bootstrap && lerna run build --scope @pawcapsu/notifier",
+    "build:api/archive": "npm run bootstrap && lerna run build --scope @pawcapsu/archive-api",
     "build:web": "npm run bootstrap && lerna run build --scope @pawcapsu/web"
   },
   "devDependencies": {
