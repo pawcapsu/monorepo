@@ -5,6 +5,11 @@
 	"author": "",
 	"private": true,
 	"license": "UNLICENSED",
+  "scripts": {
+    "dev": "nest dev",
+    "build": "nest build",
+    "start": "node main.js"
+  },
 	"dependencies": {
 		"@nestjs/common": "^8.0.0",
 		"@nestjs/config": "^1.0.1",
