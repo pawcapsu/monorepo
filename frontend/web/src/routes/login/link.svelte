@@ -5,12 +5,9 @@
   import { Config } from '$config/index';
 
   onMount(() => {
-    let json = {
-      backgroundColor: "#111827",
-      logotype: "https://res.cloudinary.com/lococovu-cdn/image/upload/v1614110162/logotypes/pawcapsu-black-small.svg"
-    };
-
-    goto(`https://auth.odzi.dog/callback/${encodeURIComponent(Config.get('MODE') === 'DEVELOPMENT' ? 'localhost:3000/login' : 'pawcapsu.ml/login')}?design=${encodeURIComponent(JSON.stringify(json))}`);
+    // +todo move this id to env variable?
+    const resourceId = "617a552cb4a7bfad0b9a1b54";
+    goto(`https://cloud.odzi.dog/auth/v1/${resourceId}`);
   });
 </script>
 
