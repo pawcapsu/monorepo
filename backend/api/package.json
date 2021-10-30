@@ -5,6 +5,10 @@
 	"author": "",
 	"private": true,
 	"license": "UNLICENSED",
+  "scripts": {
+    "build:pawcapsu": "nest build pawcapsu-api",
+    "start": "node apps/pawcapsu-api/main.js"
+  },
 	"dependencies": {
 		"@grammyjs/types": "^2.2.6",
 		"@nestjs/bull": "^0.4.1",
