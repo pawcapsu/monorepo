@@ -26,7 +26,7 @@ const config = {
 					$stores: resolve('./src/stores'),
 					$services: resolve('/src/services'),
 					$config: resolve('/src/config'),
-					'@app/shared': resolve('../api/libs/shared/src'),
+					'@app/shared': resolve('../../backend/api/libs/shared/src'),
 				},
 			},
 		},

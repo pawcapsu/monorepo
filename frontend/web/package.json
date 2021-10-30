@@ -1,6 +1,11 @@
 {
 	"name": "@pawcapsu/web",
 	"version": "0.0.1",
+  "scripts": {
+		"dev": "svelte-kit dev",
+		"build": "svelte-kit build --verbose",
+		"preview": "svelte-kit preview"
+	},
 	"devDependencies": {
 		"@sveltejs/kit": "next",
 		"@types/axios": "^0.14.0",
