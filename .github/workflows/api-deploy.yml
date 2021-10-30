@@ -1,4 +1,4 @@
-name: api production
+name: api.pawcapsu.ml production
 
 on: push
 
@@ -25,13 +25,6 @@ jobs:
       run: npm ci
     - name: Bootstrap and Build application
       run: npm run build:api/pawcapsu
-    - name: Prepare cloud instance for artifact upload
-      uses: JimCronqvist/action-ssh@0.1.1
-      with:
-        hosts: 'ubuntu@140.238.219.21'
-        privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
-        command: |
-          rm -rf $PATH_REMOTE
     - name: Prepare artifact before cloud push
       run: |
         cp $PATH_LOCAL/package.json $PATH_LOCAL/dist
