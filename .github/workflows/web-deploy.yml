@@ -12,10 +12,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Copy shared package into web production folder
-      run: cp -a ./packages/api/libs/shared/. ./packages/web/production/shared
+      run: cp -a ./backend/api/libs/shared/. ./frontend/web/production/shared
 
     - name: Copy production configs into web root folder
-      run: cp -a ./packages/web/production/* ./packages/web
+      run: cp -a ./frontend/web/production/* ./frontend/web
 
     - name: Deploy application to Vercel
       uses: amondnet/vercel-action@v20
@@ -24,4 +24,4 @@ jobs:
         vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
         vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_WEB }}
         vercel-args: '--prod'
-        working-directory: ./packages/web
+        working-directory: ./frontend/web
