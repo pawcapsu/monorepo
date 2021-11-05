@@ -13,6 +13,7 @@ export class PaginatedBooksClass {
         query getBooks($options: BookSearchOptionsInput!) {
           books(options: $options) {
             docs {
+              _id
               title
               creator {
                 _id
@@ -63,6 +64,7 @@ export class PaginatedBooksClass {
         query getBooks($options: BookSearchOptionsInput!) {
           books(options: $options) {
             docs {
+              _id
               title
               creator {
                 _id

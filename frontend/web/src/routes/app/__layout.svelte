@@ -4,9 +4,12 @@
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
 
+  import Icon from 'src/components/Icon.svelte';
+
   import {
     Container,
     Logotype,
+    Sidebar,
   } from 'src/design';
 
   onMount(() => {
@@ -26,5 +29,15 @@
     <Logotype type="icon" />
   </Container>
 { :else }
-  <slot />
+  <!-- Container -->
+  <Container flex="flex">
+    <!-- Sidebar -->
+    <Sidebar />
+
+    <!-- Content -->
+    <section class="w-full h-full relative">
+      <slot />
+    </section>
+
+  </Container>
 { /if }

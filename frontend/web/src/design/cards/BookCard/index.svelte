@@ -2,11 +2,11 @@
   // Importing theme wrapper
   import theme from 'src/design/Wrapper'
 
-  // Importing components
+  // Importing modules
   import Viewer from 'src/design/text/Viewer/index.svelte';
-
   import Icon from 'src/components/Icon.svelte';
-
+  import { goto } from '$app/navigation';
+  
   // Importing types
   import type { IBook, IProfile, IBookChapter, IBookRating, IUniversalText, IBookTag } from '@app/shared';
 
@@ -62,7 +62,9 @@
       { /if }
 
       <!-- Title -->
-      <div class="mb-2">
+      <div on:click={() => {
+        goto(`/app/reader/${ book._id }`)
+      }} class="mb-2 cursor-pointer">
         <div class="flex items-center mt-0.5 opacity-70 text-white">
           { #if !currentType.hide.includes('author') }
             <Icon name="link-2" attrs={{ class: "w-4 h-4" }} />
