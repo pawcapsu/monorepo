@@ -1,7 +1,7 @@
-import { EUniversalTextType } from "../../../";
+import { EUniversalTextType, UNodeEntity } from "../../../";
 
 export interface IUniversalText {
   version?: number;
   type?: EUniversalTextType;
-  nodes?: Array<any>;
+  nodes?: Array<UNodeEntity>;
 }
