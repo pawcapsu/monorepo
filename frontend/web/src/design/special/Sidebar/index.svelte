@@ -1,20 +1,26 @@
 <script lang="typescript">
   // Importing modules
   import { SidebarState } from '$stores/sidebar';
+  import type { SidebarStateStore } from '$stores/sidebar';
   import { goto } from '$app/navigation';
   import { fade } from 'svelte/transition';
 
   import Icon from 'src/components/Icon.svelte';
   import Container from 'src/design/layout/Container/index.svelte';
-  import { onMount } from 'svelte';
   
   let updateAnimation = false;
-  SidebarState.subscribe(() => {
-    updateAnimation = true;
-    
-    setTimeout(() => {
-      updateAnimation = false;
-    }, 250);
+  let previousState: string;
+
+  SidebarState.subscribe((currentState) => {
+    if (previousState != currentState?.state) {
+      previousState = currentState.state;
+
+      updateAnimation = true;
+      
+      setTimeout(() => {
+        updateAnimation = false;
+      }, 250);
+    };
   });
   
   $: size = $SidebarState.state == 'in-reader' ? 8 : 10;
