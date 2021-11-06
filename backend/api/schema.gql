@@ -61,6 +61,8 @@ type TextNode {
 
 """Type of node of UniversalText object (TEXT, PICTURE, etc..)"""
 enum ENodeType {
+  BOOK_REVIEW
+  CHAPTER_TITLE
   TEXT
   PICTURE
 }
